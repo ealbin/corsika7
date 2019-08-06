@@ -1,0 +1,26 @@
+This is an example for a COAST based CORSIKA binary file merger (checker). 
+It explains in 2 steps, how to use the create an executable
+to merge (check) CORSIKA binary outputs.
+
+NOTE : boost should be installed on your system
+
+Step 1:
+-------
+
+Compile COAST libraries by selecting option "d1" in 'coconut' (other options 
+are not important at this stage) and compile CORSIKA a first time.
+
+Step 2:
+-------
+
+run "make"
+
+-------
+
+The executable files "merge_corsika" and "check_corsika" are created and 
+run "./merge_corsika" or  "./check_corsika" to know how to use them.
+
+
+20/12/2018 by T.Pierog
+
+

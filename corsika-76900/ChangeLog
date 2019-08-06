@@ -1,0 +1,3226 @@
+------------------------------------------------------------------------
+
+Version 7.6900                     (coupled with EPOS-LHC,
+(Dec. 20 2018)         NEXUS-397, QGSJET01D, QGSJET-II-04, SIBYLL-2.3c,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.521)
+------------------------------------------------------------------------
+          Update bernlohr package to version 1.56
+          Enable reading for atmabs.dat, quanteff.dat and mirreff.dat
+          tables for larger wavelength band by new keyword CWAVRANG.
+          add the possibilty to run heavy nuclear in CONEX+EPOS
+          combination up to a mass A=250
+          improved utility scripts
+------------------------------------------------------------------------
+
+Version 7.6400                     (coupled with EPOS-LHC,
+(Aug. 14 2018 not rel.) NEXUS-397, QGSJET01D, QGSJET-II-04, SIBYLL-2.3c,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.521)
+------------------------------------------------------------------------
+          Update bernlohr package to version 1.55
+------------------------------------------------------------------------
+
+Version 7.6400                     (coupled with EPOS-LHC,
+(Mar.  1 2018 not rel.) NEXUS-397, QGSJET01D, QGSJET-II-04, SIBYLL-2.3c,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.521)
+------------------------------------------------------------------------
+          Update bernlohr package to version 1.54
+------------------------------------------------------------------------
+
+Version 7.6400                     (coupled with EPOS-LHC,
+(Dec. 21 2017)         NEXUS-397, QGSJET01D, QGSJET-II-04, SIBYLL-2.3c,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.521)
+------------------------------------------------------------------------
+	   CONEX version 6.400 with new correction on energy deposit
+	   new DPMJETIII available but only upon request to the authors
+	   (<anatoli.fedynitch@desy.de>)
+           Update bernlohr package to version 1.52
+	   Update on Gdas tools
+	   Update scripts to run CORSIKA in parallel mode
+	   Small bug fixes.
+------------------------------------------------------------------------
+
+Version 7.6300                     (coupled with EPOS-LHC,
+(Sept. 21 2017)         NEXUS-397, QGSJET01D, QGSJET-II-04, SIBYLL-2.3c,
+      VrENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.521)
+------------------------------------------------------------------------
+           Now some of rare decays leading to mu+mu--pairs are added:
+           omega ----> mu+ + mu- + pi(o)   (BR=1.3e-4)  (RESDEC)
+           omega ----> mu+ + mu-           (BR=9.0e-5)  (RESDEC)
+           eta   ----> mu+ + mu-           (BR=5.8e-6)  (ETADEC)
+           The decays include the muon polarizations.
+           The PHI vector meson is produced in full analogy with the
+           omega meson. The intensity of the vector mesons 
+           rho(0) : omega : Phi is assumed to 9 : 0.6 : 0.4
+           The decay of the Phi meson including rare decays leading
+           to mu+mu- pairs is performed in subroutine RESDEC.
+           DPMJET temporarily not available (next release).
+	   Updated version of Sibyll 2.3c with new keyword SIBCHM to 
+	   switch on/off charm production and corrected forward spectra.
+	   New keyword ATMFILE to read GDAS based atmospheric parameters
+	   and refrative index table for radio calculations.
+	   New CONEX version 6.200 with corrected energy loss
+------------------------------------------------------------------------
+
+Version 7.5700                     (coupled with EPOS-LHC,
+(June 2 2017)           NEXUS-397, QGSJET01D, QGSJET-II-04, SIBYLL-2.3,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.521)
+------------------------------------------------------------------------
+           Technical release to correct some important bugs in the CONEX
+           option (since 7.5601) and in radio simulation (CoREAS)
+           improve file management with MPI parallel run (incl. CoREAS)
+           DPMJET temporarily not available.
+           New baack directory containing some advanced options to run
+           corsika (see user guide).
+------------------------------------------------------------------------
+
+Version 7.5602                     (coupled with DPMJET-3.0, EPOS-LHC,
+(                  ) NEXUS-397, QGSJET01D, QGSJET-II-04, SIBYLL-2.3,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.521)
+------------------------------------------------------------------------
+           In the THIN option with the CERFIL keyword in combination 
+           with the CEFFIC or the CERWLEN option the wavelength (instead
+           of the weight) may be demanded. 
+           Modifications in Cherenkov option allow to use telescopes 
+           without IACT option. The output of each telescope may be 
+           written in separate CERnnnnnn-teliii files (rsp. 
+           DATnnnnnn.cher-teliii for MCERFI >= 3)  where iii gives the 
+           telescope ID. 
+           Correction of EDEP1 to avoid spikes in the longitudinal
+           energy deposit distribution. Also negative contents in the
+           last energy deposit bin are repalced by zeros.
+------------------------------------------------------------------------
+
+Version 7.5601                     (coupled with DPMJET-3.0, EPOS-LHC,
+(January 17, 2017) NEXUS-397, QGSJET01D, QGSJET-II-04, SIBYLL-2.3,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.521)
+------------------------------------------------------------------------
+           Coupling with updated DPMJET3.0 in connection with PHOJET1.12
+           and PYTHIA6.427 (all files made available by A. Fedynitch).
+           Update bernlohr package to version 1.50
+           RIGIDITY rejection of low-energy primaries dependent on the
+           primary zenith and azimuth angles (for GRAPES experiment at
+           Ooty, India)
+           In the EFIELD option the electric field acts now - besides 
+           on electrons and positrons - also on the muonic and hadronic 
+           particles.
+           In the CERLDE subroutine a bug is corrected which happens 
+           only in the combination of options CURVED&&SLANT.
+           Slant depth calculation in function THCKSI improved by 
+           increasing the number of points (from 500 to 8000) for
+           interpolation between slant path bins.
+------------------------------------------------------------------------
+
+Version 7.5600                     (coupled with DPMJET-II.55, EPOS-LHC,
+(released Aug. 2016) NEXUS-397, QGSJET01D, QGSJET-II-04, SIBYLL-2.3,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.521)
+------------------------------------------------------------------------
+           Remove bug which affects unexpectedly the x and y
+           coordinates of resonances when its starting and end point in 
+           the SLANT longitudinal distribution are determined. This bug
+           was only for simulations with SLANT and CURVED and
+           longitudinal calculation active, It had minor impact except
+           with the new Sibyll 2.3 for which resonances are decayed in 
+           CORSIKA.
+           Improve link between CORSIKA and CONEX for longitudinal
+           profile.
+           Correct energy deposit calculation to avoid negativ energy
+           deposit in longitudinal profile.
+           Various small corrections and cosmetics.
+------------------------------------------------------------------------
+
+Version 7.5000                     (coupled with DPMJET-II.55, EPOS-LHC,
+(released Feb. 2016) NEXUS-397, QGSJET01D, QGSJET-II-04, SIBYLL-2.3,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.521)
+------------------------------------------------------------------------
+           Coupling with Sibyll 2.3rc4a.f of F. Riehn, which includes 
+           charm production. Can be used without CHARM option rsp. with
+           CHARM option. Needs updates in routines/functions BOX2, 
+           PYTSTO, and all corsika-sibyll link routines (SIBDAT, 
+           SIBINI, SIBLNK, SIBSIG, SIBSTR, SIGNUC_INI2, S_RNDM).
+           Update bernlohr package to bernlohr-1.49.
+           Additional modification for herwig6521.f needed to avoid
+           identical subroutine names UPINIT and UPEVNT with PYTHIA 
+           routines. HERWIG code is now included in CORSIKA package
+           High energy photonuclear reactions done with rho0 projectile
+           for EPOS and SIBYLL.
+           Changed default value for ELMFLG/FEGS = .true.
+------------------------------------------------------------------------
+
+Version 7.4950                     (coupled with DPMJET-II.55, EPOS-LHC,
+(not released Nov. 2015) NEXUS-397, QGSJET01D, QGSJET-II-04, SIBYLL-2.1,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.511)
+------------------------------------------------------------------------
+           Introduce new generation counter including EM interactions.
+           Done always but full information available only with EHISTORY
+           option. Now without EHISTORY generation counter saturates at
+           99 indicating that EM particles come from muon decay.
+           Various bug corrections.   
+           Improve range calculation in CURVED+UPWARD+NEUTRINO  for 
+           neutrinos which are produced with skimming incidence to reach
+           the border of the atmosphere in any direction.
+------------------------------------------------------------------------
+
+Version 7.4770                     (coupled with DPMJET-II.55, EPOS-LHC,
+(not released June 2015) NEXUS-397, QGSJET01D, QGSJET-II-04, SIBYLL-2.1,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.511)
+------------------------------------------------------------------------
+           Rare decay   rho(0) ---> mu(+) + mu(-) (B.R. = 4.5E-5) 
+           has been added to the subroutine RHO0DC which is now called 
+           also from RESDEC.
+           Rare decay    K0s ---> pi(+-) + mu(-+) + (anti)nu_mu 
+           is added to get the high-energy muons and muon neutrinos 
+           steming from this decay.
+           New options ICECUBE1 and ICECUBE2 to meet the requirements
+           of the IceCube experiment. 
+           ICECUBE1 treats the stack of secondary particles (which 
+           usually handles LIFO) differently in FIFO mode which enables 
+           to shorten a shower if only low-energy particles are in the 
+           stack which are no longer interesting for the production of 
+           high-energy neutrinos. The threshold energy is defined by 
+           the keyword EINTER (interesting energy). This may shorten 
+           the simulation time considerably.
+           ICECUBE2 offers two modes how to handle the particle data
+           output file: With the keyword COMPRESS the output file is 
+           compressed by the gzip procedure. With the keyword PIPE the
+           output file is written into a buffer which is on-line used
+           as input for a detector Monte Carlo program.
+------------------------------------------------------------------------
+
+Version 7.4005                     (coupled with DPMJET-II.55, EPOS-LHC,
+(released March 2, 2015) NEXUS-397, QGSJET01D, QGSJET-II-04, SIBYLL-2.1,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.511)
+------------------------------------------------------------------------
+           Correct serious bug (in case of TMARGIN.eq.T) as the position
+           and time coordinates of primary must be reset at beginning 
+           of each shower in the shower loop.
+           Introduce new keyword NUADDI to give additional info on 
+           neutrinos.
+           Introduce new keyword CORECUT to discard particles arriving
+           close to the core from output; it works with and without 
+           thinning and should be used to reduce size of particle output
+           data file.
+           Introduce new MULTITHIN and AUGERHIT options. 
+------------------------------------------------------------------------
+
+Version 7.4004                     (coupled with DPMJET-II.55, EPOS-LHC,
+(released Dec. 2014)     NEXUS-397, QGSJET01D, QGSJET-II-04, SIBYLL-2.1,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.511)
+------------------------------------------------------------------------
+           Update mpi_runner.c
+           Eliminate bug in the angle of the additional muon at its
+           origin in the CURVED option.
+           Improve BOX2 to give correct transport path for neutrinos
+           also for CURVED & UPWARD.
+           Include new rare decay mode (eta --> mu+ + mu- + gamma) which
+           is an additional channel for high-energy muons > 100 TeV.
+           Introduce more option details in binary file name.
+------------------------------------------------------------------------
+
+Version 7.4003                     (coupled with DPMJET-II.55, EPOS-LHC,
+(released Oct. 2014)     NEXUS-397, QGSJET01D, QGSJET-II-04, SIBYLL-2.1,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.511)
+------------------------------------------------------------------------
+           Correct bug in tobuf.c . Update BERNLOHR package to version
+           1.48.
+           Update mpi_runner.c and remove incompatible compilation flag
+           for Mac.
+           Eliminate bug: reset shower start time for CURVED option.
+           Various other bug corrections and improvements.
+------------------------------------------------------------------------
+
+Version 7.4002                     (coupled with DPMJET-II.55, EPOS-LHC,
+(released Oct. 2014)     NEXUS-397, QGSJET01D, QGSJET-II-04, SIBYLL-2.1,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.511)
+------------------------------------------------------------------------
+            Bug affecting hadron energy deposit with THIN option
+            add an example in COAST to compile with COAST_USER_LIB
+------------------------------------------------------------------------
+
+Version 7.4001                     (coupled with DPMJET-II.55, EPOS-LHC,
+(released July 2014)     NEXUS-397, QGSJET01D, QGSJET-II-04, SIBYLL-2.1,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.511)
+------------------------------------------------------------------------
+           Bug affecting the additional muon information with MUADDI
+           (especially in combination with THIN) has been eliminated,
+           partial reprogramming of routine MUNUCL was necessary.
+------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+Version 7.44xx                     (coupled with DPMJET-II.55, EPOS-LHC,
+(not released Sept 2014) NEXUS-397, QGSJET01D, QGSJET-II-04, SIBYLL-2.1,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.511)
+------------------------------------------------------------------------
+           Include rare decay K^0_S ---> PI(+-) + e(-+) + (anti)NU_e
+           in subroutine KDECAY as it contributes significantly to 
+           flux of high-energy neutrinos, see T. Gaisser & S. Klein,
+           arXiv 1409.4924 (2014).
+------------------------------------------------------------------------
+
+Version 7.4356                     (coupled with DPMJET-II.55, EPOS-LHC,
+(not released Feb. 2014) NEXUS-397, QGSJET01D, QGSJET-II-04, SIBYLL-2.1,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.511)
+------------------------------------------------------------------------
+           Update bernlohr package to bernlohr-1.48.
+           New option MULTITHIN which simulates unthinned showers, but 
+           gives to each output particle up to 6 weights for 6 different
+           thinning modes. 
+------------------------------------------------------------------------
+
+Version 7.4001                     (coupled with DPMJET-II.55, EPOS-LHC,
+(not released Oct. 2013) NEXUS-397, QGSJET01D, QGSJET-II-04, SIBYLL-2.1,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.511)
+------------------------------------------------------------------------
+          New option AUGERHIT which suppresses all output particles
+          falling not in close neighbourhood of Auger detectors or are
+          in close neighbourhood of the shower axis. This reduces the
+          particle output file size by up to factor 500.
+          Eliminate bug in combination NEUTRINO with CURVED by improved
+	  calculation of the neutrino range (subr. BOX2).
+------------------------------------------------------------------------
+
+Version 7.4000                     (coupled with DPMJET-II.55, EPOS-LHC,
+(released Sept. 2013)    NEXUS-397, QGSJET01D, QGSJET-II-04, SIBYLL-2.1,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.511)
+------------------------------------------------------------------------
+          New option MUONHIST to produce histograms for all muons 
+          produced in the shower.
+          Add COAST (incl CoREAS) in CORSIKA distribution compiled as
+          static library.
+------------------------------------------------------------------------
+
+Version 7.3700                     (coupled with DPMJET-II.55, EPOS-LHC,
+(released April 2013)    NEXUS-397, QGSJET01D, QGSJET-II-04, SIBYLL-2.1,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.511)
+------------------------------------------------------------------------
+         New keyword NUSLCT to select the type of first interaction (CC
+         or NC) of primary neutrinos.
+         Correction of inconsistencies in CONEX. Extend the cascade 
+         equations down to the lowest possible energies.
+         Correct QGSJET-II-04 to treat A-p collisions correctly.
+         Update of PRESHOWER option to preshower2.0-rev version with 
+         much faster algorithm to localize interaction altitude.
+         Correct small inconsistencies in vector meson production.
+         Update of utility and parallel programs/procedures for more
+         comfortable handling.
+------------------------------------------------------------------------
+
+Version 7.3695                    (coupled with DPMJET-II.55, EPOS 1.99,
+(released April 2013)    NEXUS-397, QGSJET01C, QGSJET-II-03, SIBYLL-2.1,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.511)
+------------------------------------------------------------------------
+         Same as 7.3700 but with EPOS 1.99 and QGSJETII-03.
+------------------------------------------------------------------------
+
+Version 7.3500                     (coupled with DPMJET-II.55, EPOS-LHC,
+(released Dec 2012)      NEXUS-397, QGSJET01C, QGSJET-II-04, SIBYLL-2.1,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.511)
+------------------------------------------------------------------------
+         CORSIKA and CONEX for EPOS-LHC, QGSJET01C, QGSJET-II-04, 
+	 SIBYLL-2.1 high energy hadronic models.
+	 EPOS LHC (v3400) and QGSJETII-04 are models compatible with LHC
+	 data (retune to TOTEM cross-section and more).
+------------------------------------------------------------------------
+
+Version 7.3495                     (coupled with DPMJET-II.55, EPOS-199,
+         (Dec 2012)       NEXUS-397, QGSJET01C, QGSJET-II-3, SIBYLL-2.1,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.511)
+------------------------------------------------------------------------
+         Include CONEX for EPOS-199, QGSJET01C, QGSJET-II-3, SIBYLL-2.1
+	 high energy hadronic models and all low energy models.
+	 Include PARALLEL option including MPI interface and shell
+	 script examples.
+	 Improve hadronic model stability and correct bug for inclined
+	 shower (crash sometimes).
+	 Remove STACEE option.
+	 Use C language to write binary file and avoid m32 or m64 format
+         problems without COAST.
+------------------------------------------------------------------------
+
+Version 6.99x                      (coupled with DPMJET-II.55, EPOS-199,
+         (Dec 2012)       NEXUS-397, QGSJET01C, QGSJET-II-3, SIBYLL-2.1,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.511)
+------------------------------------------------------------------------
+         Improve calculation of the vectormeson fraction in photonuclear
+         interactions by respecting processes leading to excited target 
+         nuclei.
+         New option MUPROD to get informatin about muons which decay
+         before reaching ground. MUPROD might be combined with EHISTORY.
+------------------------------------------------------------------------
+
+Version 6.99x                      (coupled with DPMJET-II.55, EPOS-199,
+         (March 2012)     NEXUS-397, QGSJET01C, QGSJET-II-3, SIBYLL-2.1,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.511)
+------------------------------------------------------------------------
+         EFIELD option to enable simulations in the presence of electro-
+         static fields in the atmosphere.
+         TRAJECT option to follow an astrophysical object on the sky
+         by correlated selection of zenith and azimuth angles.
+         Adapt FLUKA link routines to new FLUKA2011.2 by replacing
+         MEDIUM() with MEDFLK(,)
+------------------------------------------------------------------------
+Version 6.99x                      (coupled with DPMJET-II.55, EPOS-199,
+           (Oct. 2011)    NEXUS-397, QGSJET01C, QGSJET-II-3, SIBYLL-2.1,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.510)
+------------------------------------------------------------------------
+        Improved Cerenkov emission of primary nucleus before the first
+        interaction by appropriate chopping the transport path.
+        Gives additional information on history of em-particles by
+        keyword EMADDI.
+        Monthly Malargue Atmospheres available derived from GDAS data.
+        Take more precise Cherenkov emission angle (Subroutine UPDATE).
+------------------------------------------------------------------------
+
+Version 6.990                      (coupled with DPMJET-II.55, EPOS-199,
+           (August 2011)   NEXUS-397, QGSJET01C, QGSJET-II-3, SIBYLL-2.1,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.510)
+------------------------------------------------------------------------
+        Various bug corrections affecting the stability of the code
+        (no change in results).
+        Change CURVOUT keyword default to T to be closer to reality.
+        In case of CURVED the definition of X and Y in DAT file has been
+        changed to be able to calculate the real coordinates on a curved
+        observation level and to be correct has a first approximation on
+        a cartesian frame if used directly (close to the core). See User
+        Guide for the keyword CURVOUT for more details.
+------------------------------------------------------------------------
+
+Version 6.981                      (coupled with DPMJET-II.55, EPOS-199,
+           (July 2011)   NEXUS-397, QGSJET01C, QGSJET-II-3, SIBYLL-2.1,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.510)
+------------------------------------------------------------------------
+        Various bug corrections affecting the CURVED option.
+        Add CURVOUT option to replace FLATOUT and use F (=FLATOUT T) as
+        default because for CURVOUT F the coordinates X and Y as to be
+        used in a different way compared to before (see User Guide).
+------------------------------------------------------------------------
+
+Version 6.980                      (coupled with DPMJET-II.55, EPOS-199,
+           (April 2011)   NEXUS-397, QGSJET01C, QGSJET-II-3, SIBYLL-2.1,
+      VENUS4.12/5, FLUKA2011, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.510)
+------------------------------------------------------------------------
+        Update link to FLUKA to be compatible with FLUKA 20011.2
+        (not compatible anymore with FLUKA 2008 !)
+	Update to IGRF11
+        Update EHISTORY option to get mother and grand-mother hadrons of 
+        electromagnetic particles and with THIN option
+        Update to use inclined observer plane using COAST
+        Bernlohr package 1.44
+        Various small bug corrections
+------------------------------------------------------------------------
+
+Version 6.971                      (coupled with DPMJET-II.55, EPOS-199,
+           (April 2011)   NEXUS-397, QGSJET01C, QGSJET-II-3, SIBYLL-2.1,
+      VENUS4.12/5, FLUKA2008, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.510)
+------------------------------------------------------------------------
+        Bug correction concerning simulations with VENUS or EPOS with a
+        nucleus as projectile
+------------------------------------------------------------------------
+
+Version 6.970                      (coupled with DPMJET-II.55, EPOS-199,
+           (July 2010)   NEXUS-397, QGSJET01C, QGSJET-II-3, SIBYLL-2.1,
+      VENUS4.12/5, FLUKA2008, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.510)
+------------------------------------------------------------------------
+        New option TAULEP added which enables treatment of tau leptons
+        with all interaction codes, the decay of tau leptons is handled
+        with the PYTHIA package.
+        Updated DPMJET II.55 package to avoid hungup at high energies
+        (negative square root).
+	Added new DATDIR steering card feature. It can be used to point 
+	CORSIKA to the directory where all input data tables are stored.
+        Bernlohr package 1.43
+------------------------------------------------------------------------
+
+Version 6.960                      (coupled with DPMJET-II.55, EPOS-199,
+           (March 2010)  NEXUS-397, QGSJET01C, QGSJET-II-3, SIBYLL-2.1,
+      VENUS4.12/5, FLUKA2008, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.510)
+------------------------------------------------------------------------
+        Introduction of new subroutine MUPAIR to treat the production
+        of mu+mu- pairs with correct form factors, which increases the
+        cross section for gamma ---> mu+mu- by about a factor 2. In the
+        formation the angles theta between incoming gamma direction and
+        outgoing muons come out considerably larger (factor 2 to 5).
+        New data sets EGSDAT6... are needed for the new MUPAIR routine.
+        New FLATOUT option with CURVED to save particles on curved Earth 
+        surface.
+------------------------------------------------------------------------
+
+Version 6.950                      (coupled with DPMJET-II.55, EPOS-199,
+           (May 2009)     NEXUS-397, QGSJET01C, QGSJET-II-3, SIBYLL-2.1,
+      VENUS4.12/5, FLUKA2008, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.510)
+------------------------------------------------------------------------
+       Introduction of new option EHISTORY to write out grandmother and
+       mother particle parameters of muons using the MUADDI key word.
+------------------------------------------------------------------------
+
+Version 6.900                      (coupled with DPMJET-II.55, EPOS-199,
+(released April 2009)     NEXUS-397, QGSJET01C, QGSJET-II-3, SIBYLL-2.1, 
+      VENUS4.12/5, FLUKA2008, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.510)
+------------------------------------------------------------------------
+        Replacement of EPOS-161 by EPOS 199 and Bernlohr package 1.35
+        by 1.41 (IACT)
+        New installation tool "coconut" to replace ./corsika-install
+        (proper use of GNU autotools)
+------------------------------------------------------------------------
+
+Version 6.760                      (coupled with DPMJET-II.55, EPOS-161,
+        (Oct. 2008)       NEXUS-397, QGSJET01C, QGSJET-II-3, SIBYLL-2.1, 
+      VENUS4.12/5, FLUKA2008, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.510)
+------------------------------------------------------------------------
+        Introduction of new option CHARM to explicitely treat charmed
+        hadrons produced in QGSJET01c or in DPMJET-II.55; for combining
+        CHARM with QGSJET01c a link of the PYTHIA package is necessary.
+        Also tau leptons and tau-neutrinos may be treated with this 
+        option.
+------------------------------------------------------------------------
+
+Version 6.735                      (coupled with DPMJET-II.55, EPOS-161,
+(released Jun 2008)       NEXUS-397, QGSJET01C, QGSJET-II-3, SIBYLL-2.1, 
+      VENUS4.12/5, FLUKA2006, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.510)
+------------------------------------------------------------------------
+        Bug correction in STACKIN with maximum weight 
+        (not effective in previous version)
+        Small bug for horizontal showers with UPWARD (not sarting) and
+        in definition of EVTH(8) and EVTH(9) with CURVED
+	Problem with cross section of light fragments produced by FLUKA
+	solved
+	Correction of ARRANG definition
+	Correction for installation with pgf77
+	(many thanks to all the users who kindly help us to detect this
+	bugs)
+------------------------------------------------------------------------
+
+Version 6.720                      (coupled with DPMJET-II.55, EPOS-161,
+(released Jan 2007)       NEXUS-397, QGSJET01C, QGSJET-II-3, SIBYLL-2.1, 
+      VENUS4.12/5, FLUKA2006, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.510)
+------------------------------------------------------------------------
+        Bug correction in SIBYLL initialization (direct crash)
+	Bug correction for rare crash with EPOS (no change in results)
+------------------------------------------------------------------------
+
+Version 6.710                      (coupled with DPMJET-II.55, EPOS-161,
+(released Nov 2007)       NEXUS-397, QGSJET01C, QGSJET-II-3, SIBYLL-2.1, 
+      VENUS4.12/5, FLUKA2006, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.510)
+------------------------------------------------------------------------
+        Various bug corrections (especially for UPWARD going shower, no
+        problem if running, but leads to crash).
+	Updated link to COAST.
+	New Hadronic Generation counter.
+------------------------------------------------------------------------
+
+Version 6.616                      (coupled with DPMJET-II.55, EPOS-161,
+(released Jun 2007)       NEXUS-397, QGSJET01C, QGSJET-II-3, SIBYLL-2.1, 
+      VENUS4.12/5, FLUKA2006, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.510)
+------------------------------------------------------------------------
+        Bug in energy deposition (hadron/neutrino part) corrected
+	(only without THIN option and small correction for usual
+	threshold of hadronic particles)
+------------------------------------------------------------------------
+
+Version 6.611                      (coupled with DPMJET-II.55, EPOS-161,
+(released May 2007)       NEXUS-397, QGSJET01C, QGSJET-II-3, SIBYLL-2.1, 
+      VENUS4.12/5, FLUKA2006, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.510)
+------------------------------------------------------------------------
+        Tiny bug correction in STACKIN+SLANT options and for Tau 
+	neutrinos with DPMJET.
+	update of EPOS to improve stability (no change in results from
+	1.60 to 1.61 (to be called version 1.6)).
+------------------------------------------------------------------------
+
+Version 6.600                      (coupled with DPMJET-II.55, EPOS-160,
+(released Apr 2007)       NEXUS-397, QGSJET01C, QGSJET-II-3, SIBYLL-2.1, 
+      VENUS4.12/5, FLUKA2006, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.510)
+------------------------------------------------------------------------
+        Official version of EPOS(1.6) fully coupled to CORSIKA
+    (bug corrected in NEXUS/EPOS linked for charge conservation).
+        Bug in SLANT eliminated to get correct ANAHIST histograms.
+	Modifications in muon interactions (pair production accelerated)
+        and ionization energy loss (including density effect)
+------------------------------------------------------------------------
+
+Version 6.535                      (coupled with DPMJET-II.55, EPOS-135,
+(not released Nov 2006)   NEXUS-397, QGSJET01C, QGSJET-II-3, SIBYLL-2.1, 
+      VENUS4.12/5, FLUKA2006, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.510)
+------------------------------------------------------------------------
+        Preliminary version of EPOS(1.35) fully coupled to CORSIKA
+    (including documentation).
+        Debug output of UrQMD commented off.
+	New version of FLUKA (2006.3) can be linked (still compatible 
+    with FLUKA 2005.6)
+        Bug in SLANT eliminated to get energy balance of last SLANT bin
+    correctly.
+------------------------------------------------------------------------
+
+Version 6.517                    (coupled with DPMJET-II.55, NEXUS-397,
+(not released Juli 2006)            QGSJET01C, QGSJET-II-3, SIBYLL-2.1, 
+    VENUS4.12/5,FLUKA2005.6, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.510)
+------------------------------------------------------------------------
+        Partial reprogramming of SLANT for correct combination with
+    CURVED and UPWARD and CURVED&UPWARD including skimming incidence.
+        Energy deposit of pi+-, K+- and K^0 now distributed over
+    hadronic deposit and neutrino deposit.
+        HERWIG coupling for NUPRIM modified according with O. Pisanti.
+    Also transport of neutrinos in UPDATC improved.
+------------------------------------------------------------------------
+
+Version 6.501                    (coupled with DPMJET-II.55, NEXUS-397,
+(released June 20, 2006)            QGSJET01C, QGSJET-II-3, SIBYLL-2.1, 
+    VENUS4.12/5,FLUKA2005.6, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.510)
+------------------------------------------------------------------------
+        Bug in SIBYLL coupling (missing transverse momentum in 
+    hadron-induced collision) eliminated.
+------------------------------------------------------------------------
+
+Version 6.500                    (coupled with DPMJET-II.55, NEXUS-397,
+(released March 6, 2006)            QGSJET01C, QGSJET-II-3, SIBYLL-2.1, 
+    VENUS4.12/5,FLUKA2005.6, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.510)
+------------------------------------------------------------------------
+	Official release v6.500 (SVN repository 100). Large improvements 
+    have been made in CURVED+UPWARD options to make them much more 
+    reliable and stable. 
+------------------------------------------------------------------------
+
+Version 6.497                    (coupled with DPMJET-II.55, NEXUS-397,
+(not released Feb 2006)             QGSJET01C, QGSJET-II-3, SIBYLL-2.1, 
+    VENUS4.12/5,FLUKA2005.6, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.510)
+------------------------------------------------------------------------
+	A time limit is introduced (keyword TIMLIM) in the CURVED version
+    to cut away particles to be scattered around and consuming unnecessary 
+    computing time.  The argument of TIMLIM is the distance the particle 
+    may be followed downstream before being cutted.
+------------------------------------------------------------------------
+
+Version 6.450                    (coupled with DPMJET-II.55, NEXUS-397,
+(not released Feb 2006)             QGSJET01C, QGSJET-II-3, SIBYLL-2.1, 
+    VENUS4.12/5,FLUKA2005.6, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.510)
+------------------------------------------------------------------------
+	Several smaller improvements have been made in the combination of
+    the options CURVED with UPWARD within routines UPDATC and UPDATE to 
+    avoid that particles run out of the atmospheric region. 
+	The angle addition routines ADDANG3 and ADDANG4 have been improved 
+    by a fast renormalization to avoid that the direction cosines become 
+    unnormalized (otherwise their square sum becomes > 1 and causes 
+    unpredictable errors).
+------------------------------------------------------------------------
+
+Version 6.400                    (coupled with DPMJET-II.55, NEXUS-397,
+(not released Dec 2005)QGSJET01C, QGSJET-II-2, SIBYLL-2.1, VENUS4.12/5,
+                FLUKA2005.6, GHEISHA_2002d, URQMD_1.3cors, HERWIG6.510)
+------------------------------------------------------------------------
+	New installation process without CMZ (GNU-like).  CMZ is not needed 
+    any more.  A shell script "corsika-install" is used to properly call 
+    ./configure to install the binary file of CORSIKA in the run/ 
+    subdirectory.
+	CURVED and UPWARD options can now be used together allowing any 
+    zenith angle also for hadrons.
+	The new ROOTOUT option is available and distributed with the COAST 
+    package to get the CORSIKA output in a .root file.
+	The new PLOTSH2 option allows to visualize air showers with .png 
+    files (thanks to the C-program "map2png"). 
+	The new CERWLEN option includes the wavelength dependent generation 
+    of Cherenkov photons and respects their wavelength dependent 
+    refraction within the atmosphere. 
+	FLUKA 2005.6 is now linked to CORSIKA.  
+	QGSJET-II(-03) and NEXUS-397 are now officially distributed with 
+    CORSIKA.
+	Bernloehr package v1.34 included.
+------------------------------------------------------------------------
+
+Version 6.328          (coupled with DPMJET-II.55, NEXUS-03, QGSJET01C,
+(not released, Nov. 2005)           QGSJET-II, SIBYLL-2.1, VENUS4.12/5,
+                    FLUKA2002, GHEISHA_2002d, URQMD_1.3c, HERWIG_6.400)
+------------------------------------------------------------------------
+	Within the routine FILOPN the statements for opening the
+    PLOTSH files were misplaced which truncated the file names. Replacing
+    the OPEN statements corrects this.
+        The PLOTSH plotting of track segments of primary em-particles before
+    the first interaction is now prohibited except for setting of TMARGIN
+    by key word TSTART.
+        To implement the skimming entrance of primary particles the new
+    keyword IMPACT has been introduced. The minimal altitude of the shower
+    with horizontal movement is selected at random with uniform
+    distribution between HIMPACT(1) and HIMPACT(2). Within the routine
+    INPRM the primary parameter THETAP is derived from the minimal height
+    HIMPCT of the shower axis above sea level.
+        For Linux CMZ installation without the default name cmcc.c for
+    extracted C-language routines a CMZ command has been added to the deck
+    'make' deck to guarantee this name cmcc.c .
+------------------------------------------------------------------------
+
+Version 6.322          (coupled with DPMJET-II.55, NEXUS-03, QGSJET01C,
+(not released, Sept 2005)           QGSJET-II, SIBYLL-2.1, VENUS4.12/5,
+                    FLUKA2002, GHEISHA_2002d, URQMD_1.3c, HERWIG_6.400)
+------------------------------------------------------------------------
+	The longitudinal distribution of Cherenkov photons has been
+    improved avoiding jumps in the distribution when the step of a charged
+    particle is interrupted by the passage of an observation level.
+    This implies a complet rewriting of CERLDE and eliminating CERLHA,
+    affected are also $CEREN2 and CERENK.
+        For the THIN option the PLOTSH output files have been extended to
+    contain the particle weight for each track segment.
+        The option PLOTSH2 developed at Leeds by F. Schmidt has been taken
+    over and adapted for compatibility with all interesting other
+    options available.
+        Many modifications have been made to enable a combination of the
+    options CURVED with UPWARD to cover the whole zenith angular range.
+    Routines essentially affected are AAMAIN,COOINC,DATAC,INPRM,
+    PRANGC,THICKC,UPDATC,UPDATE,ELECTR,HOWFAR,PHOTON.
+------------------------------------------------------------------------
+
+Version 6.321          (coupled with DPMJET-II.55, NEXUS-03, QGSJET01C,
+(not released, Aug 2005)           QGSJET-II, SIBYLL-2.1, VENUS4.12/5,
+                    FLUKA2002, GHEISHA_2002d, URQMD_1.3c, HERWIG_6.400)
+------------------------------------------------------------------------
+	For em-primaries the timer was started in the curved version
+    erroneously at the first interaction instead at the top of atmosphere.
+    This is now cured.
+------------------------------------------------------------------------
+
+Version 6.311          (coupled with DPMJET-II.55, NEXUS-03, QGSJET01C,
+(not released, June 2005)           QGSJET-II, SIBYLL-2.1, VENUS4.12/5,
+                    FLUKA2002, GHEISHA_2002d, URQMD_1.3c, HERWIG_6.400)
+------------------------------------------------------------------------
+	In the HERWIG link accidentally the random sequence # 1 was used
+    instead of the correct one # 5.
+        The thinning of hadronic particles coming from EGS4 is revised.
+    Consequently their thinning is performed only in TSTEND which implies
+    the elimination of THIN2 and a renaming of routine MPPROP to the
+    simplified routine MUPROP. Also routine SHOWER is affected.
+        The energy loss of charged particles by ionization is calculated
+    more precisely taking into account the maximum transferable energy to
+    electrons, which gives an additional term
+    - 0.5D0 * LOG(1.D0 + 2.D0 * GAM * RATM + RATM**2)
+    with RATM = M_elec/M_hadr
+------------------------------------------------------------------------
+
+Version 6.308          (coupled with DPMJET-II.55, NEXUS-03, QGSJET01C,
+(not released, May  2005)           QGSJET-II, SIBYLL-2.1, VENUS4.12/5,
+                     FLUKA2002, GHEISHA_2002, URQMD_1.3c, HERWIG_6.400)
+------------------------------------------------------------------------
+	The possibility to select the cross sections independently from
+    the interaction model is not reasonable. Therefore the options
+    DPMJETSIG, NEXUSSIG, QGSSIG, SIBYLLSIG, and VENUSSIG have been
+    eliminated. The essential reason for this actions is a considerable
+    simplification of the nesting of the CMZ optional code for easier
+    maintenance of the program.
+------------------------------------------------------------------------
+
+Version 6.307          (coupled with DPMJET-II.55, NEXUS-03, QGSJET01C,
+(not released, Apr, 2005)           QGSJET-II, SIBYLL-2.1, VENUS4.12/5,
+                     FLUKA2002, GHEISHA_2002, URQMD_1.3c, HERWIG_6.400)
+------------------------------------------------------------------------
+	The GHEISHA link routines have totally been converted to double
+    precision in all REAL variables, so a linking with the double precision
+    version of GHEISHA2002d is necessary.
+        The QGSJET II-1 has been replaced by QGSJET II-2 and the QGS-link
+    routines adapted to the more advanced version (COMMON qgarr54/qgarr55).
+        In the case of thinning the weights of gamma-induced moun pairs,
+    rho and omega-mesons or single pions (emerging from low-energy pion
+    production) had been calculated too high. This bug in routine
+    THIN2 is now cured.
+------------------------------------------------------------------------
+
+Version 6.306          (coupled with DPMJET-II.55, NEXUS-03, QGSJET01C,
+(not released, Apr, 2005)           QGSJET-II, SIBYLL-2.1, VENUS4.12/5,
+                     FLUKA2002, GHEISHA_2002, URQMD_1.3c, HERWIG_6.400)
+------------------------------------------------------------------------
+	In the PRESHOWER version the arrival times of the particles had been
+    incompatible with the altitude of the first interaction (by conversion
+    above the atmosphere). This is now cured.
+------------------------------------------------------------------------
+
+Version 6.305          (coupled with DPMJET-II.55, NEXUS-03, QGSJET01C,
+(not released, Feb, 2005)           QGSJET-II, SIBYLL-2.1, VENUS4.12/5,
+                     FLUKA2002, GHEISHA_2002, URQMD_1.3c, HERWIG_6.400)
+------------------------------------------------------------------------
+	The updated interaction model QGSJET II-1 has been coupled with
+    modifications of the QGSJET link routines. QGSDAT01 is replaced by
+    qgsdat-II, SECTNU is replaced by sectnu-II.
+        To avoid a 'floating exception' in BOX2 by converting a value of
+    CHI > 2.E9, the size of CHI is limited to 2.e9.
+        The treatment of muon nuclear interaction and continuous energy
+    loss of muons by nuclear interactions is corrected. Up to now both
+    processes have been respected simultaneously which gave a too large
+    energy loss of the muons. Now the the hadronic cutting energy is
+    taken as transition energy (lower rsp. upper boundary for DADMUL
+    integration) between both processes. Affected routines are DNIELM
+    and DNUSGM.
+------------------------------------------------------------------------
+
+Version 6.304                     (coupled with DPMJET-II.55, NEXUS-03,
+(not released, Jan, 2005)           QGSJET01C, SIBYLL-2.1, VENUS4.12/5,
+                      FLUKA2002, GHEISHA_2002, URQMD_1.3c, HERWIG_6.400)
+------------------------------------------------------------------------
+	The option `upward' has been extended to hadronic and muonic
+    particles, also in combination with `slant', but not yet in combination
+    with `curved'.  Affected routines are AAMAIN, BOX2, BOX3, DATAC, INPRM,
+    MUTRAC, PRANGE, and UPDATE.
+        Some smaller inconsistencies in the energy balance caused by
+    upward going particles in upward going showers (leaving the atmosphere)
+    have been corrected in HOWFAR.
+------------------------------------------------------------------------
+
+Version 6.303                  (coupled with DPMJET-II.55, NEXUS-02/03,
+(not released, Nov, 2004)           QGSJET01C, SIBYLL-2.1, VENUS4.12/5,
+                      FLUKA2002, GHEISHA_2002, URQMD_1.3c, HERWIG_6.400)
+------------------------------------------------------------------------
+	The structure of the particle arrays CURPAR, SECPAR, PRMPAR, OBSPAR
+    has been mofified to introduce 3 direction cosines instead of the
+    COSTHE and PHI. The advantage is an easier handling of horizontally
+    and upward going particles (3 directional cosines are used in the EGS
+    portion of CORSIKA since ever). The particle identfication is now
+    contained within CURPAR(0), the gamma factor (resp. energy) within
+    CURPAR(1), the direction cosine in z-direction in CURPAR(2), the new
+    direction cosines PHIX and PHY are stored in CURPAR(3) and CURPAR(4).
+    Two new routines ADDANG3 and ADDANG4 for angle addition replace in
+    most cases the former angle addition routine ADDANG. Therefore many
+    minor modifications have been necessary.
+        All masses, decay constants, branching ratios etc. have been
+    updated according with the Particle Data Group edition 2004.
+------------------------------------------------------------------------
+
+Version 6.302                  (coupled with DPMJET-II.55, NEXUS-02/03,
+(not released, Oct, 2004)           QGSJET01C, SIBYLL-2.1, VENUS4.12/5,
+                      FLUKA2002, GHEISHA_2002, URQMD_1.3c, HERWIG_6.400)
+------------------------------------------------------------------------
+        The electronuclear interaction has been added to the EGS routines.
+    This effects essentially the routine ELECTR and some commons.
+    A new routine ELNUCL treats this interaction. The cross section and
+    branching ratio files EGSDAT are renamed to EGSDAT5_x.x  to make the
+    difference in the data structure visible in the name.
+        The updated low-energy interaction program UrQMD 1.3c is now linked.
+    This update improves the CPU time by a factor 15
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+   Starting from version 6200, most of the improvements up to
+ version 63xx have been taken over as soon as they became known.
+========================================================================
+   For the THIN option the PLOTSH output files have been extended to
+   contain the particle weight for each track segment.
+   Within the routine FILOPN the statements for opening the
+   PLOTSH files were misplaced which truncated the file names. Replacing
+   the OPEN statements corrects this.
+------------------------------------------------------------------------
+
+Version 6.204                  (coupled with DPMJET-II.55, NEXUS-02/03,
+(released, June.15, 2005)           QGSJET01C, SIBYLL-2.1, VENUS4.12/5,
+                      FLUKA2002, GHEISHA_2002, URQMD_1.3, HERWIG_6.400)
+------------------------------------------------------------------------
+   In the combination of options PRESHOWER and CURVED the azimuth angle
+   PHI was not set correctly for the primary momenta component calculation
+   to be used in the eventheaders EVTH(8), EVTH(9) and EVTH(12).
+   In the HERWIG link accidentally the random sequence # 1 was used
+   instead of the correct one # 5.
+   To ensure a correct linking of CORSIKA with qgsjet01c.f the name
+   of the subroutine PSASET has been modified into PSASETC in corsika6204
+   as well as in qgsjet01.c. This avoids an accidental combination of
+   corsika6204 (unpacked for qgsjet01c.f) with the older qgsjet01.f
+   which works without crash, but delivers strange results.
+------------------------------------------------------------------------
+
+Version 6.203                  (coupled with DPMJET-II.55, NEXUS-02/03,
+(released, Apr.19, 2005)            QGSJET01C, SIBYLL-2.1, VENUS4.12/5,
+                      FLUKA2002, GHEISHA_2002, URQMD_1.3, HERWIG_6.400)
+------------------------------------------------------------------------
+  In the case of thinning the weights of gamma-induced moun pairs,
+  rho and omega-mesons or single pions (emerging from low-energy pion
+  production) had been calculated too high. This bug in routine
+  THIN2 is now cured.
+------------------------------------------------------------------------
+
+Version 6.202                  (coupled with DPMJET-II.55, NEXUS-02/03,
+(released, Apr.04, 2005)            QGSJET01C, SIBYLL-2.1, VENUS4.12/5,
+                      FLUKA2002, GHEISHA_2002, URQMD_1.3, HERWIG_6.400)
+------------------------------------------------------------------------
+   In the PRESHOER version the arrival times of the particles had been
+   incompatible with the altitude of the first interaction (by conversion
+   above the atmosphere). This is now cured.
+------------------------------------------------------------------------
+
+Version 6.201                  (coupled with DPMJET-II.55, NEXUS-02/03,
+(released, Mar.22, 2005)            QGSJET01C, SIBYLL-2.1, VENUS4.12/5,
+                      FLUKA2002, GHEISHA_2002, URQMD_1.3, HERWIG_6.400)
+------------------------------------------------------------------------
+   Some smaller inconsistencies in the energy balance caused by
+   upward going particles in upward going showers (leaving the atmosphere)
+   have been corrected in HOWFAR.
+   The treatment of muon nuclear interaction and continuous energy
+   loss of muons by nuclear interactions is corrected. Up to now both
+   processes have been respected simultaneously which gave a too large
+   energy loss of the muons. Now the the hadronic cutting energy is
+   taken as transition energy (lower rsp. upper boundary for DADMUL
+   integration) between both processes. Affected routines are DNIELM
+   and DNUSGM.
+------------------------------------------------------------------------
+
+Version 6.200                     (coupled with DPMJET-II.55, NEXUS-03,
+(released, Oct. 06, 2004)           QGSJET01C, SIBYLL-2.1, VENUS4.12/5,
+                       FLUKA2002, GHEISHA_2002, URQMD_1.3, HERWIG6.400)
+------------------------------------------------------------------------
+   A bug in the SLANT option has been eliminated by modification of
+   function THCKSI to guarantee a value within the allowed range
+   0 =< THCKSI =< TSLANT(IENDT).
+   The interactiontest is extended to get a 2-dim histogram for
+   P_t vs. rapidity to verify experimental p_t data.
+   The initialization LNGHSTINI of the longitudinal histograms in the
+   ANAHIST version is now separated form the filling routine LONGIHIST.
+   The link routines of DPMJET, QGSHET, SIBYLL and VENUS have been 
+   modified in a manner to suppress diffractive events in the case of 
+   photonuclear interaction. A corresponding modification of NEXUS-link 
+   is not possible as the diffraction is permanent in NEXUS. In HDPM the
+   diffraction is anyway switched off for photo-nuclear interactions.
+   The high-energy extrapolation of the photonuclear cross sections 
+   has been modified, replacing the old Gaisser(1985) parametrization by
+   the recent Cudell parametrization (given by the Particle Data Group).
+   This affects only the data sets EGSDAT, which are now renamed to 
+   EGSDAT4_x.x .
+------------------------------------------------------------------------
+
+Version 6.182                     (coupled with DPMJET-II.55, NEXUS-03,
+(not released, July 2004)           QGSJET01C, SIBYLL-2.1, VENUS4.12/5,
+                       FLUKA2002, GHEISHA_2002, URQMD_1.3, HERWIG6.400)
+------------------------------------------------------------------------
+   The UrQMD link has been totally renewed and simplified. It is now
+   adapted to the UrQMD version 1.3.
+   The longitudinal particle distribution has been extended to get 
+   the distributions for a series of hadronic particle species separately
+   (nucleon, charged nucleon, uncharged nucleon, charged pion, charged 
+   Kaon, K0l, K0s, neutral Kaon).
+   A clean-up of the Auger histograming routines has been made to 
+   eliminate unnecessary calculations. The size of some histograms is
+   reduced to reasonable values, some new histograms (releasable energy 
+   vs. dist.) are defined. The new particle longitudinal distributions
+   are also available as histograms. A list of the used histograms is 
+   now printed in the standard output.
+   The linking of the PRESHOWER routines is improved to enable their
+   use in combination with CURVED and/or SLANT.
+   The PRESHOWER routines have been modified to get rid of routines
+   from 'Numerical Recepies'. The Bessel function is now a specialized
+   version of CERN mathlib routine DBSKA.
+   Erroneously in the PRESHOWER option the EVTH block was not written 
+   to the output particle file. This is now cured.
+   The energy cut ELCUT(4) up to now exclusively used for gammas
+   is now used also for the pi(0) energy cut.
+   In the CERENKOV+CURVED option a serious bug concerning the 
+   refractive time correction in the last altitude bin has been 
+   eliminated. For easier maintenance the arrays DISTEF and TOF have
+   been redefined with shifted indices (now starting at 0).
+   In the upward version without setting FIXHEI the number of 
+   longitudinal steps always was set to reach sea level. This is
+   now corrected.
+------------------------------------------------------------------------
+
+Version 6.176                      (coupled with VENUS4.12/5, NEXUS-03,
+(not released, Feb  2004)          SIBYLL-2.1, QGSJET01C, DPMJET-II.55,
+                         GHEISHA_2002, FLUKA2002, URQMD_1, HERWIG6.400)
+------------------------------------------------------------------------
+   The continuous energy loss by muon nuclear interaction is now added
+   according to Bottai & Perrone, which needs changements within MUPINI
+   and adding the routines DNIELM and VPHL. The muon interaction routines 
+   MUBREM, MUPRPR, and MUNUCL are now improved in so far as after a very 
+   long muon transport step (occurring at  very inclined showers) the cross
+   section is checked again, and the interaction is skipped eventually.
+   In the calculation of the energy deposit of deuterons, tritons and 
+   alpha particles within subroutine CGHEI the rest mass was taken with a
+   faulty particle identifier. This is now corrected.
+   If a muon undergoes nuclear interaction  the remaining muon with 
+   reduced energy was not written correctly to stack and therefore lost. 
+   This is now cured.
+   The name conventions of the PLOTSH output files has been changed
+   to DATnnnnnn.track_em, DATnnnnnn.track_mu, and DATnnnnnn.track_hd,
+   which are written to the directory specified by DIRECT.
+   Some COMMON arrays of QGSJET have been enlarged to get the 
+   correct high multiplicity of Fe-air collisions without limitations
+   by array sizes even at 10^20 eV. The modified qgsjet is renamed 
+   to qgsjet01c.f. In the make file for the CMZ-selection a suitable 
+   option is provided to get the modifications in the qgsjet link 
+   routines with the enlarged COMMON block AREA14.
+------------------------------------------------------------------------
+
+Version 6.175                      (coupled with VENUS4.12/5, NEXUS-03,
+(not released, Jan  2004)           SIBYLL-2.1, QGSJET01, DPMJET-II.55,
+                         GHEISHA_2002, FLUKA2002, URQMD_1, HERWIG6.400)
+------------------------------------------------------------------------
+   A severe bug has been detected: The modified Bottai&Perrone 
+   routines treating the muon interactions (bremsstrahlung, pair 
+   production and nuclear interactions) give the cross sections in barn, 
+   while the CORSIKA routine BOX2 needs it in millibarn. 
+   The more frequent treatment of muonic interactions may lead to 
+   endless rejection loops within the routines MUBREM, MUPRPR and 
+   MUNYUCL. This is now prevented/controlled by rejection loop counters.
+------------------------------------------------------------------------
+
+Version 6.173                      (coupled with VENUS4.12/5, NEXUS-03,
+(not released, Jan  2004)           SIBYLL-2.1, QGSJET01, DPMJET-II.55,
+                         GHEISHA_2002, FLUKA2002, URQMD_1, HERWIG6.400)
+------------------------------------------------------------------------
+   A new option STACKIN has been implemented. By reading in the
+   parameters (type, energy, momenta) of secondary particles emerging from 
+   an interaction of any exotic primary the resulting shower is simulated. 
+   The altitude of this interaction has to be specified by FIXHEI.
+------------------------------------------------------------------------
+
+Version 6.172                      (coupled with VENUS4.12/5, NEXUS-03,
+(not released, Dec  2003)           SIBYLL-2.1, QGSJET01, DPMJET-II.55,
+                         GHEISHA_2002, FLUKA2002, URQMD_1, HERWIG6.400)
+------------------------------------------------------------------------
+   A new option SLANT is introduced which enables the production of
+   longitudinal distributions at slant depth (replacing the vertical 
+   depth distributions of the standard case). This needs some new 
+   subroutines and functions: DGAUSS, PATHSI, RHOSL, THCKSI, THCKSL.
+   In a first the option SLANT cannot yet combined with option UPWARD.
+   Some smaller inconsistencies (negative rest mass for antinucleons,
+   etc. ..) have been corrected.
+------------------------------------------------------------------------
+
+Version 6.163                      (coupled with VENUS4.12/5, NEXUS-03,
+(not released, Oct  2003)           SIBYLL-2.1, QGSJET01, DPMJET-II.55,
+                         GHEISHA_2002, FLUKA2002, URQMD_1, HERWIG6.400)
+------------------------------------------------------------------------
+   The finalized preshower C-routines are now available in the patch
+   PRESHOWER together with the IGRF Fortran routine to calculate the
+   magnetic dipole field of the Earth. Smaller modifications have been 
+   applied to subroutine PRESHO for a correct linking of these routines.
+------------------------------------------------------------------------
+
+Version 6.162                      (coupled with VENUS4.12/5, NEXUS-03,
+(not released, Sept 2003)           SIBYLL-2.1, QGSJET01, DPMJET-II.55,
+                         GHEISHA_2002, FLUKA2002, URQMD_1, HERWIG6.400)
+------------------------------------------------------------------------
+   A serious bug in the constants used within the LPM routine 
+   LPMEFFECT has been corrected. For gamma-induced showers this lowers
+   the onset energy by about the factor 2.
+   The upward option within the EGS routines has been extended to 
+   enable a combination of upward with curved.
+------------------------------------------------------------------------
+
+Version 6.156                      (coupled with VENUS4.12/5, NEXUS-03,
+(not released, July 2003)           SIBYLL-2.1, QGSJET01, DPMJET-II.55,
+                         GHEISHA_2002, FLUKA2002, URQMD_1, HERWIG6.400)
+------------------------------------------------------------------------
+   Erroneously the energy deposited at the detector level by electrons
+   and photons was counted twice (within ELECTR/PHOTON and additionally
+   within OUTPT1). This is now corrected.
+   The FLUKA link routines have been extended to include the 
+   include files of the Linux version with the correct name which is 
+   included in brackets. The make file respects now the Linux version.
+------------------------------------------------------------------------
+
+Version 6.155                      (coupled with VENUS4.12/5, NEXUS-03,
+(not released, July 2003)           SIBYLL-2.1, QGSJET01, DPMJET-II.55,
+                         GHEISHA_2002, FLUKA2002, URQMD_1, HERWIG6.400)
+------------------------------------------------------------------------
+   Five new atmosphere parametrizations have been implemented:
+   Four for different seasons at Malargue, Argentina (Pierre Auger 
+   Observatory), and one as a new parametrizations of the U.S. standard
+   atmosphere, all parametrized by B. Keilhauer.
+   Small inconsistencies in the FLUKA link have been removed.
+   The unallowed leading tilde in a dataset name is now checked.
+------------------------------------------------------------------------
+
+Version 6.154                      (coupled with VENUS4.12/5, NEXUS-03,
+(not released, June 2003)           SIBYLL-2.1, QGSJET01, DPMJET-II.55,
+                         GHEISHA_2002, FLUKA2002, URQMD_1, HERWIG6.400)
+------------------------------------------------------------------------
+   The treatment of muonic interactions has been completely revised
+   by adapting the routines of Bottai and Perrone to the CORSIKA 
+   program. New or significantly changed routines comprise: 
+   CBRSGM, CDEDXM, CNUSGM, CPRSGM, DADMUL, DBRELM, DBRSGM, DGQUAD, 
+   DKOKOE, DKOKOI, DKOKOS, DNUSGM, DPRELM, DPRSGM, MUBREM, MUNUCL, 
+   MUPINI, MUPRPR, PPCE, PPCS, VBSE, VBSS, and VPHM.
+   Major changes concern the cross-sections at muon energies
+   exceeding 100 TeV, the sampling of muon-produced e+e- pairs,
+   and the muon nuclear interactions. The latter makes use of the 
+   EGS routines PIGNE, PIGEN1, PIGEN2 ...  Therefore now always 
+   two seeds have to be usd. To initialize the EGS-parameters
+   without reading the EGSDAT file the EGSINI routine is split into
+   EGSIN1 (setting the parameters) and EGSIN2 (reading EGSDAT file).
+   The energy loss of muons by Bremsstrahlung and pair production below
+   the energy cut is now included in PRANGC, PRANGE, and UPDATE.
+   Using the FLUKA option to avoid confusions when starting several 
+   jobs at a time from the same directory, the FLUKA output files 
+   (fort.11 and fort.15)  may now be redirected to /dev/null or to  
+   files called DATnnnnnn.flout and DATnnnnnn.flerr to be written to 
+   the same directory as the particle output file.  This redirection
+   is steered by the keyword FLUDBG.  This required a separation of the 
+   OPEN statements from the subroutine INPRM into a new routine FILOPN, 
+   which is called from START after reading the NUCNUCCS cross sections.
+   To enable the correct treatment at the highest energies above 
+   10^20 eV with extreme high secondary particle numbers some array 
+   dimensions should be enlarged.  Index overflow of those arrays is now 
+   controlled (error stop), the arrays easily may be redimensioned by 
+   modifying the parameters for defining the array sizes. 
+------------------------------------------------------------------------
+
+Version 6.150                      (coupled with VENUS4.12/5, NEXUS-03,
+(not released, May 2003)            SIBYLL-2.1, QGSJET01, DPMJET-II.55,
+                          GHEISHA_2002, FLUKA2002, URQMD_1,HERWIG6.400)
+------------------------------------------------------------------------
+   A new option NUPRIM is added to treat primary neutrinos. The first
+   interaction is treated with HERWIG, which must be coupled for this
+   purpose. This implied a renaming of CORINC into COOINC.
+   The new random generator has been improved at those routines where 
+   only single precision random numbers are used (to prevent random 
+   numbers becoming 0. or 1.). Consequently the name has been changed
+   to RMMARD.
+------------------------------------------------------------------------
+
+Version 6.146                      (coupled with VENUS4.12/5, NEXUS-03,
+(not released, March 2003)          SIBYLL-2.1, QGSJET01, DPMJET-II.55,
+                                    GHEISHA_2002, FLUKA, URQMD_1)
+------------------------------------------------------------------------
+   A new random generator RMMARD with ENTRY RMMAQD is now used 
+   throughout within CORSIKA and the coupled interaction models. 
+   This generator combines the multi-sequences of RMMAR with the double 
+   precision feature of RM48. Tests revealed bit-identical sequences for 
+   RMMARD and RM48.
+------------------------------------------------------------------------
+
+Version 6.145                      (coupled with VENUS4.12/5, NEXUS-03,
+(not released, March 2003)          SIBYLL-2.1, QGSJET01, DPMJET-II.55,
+                                    GHEISHA_2002, FLUKA, URQMD_1)
+------------------------------------------------------------------------
+   The linking of FLUKA has been improved taking advantage of the
+   Fluka built-in direction cosines to reduce the computing times.
+   Modified neXuslink to fit with neXus3. The PNLL has been 
+   corrected in NEXLNK and VENLNK (missing beta in the formulas).
+   The PLOTSH output files are refined including now the time
+   at begin and end of each tracing segment. Therefore the parameter 
+   sequence in the PLOTSH output files is modified.
+   To adapt to various combinations of high- with low-energy hadronic
+   interaction models, the parameter HILOW may be set also for the
+   standard CORSIKA version.
+   The erroneous clipping of the specific energy loss of electrons
+   at energies below 300 keV has been eliminated. 
+   The reset of STACKINT is now performed before entering the shower
+   loop to avoid unnecessary computing times.
+------------------------------------------------------------------------
+
+Version 6.142                      (coupled with VENUS4.12/5, NEXUS-02,
+(not released, Dec. 2002)           SIBYLL-2.1, QGSJET01, DPMJET-II.55,
+                                    GHEISHA_2002, FLUKA, URQMD_1)
+------------------------------------------------------------------------
+   By some correction patches (obtained by R. E. Cassell and G. Bower,
+   SLAC) the energy conservation of GHEISHA has been improved considerably.
+   The corrected version of GHEISHA is now called GHEISHA2002.
+   Thanks to G. Battistoni and A. Ferrari (INFN, Milan) linking
+   routines to the low energy hadronic interaction routines of FLUKA could
+   be established. A link with the object code library of FLUKA is
+   necessary when using the FLUKA routines in combination with CORSIKA.
+   Because of duplicate names all CORSIKA commons have been renamed by
+   adding a "CR" at the beginning of each CORSIKA common name.
+   Also the names of some constants have been changed slightly.
+   For UrQMD the coupling of K-induced interactions has been improved 
+   taking into account the mixing of K(0) and K(0)bar to K(0)s and K(0)L.
+   The target selection within GHEISHA has been improved to enable 
+   the targets (p, 14N, 16O, 40Ar, 99air) in the INTERACTEST option.
+------------------------------------------------------------------------
+
+Version 6.138                      (coupled with VENUS4.12/5, NEXUS-02,
+(not released, Aug. 2002)           SIBYLL-2.1, QGSJET01, DPMJET-II.55,
+                                    GHEISHA_600, URQMD_1)
+------------------------------------------------------------------------
+   A new CMZ option AUGERHIST is added, which enables the generation
+   of histograms along the shower development at 20 observation level 
+   for various particle species.
+   The tables for energy deposit have been disentangled to get 
+   separately the energy deposed because of energy cut and that because
+   of angular cut and a Gaisser-Hillas fit to the ionization energy
+   deposit is performed additionally.
+   A new CMZ option UPWARD is added, which enables the transport
+   of em-particles in upward direction, i.e. no angular cut is applied.
+   This new option should not (yet) be combined with CURVED.
+   A new CMZ option ANAHIST is added, which enables the production
+   of histograms for a standard analysis without producing the
+   particle output file (by using PAROUT f x) thus saving disk space.
+   A new CMZ option PRESHOWER is added calling a C-routine package of
+   P. Homola (Uni Krakow) which simulates the generation of a gamma
+   induced preshower within the Earth's magnetic filed well above the
+   margin of the atmosphere.
+------------------------------------------------------------------------
+
+Version 6.017                      (coupled with VENUS4.12/5, NEXUS-02,
+(not released, Sept., 2002)          SIBYLL-2.1, QGSJET01,DPMJET-II.55,
+                                    GHEISHA_600, URQMD_1)
+------------------------------------------------------------------------
+   To get better numerical stability throughout the program the
+   calculation of trigonometric functions sin = sqrt(1-cos**2)
+   is mostly replaced by sin = sqrt( (1+cos)*(1-cos) ).
+   Similar replacements have been made for analogue expressions.
+   To extend CORSIKA to charmed particles the particle codes of charmed
+   mesons and baryons have been defined together with tau and 
+   tau-neutrinos in close analogy with the particle codes used in DPMJET.
+   Decay times are now collected within the table DECTIM and all masses,
+   charges and life times are initialized in subroutine PAMAF.
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+   Starting from version 6016, most of the improvements up to 
+   version 6031 have been taken over as soon as they became known.
+========================================================================
+------------------------------------------------------------------------
+
+Version 6.032                      (coupled with VENUS4.12/5, NEXUS-02,
+(released, July  09, 2004)          SIBYLL-2.1, QGSJET01,DPMJET-II.55,
+                                    GHEISHA_2002, URQMD_1)
+------------------------------------------------------------------------
+   In the CERENKOV+CURVED option a serious bug concerning the 
+refractive time correction in the last altitude bin has been 
+eliminated. For easier maintenance the arrays DISTEF and TOF have
+been redefined with shifted indices (now starting at 0).
+------------------------------------------------------------------------
+
+Version 6.031                      (coupled with VENUS4.12/5, NEXUS-02,
+(released, February  09, 2004)      SIBYLL-2.1, QGSJET01,DPMJET-II.55,
+                                    GHEISHA_2002, URQMD_1)
+------------------------------------------------------------------------
+   The more frequent treatment of muonic interaction may lead to 
+endless loops within the routines MUBREM and MUPRPR. This is now
+prevented.
+   In the calculation of the energy deposit of deuterons, tritons and 
+alpha particles within subroutine CGHEI the rest mass was taken with a
+faulty particle identifier. This is now corrected.
+------------------------------------------------------------------------
+
+Version 6.030                      (coupled with VENUS4.12/5, NEXUS-02,
+(released, January   21, 2004)      SIBYLL-2.1, QGSJET01,DPMJET-II.55,
+                                    GHEISHA_2002, URQMD_1)
+------------------------------------------------------------------------
+   A severe bug has been detected: The routines SIGBRM and SIGPRM
+for the muon interaction cross sections (bremsstrahlung, pair 
+production and nuclear interactions) give the cross sections in barn, 
+while the CORSIKA routine BOX2 needs it in millibarn.
+------------------------------------------------------------------------
+
+Version 6.023                      (coupled with VENUS4.12/5, NEXUS-02,
+(released, October   24, 2003)      SIBYLL-2.1, QGSJET01,DPMJET-II.55,
+                                    GHEISHA_2002, URQMD_1)
+------------------------------------------------------------------------
+   In the curved version the arrival time started not as intented at 
+the margin of the atmosphere. This inconsistency is now corrected.
+   Some smaller inconsistencies (negative rest mass for antinucleons,
+etc. ..) have been corrected.
+------------------------------------------------------------------------
+
+Version 6.022                      (coupled with VENUS4.12/5, NEXUS-02,
+(released, September 04, 2003)      SIBYLL-2.1, QGSJET01,DPMJET-II.55,
+                                    GHEISHA_2002, URQMD_1)
+------------------------------------------------------------------------
+   A serious bug in the constants used within the LPM routine 
+LPMEFFECT has been corrected. For gamma-induced showers this lowers
+the onset energy by about the factor 2.
+------------------------------------------------------------------------
+
+Version 6.021                      (coupled with VENUS4.12/5, NEXUS-02,
+(released, July  28, 2003)          SIBYLL-2.1, QGSJET01,DPMJET-II.55,
+                                    GHEISHA_2002, URQMD_1)
+------------------------------------------------------------------------
+   Erroneously the energy deposited at the detector level by electrons
+and photons was counted twice (within ELECTR/PHOTON and additionally
+within OUTPT1). This is now corrected.
+   The unallowed leading tilde in a dataset name is now checked.
+------------------------------------------------------------------------
+
+Version 6.020                      (coupled with VENUS4.12/5, NEXUS-02,
+(released, March 24, 2003)          SIBYLL-2.1, QGSJET01,DPMJET-II.55,
+                                    GHEISHA_2002, URQMD_1)
+------------------------------------------------------------------------
+   The erroneous clipping of the specific energy loss of electrons
+at energies below 300 keV has been eliminated. 
+   The reset of STACKINT is now performed before entering the shower
+loop to avoid unnecessary computing times.
+   In subroutine VAPOR the sometimes occurring residual nucleus of 
+a di-neutron is now treated as two neutrons.
+   For vertical showers simulated with the CURVED option a 'divide
+by zero' could occur within function NRANGC. This is now cured.
+------------------------------------------------------------------------
+
+Version 6.019                      (coupled with VENUS4.12/5, NEXUS-02,
+(released, December18, 2002)         SIBYLL-2.1, QGSJET01,DPMJET-II.55,
+                                    GHEISHA_600, URQMD_1)
+------------------------------------------------------------------------
+   In the case an em-particle is the primary and penetrates through
+the total atmosphere without interaction, no eventheader is written 
+to the particle file. This is now corrected.
+   In the subroutine CERENK with the CURVED option the quantity ETA1
+is used without being initialized, which finally causes wrong 
+parameters of the Cherenkov output photons. This bug is now fixed.
+   Using CURVED in combination with the ATMEXT option the routines 
+PRANGC, NRANGC, and THICKC employed different atmospheric 
+parametrizations at the same time in mixed mode, which gave incorrect 
+longitudinal distributions of hadrons, muons and electrons. To prevent
+this in the ATMEXT option in combination with CURVED now parameters 
+AATM, BATM, CATM are fitted to the external atmospheric tables and 
+used further on in the program, disabling the ATMEXT option after the 
+fitting procedure.
+   For vertical showers simulated with the CURVED option a 'divide
+by zero' could occur within function THICKC. This is now cured.
+------------------------------------------------------------------------
+
+Version 6.018                      (coupled with VENUS4.12/5, NEXUS-02,
+(released, October 1, 2002)          SIBYLL-2.1, QGSJET01,DPMJET-II.55,
+                                    GHEISHA_600, URQMD_1)
+------------------------------------------------------------------------
+   The function FINDTH which selects the azimuthal angle in the
+VOLUMECORR version has been revised by its author.
+   Possible hang-ups in ELECTR and PHOTON in the CURVED version have
+been eliminated by limiting the step size when approaching the detector.
+   In the CURVED version particles with pathes ending above the
+detector height in the local frame but below the detector plane in
+the detector frame are now brought to output (UPDATC).
+   In case of radial thinning the counting of particles in the 
+EVTE(3) ... EVTE(6) does not take into account the radial thinning.
+This is now improved by adding EVTE(263) ... EVTE(266) which
+give this information including the radial thinning. 
+------------------------------------------------------------------------
+(released, September 10, 2002)
+------------------------------------------------------------------------
+   In the curved option the height of the first interaction as given
+in the event header EVTH(7) was not calculated very precisely (with 
+deviations up to some kilometers for very inclined showers), which 
+resulted in unwanted time shifts, if the particle arrival times should 
+be given relative to the arrival of speed of light on shower axis.  
+(The time differences among the particles came out correctly.) 
+By a new programming of the function THICKC this inconsistency is 
+now eliminated.
+------------------------------------------------------------------------
+
+Version 6.016                      (coupled with VENUS4.12/5, NEXUS-02,
+(released, June 19, 2002)           SIBYLL-2.1, QGSJET01,DPMJET-II.55,
+                                    GHEISHA_600, URQMD_1)
+------------------------------------------------------------------------
+   A revised version of the bernlohr package (version 1.16) has been 
+implemented (June 5, 2002).
+   In the CURVED version the range estimation of particles has been 
+improved to get a correct fictive arrival point even below the 
+observation level (routines NRANGC and PRANGC). Particles below
+the detector plane are brought consequently to output.  Also the last 
+bins of the longitudinal particle output are now filled correctly.
+------------------------------------------------------------------------
+
+Version 6.015                      (coupled with VENUS4.12/5, NEXUS-02,
+(released, April 29, 2002)          SIBYLL-2.1, QGSJET01,DPMJET-II.55,
+                                    GHEISHA_600, URQMD_1)
+------------------------------------------------------------------------
+   The inconsistency in the printout of 'AVERAGE HEIGHT OF 1ST INT'
+(which gave for hadronic primaries the slant depth instead of the 
+vertical depth) has been eliminated.
+   The occasional occurrence of QGSJET interactions producing no
+secondaries and thus violating the energy balance is eliminated
+by resimulating those events (changements within QGSLNK and QGSTOR).
+------------------------------------------------------------------------
+
+Version 6.014                      (coupled with VENUS4.12/5, NEXUS-02,
+(released, March 5, 2002)           SIBYLL-2.1, QGSJET01,DPMJET-II.55,
+                                    GHEISHA_600, URQMD_1)
+------------------------------------------------------------------------
+   An inconsistency in the treatment how the energy deposit of particles
+going below the energy cut is handled has been eliminated. This needs
+changements in routine UPDATE and all routines which call this routine.
+   A serious bug in the muon tracking of the CURVED version has been
+eliminated. Dependent on the zenith angle this error caused an
+enlargement of the number of muons arriving at ground by 20%.
+------------------------------------------------------------------------
+
+Version 6.012                      (coupled with VENUS4.12/5, NEXUS-02,
+(released, Feb. 07, 2002)           SIBYLL-2.1, QGSJET01,DPMJET-II.55,
+                                    GHEISHA_600, URQMD_1)
+------------------------------------------------------------------------
+   Erroneously in the CURVED version the Earth's magnetic field is not 
+switched on for hadrons and muons, while the electrons are tracked
+correctly. This bug is now fixed.
+------------------------------------------------------------------------
+
+Version 6.011                      (coupled with VENUS4.12/5, NEXUS-02,
+(released, Jan. 29, 2002)           SIBYLL-2.1, QGSJET01,DPMJET-II.55,
+                                    GHEISHA_600, URQMD_1)
+------------------------------------------------------------------------
+   To get a more continuous distribution at small electron/positron
+energies in the pair formation, a sampling procedure has been changed
+within routine PAIR (rsp. PAIRLPM).
+   An error in filling the dbase file 'model+crossect' with interaction 
+model sibyll is eliminated.
+   An error resulting in incorrect tracking of muons which do not reach 
+an observation level, but produce Cherenkov radiation and cross an 
+atmospheric layer boundary, is eliminated. The error affects only the
+longitudinal energy deposits.
+------------------------------------------------------------------------
+
+Version 6.010                      (coupled with VENUS4.12/5, NEXUS-02,
+(released, Dec. 20, 2001)           SIBYLL-2.1, QGSJET01,DPMJET-II.55,
+                                    GHEISHA_600, URQMD_1)
+------------------------------------------------------------------------
+   An inconsistency in the Sternheimer correction has been detected
+when using EGSDATA sets ranging down to energies below 3 MeV.
+Depending on the data set a correction term 'sterncor' has to
+be subtracted to get the saturation of DEDX correctly as function of
+energy and air pressure.
+----- CORSIKA 6006 ----
+   To meet the requirements of the condensed output format of the
+STACEE experiment the CMZ option STACEE has been introduced, which
+needs the combination with CERENKOV, THIN, and CEFFIC.
+   Minor changes in DPMJET shortened the longitudinal shower
+development significantly. The changements concern the CORSIKA linking
+routines, the packages dpmjet251.f (now dpmjet255.f) and dpmjet252.f
+(now dpmjet256.f). To express this changements, the new version got
+the numbering DPMJET II.55.
+------------------------------------------------------------------------
+
+Version 6.005                      (coupled with VENUS4.12/5, NEXUS-02,
+(released, Sept. 3, 2001)             SIBYLL-1.6, SIBYLL-2.1, QGSJET01, 
+                                     DPMJET-II.5, GHEISHA_600, URQMD_1)
+------------------------------------------------------------------------
+   A revised version 1.10 of the bernlohr package has been made
+available by K. Bernloehr. The physics and programming did not 
+change, while the documentation and `make' files are updated. 
+   Because of serious problems (producing NaN for the particle
+coordinates) with GNU compilers and egcs-2.91.66 compilers using
+compiler optimization, the transport of charged particle through a 
+magnetic field has been reprogrammed. This affected the calculation 
+of the quantities U12, V12, W12, U22, V22, W22 in subroutine UPDATE 
+and the quantities U(NP), V(NP), W(NP) in subroutine ELECTR. 
+   Some smaller inconsistencies in the scattering of Cherenkov
+Telescopes are improved, including the Bernloehr package.
+   In the THIN version the occasional exceeding of weight limitation 
+by particles emerging from routine PIGEN2 has been prohibited by
+reprogramming PIGEN2 and introducing a new routine PIPROP (which
+acts rather analogously with MPPROP).
+------------------------------------------------------------------------
+
+Version 6.004                      (coupled with VENUS4.12/5, NEXUS-02,
+(released, May 14, 2001)              SIBYLL-1.6, SIBYLL-2.1, QGSJET01, 
+                                     DPMJET-II.5, GHEISHA_600, URQMD_1)
+------------------------------------------------------------------------
+   An error in calculating the energy deposit of em-particles into
+the last bin of the longitudinal distribution has been removed.
+This affects also the energy balance.
+   Unused portions at the end of the output RUNH and EVTH blocks 
+in the THIN version are filled with zero's.
+   The different development of electron-induced sub-showers in the
+NKG-treatment is now respected by adding 0.6 rad. length in elongation.
+------------------------------------------------------------------------
+
+Version 6.003                      (coupled with VENUS4.12/5, NEXUS-02,
+(released, April 25, 2001)            SIBYLL-1.6, SIBYLL-2.1, QGSJET01, 
+                                     DPMJET-II.5, GHEISHA_600, URQMD_1)
+------------------------------------------------------------------------
+   To enable an individual scattering of the shower axis across a
+Cherenkov array for each shower within a run, the calling of the
+quasi-random generator is moved from INPRM to AAMAIN. Also
+the scattering depends now on the random seed of the Cherenkov option.
+------------------------------------------------------------------------
+
+Version 6.003                      (coupled with VENUS4.12/5, NEXUS-02,
+(released, March 21, 2001)            SIBYLL-1.6, SIBYLL-2.1, QGSJET01, 
+                                     DPMJET-II.5, GHEISHA_600, URQMD_1)
+------------------------------------------------------------------------
+   Constants for branching ratios and Dalitz plots have been checked 
+and updated according with the most recent Particle Data Group
+publication  The European Physics Journal C15 (2000).
+   Bug fixed: For atmospheric model MODATM=10 the BATMi values are now 
+taken over correctly. 
+   Check of input file: The maximum run number is now checked to 
+prevent uncontrolled write to files with undefined names. Tabulators 
+used as separators are replaced by `blank'. The debug-diagnostics of
+input file is improved (DEBUG-statements in the DTC... routines).
+   Elimination of bug in the EGS-reject mechanism of low energy 
+subshowers starting at high altitude. (This error did not affect 
+simulations with CERENKOV, THIN, PLOTSH options, or with LONGItudinal 
+development selected.)
+------------------------------------------------------------------------
+
+Version 6.002                      (coupled with VENUS4.12/5, NEXUS-02,
+(released, Jan. 25, 2001)             SIBYLL-1.6, SIBYLL-2.1, QGSJET01, 
+                                     DPMJET-II.5, GHEISHA_600, URQMD_1)
+------------------------------------------------------------------------
+   New keyword THINH to specify conveniently thinning energy fraction
+and weight limit for hadronic particles differing from the em-ones.
+   Radial thinning is now according (r/rmax)^4.
+   Hangup (divide by zero) of DPMJET25 corrected (dpmjet252.f).
+   Glauber-table GLAUBTAR.DAT improved for individual nuclear radii.
+------------------------------------------------------------------------
+
+Version 6.001                      (coupled with VENUS4.12/5, NEXUS-02,
+(released, Jan. 8, 2001)              SIBYLL-1.6, SIBYLL-2.1, QGSJET01,
+                                     DPMJET-II.5, GHEISHA_600, URQMD_1)
+------------------------------------------------------------------------
+   Reading of CERQEF modified according with User's Guide.
+   Error corrections: Larger portion of routine urqhou (UrQMD-link)
+was missing.
+   Error correction: Write-out of fit to longitudinal distribution now 
+enabled for all showers and not only for those with FPRINT enabled.
+   Error correction: Adapt of `cmz_extract' file in the 
+Bernloehr package to meet the cmz options of CORSIKA 6000.
+------------------------------------------------------------------------
+
+Version 6.00                       (coupled with VENUS4.12/5, NEXUS-02,
+(released, Dec. 14, 2000)             SIBYLL-1.6, SIBYLL-2.1, QGSJET01, 
+                                     DPMJET-II.5, GHEISHA_600, URQMD_1)
+------------------------------------------------------------------------
+   The DPMJET interaction model has been replaced by the more recent 
+DPMJET version 2.5 (Nov. 99). The link routines have been adapted.
+Also new hadron air cross-sections are parametrized and K-air inelastic 
+cross-sections have been added.
+   To meet the requirements of the Auger experiment a CMZ option 
+enables the selection of differing formats of the .dbase file. 
+With this new formats this file is renamed to DATnnnnnn.info .
+   To overcome azimuthal asymmetries of muons caused by GHEISHA
+for each GEISHA interaction a random azimuth is added. This needed
+some modifications in subroutine CGHEI.
+   Diffraction of QGSJET98 is slightly modified to QGSJET01,
+needs new data set QGSDAT01.
+------------------------------------------------------------------------
+
+Version 5.947                      (coupled with VENUS4.12/5, NEXUS-02,
+(not released, Oct. 2000)             SIBYLL-1.6, SIBYLL-2.1, QGSJET98, 
+                                     DPMJET-II.4, GHEISHA_600, URQMD_1)
+------------------------------------------------------------------------
+   Together with the Y2K problem nearly all computing systems now have
+the 'date_and_time' routine available. Thus a combination of the former
+CMZ options DECUNIX and LINUX to the new UNIX option is an indicated
+simplification. For systems with differing RECL parameter and time
+routines in the UNIX option, the BYTERECL and OLDDATE options are
+possible. Only in special cases the TIMERC option may be used to get 
+the timer.c routine. The usage of the correct RECL parameter is now
+checked by the routine RCLCHK.
+   The C-routines of K. Bernloehr are now kept as a separate package
+compressed by .tar and .gzip; this package contains also various 
+atmprofi.dat and auxiliary files (README, make, ...)
+   The new option VIEWCONE has been introduced. It permits to
+select the primary incidence angle from a circular region around
+a fixed zenith and azimuth angle in a manner with correct probability
+density. The inner and outer opening angle of the cone is specified 
+by keyword VIEWCONE.
+   The new option COMPACT enables a more compact particle output file
+especially suited for very low energy simulations, where no or only 
+very few particles arrive at the detector level. By the COMPACT 
+option (keyword COMOUT) only abbreviated event headers of those 
+events are written, which also produce particles. Tailing zeros 
+in the data blocks as well as event-end blocks are suppressed. 
+The compact output may be switched off using the key word COMOUT.
+   The updated interaction model SIBYLL_2.1 needed a revision of 
+the linking routines. By the option SIBYLLOLD the link to the old
+SIBYLL_1.6 is selected. Debug output of the SIBYLL_2.1 link routines 
+is switched on using the second parameter of key word SIBYLL.
+   To select the old qgsjet98.f to reproduce the physics of the 
+old qgsjet.f, the option QGSJETOLD is implemented. The only 
+difference is the treatment of nucleus-nucleus cross-sections, 
+which formerly were treated by the NUCNUCCS Glauber tables, while 
+now they are done by the routine SECTNU of qgsjet98.f. The QGSJET 
+option is now selected by QGSJET (instead of QGS). 
+   The low energy interaction model UrQMD is now available (for 
+Karlsruhe internal use only) which might overcome the problems with
+GHEISHA. The link to this model is selected by the URQMD option,
+which might be combined with all high energy interaction codes. 
+In some combinations double existing names of commons, functions,
+or subroutines have to be eliminated. Debug output of the URQMD 
+linking routines is switched on using the second parameter of 
+keyword URQMD.
+   To reduce the CPU time and output of Cherenkov simulations,
+in the CEFFIC option the atmospheric absorption, mirror reflectivity, 
+and PM quantum efficiency are respected in an early stage of the 
+Cherenkov light simulation. With the keyword CERQEF all three
+processes can be enabled or disabled separately. Suitable tables
+must be read in via unit 20. New subroutines  ATABSO, CESPEC, 
+LINEAR, TELEFF, and TPDINI have been added.
+   The THIN version has been extended by implementation of weight 
+limitation (WMAX). Radial thinning for particles arriving within
+core distances < RMAX is added. The input parameters WMAX and RMAX 
+are additional parameters of the THIN key word.
+To enable a thinning level for em-particles differing form the
+hadronic thinning level and with differing weight limit WMAX, 
+a new keyword THINEM is introduced with parameters THINRAT 
+(ratio e_th_em/e_th_hadr) and WEITRAT (ratio w_max_em/W_max_hadr).
+   The zero point for the particle arriving time may be changed from 
+the first interaction (default) to the entrance point of the primary
+into the atmosphere by the keyword TSTART. This needed changes 
+within MAIN, ELECTR, and PHOTON. With the start point at entrance 
+into the atmosphere, also the generation of Cherenkov photons before 
+the first interaction is possible, and the particle then suffers from 
+ionization energy loss, magnetic deflection and multiple scattering 
+already after the starting point.
+   The CMZ-make file has been adapted to the available options and 
+the incompatibilities among them.
+   A Y2K bug in writing out the creation date on the .dbase file 
+has been corrected.
+   Parametrization of pair and brems-cross-sections for muons
+above 10^5 GeV corrected.
+   Some inconsistencies in the transport of em-particles have been
+corrected in the curved-version of HOWFAR and CORNEC.
+   Errors in the subroutine GETBUS modifying the arguments of this
+routine have been eliminated.
+   The call for system routines of day and time has been adapted to
+various hosts, the make file has been extended by appropriate  
+selections.
+   The longitudinal distribution of particle numbers and energy
+deposit can be written to file DATxxxxxx.long if the flag FLONGOUT
+(keyword LONGI) is enabled. If this flag is disabled, only the 
+particle longitudinal distribution is written out to the particle 
+output tape in separate blocks beginning with `LONG' (similar to 
+`RUNH', `EVTH', `EVTE', and `RUNE'). 
+   The longitudinal distribution of Cherenkov photons can be 
+calculated in `differential' form (# of photons generated in a 
+longitudinal step, default option), `integral' form (# of all 
+photons generated above lower border of step; CMZ-option INTCLONG; 
+compatible with the older versions), or may be suppressed completely 
+(saving CPU-time; CMZ-option NOCLONG).
+   The fitting procedure of the longitudinal parameters has been
+improved to a 2-step algorithm; in the first step the first 4
+parameters are fitted, in the second step these values are used as
+starting values for the final fit. In average better chi**2
+are obtained also at distributions gained with severe thining.
+   SAVE statements are used throughout the CORSIKA program to enable
+a compilation with Linux-GNU compilers g77 with optimization -O.
+Also the QGSJET, VENUS, and GHEISHA programs are now equipped with 
+SAVE statements. All calls to UCOPY and VZERO have been eliminated
+from the GHEISHA routines. 
+   An inconsistency in writing the last block of the Cherenkov 
+output file has been removed to avoid writing of unnecessary dummy 
+zeros.
+   The optional code for TRANSPuter systems has been removed 
+as well as that for the HORIZONTal version (which is outdated by 
+the CURVED version) to simplify the program structure.
+   An error in the calculation of CHISUM in case of em-primaries
+(erroneously the augmentation had been performed twice) has been 
+eliminated.
+   The interaction test has been extended to photonuclear reactions,
+starting with a primary gamma either multi-hadron production 
+(NDIFF = 1), vector meson production (NDIFF = 2) or a mixture 
+(NDIFF = 0) according natural occurrence may be chosen.
+   Constants for mass, decay time etc. have been checked and updated 
+according with the most recent Particle Data Booklet (Jul. 2000).
+   The content of the .dbase file has been extended and modified
+to meet the requirements of the Auger project simulations.
+------------------------------------------------------------------------
+
+Version 5.90                       (coupled with VENUS4.12/5, NEXUS-01
+(not released, Aug. 1999)        SIBYLL 1.6, QGSJET98, and DPMJET-II.4)
+
+------------------------------------------------------------------------
+   The new NEXUS interaction model has been coupled with CORSIKA. This 
+needs a new I/O file (Unit NEXPRM = 97) which is used to transfer the 
+NEXUS parameters from the DATAC input to the NEXUS package. The CMZ
+options to get the NEXUS links are named NEXUS and NEXUSSIG.
+Changements for this options are necessary in BOX2, DATAC, INPRM, SDPM, 
+START. A combination of NEXUS with QGSJETSIG and QGSJET with NEXUSSIG 
+is not possible because of many identical subroutine names used in both 
+source codes.
+   To simulate showers down to 1000 m below sea level some
+inconsistencies have been removed in BLOCK1, BOX2, INPRM, EGSINI.
+   A complete revision of the EGS4 portion has been made to overcome
+problems in connection with single precision. The interpolation of
+trigonometric functions from a table has been replaced by ordinary 
+trigonometric functions. Also the approximation of exponentials and 
+logarithms by the first members of a power expansion has been 
+modified to adapt to the enhanced precision. Both means elongate the
+computing time by about 30 %. As the source code of the CORSIKA-EGS4 
+originates from 1986, relevant error corrections available with the 
+1998 version of EGS4 have been taken over. Affected routines are 
+BHABHA/MOLLER and PAIR/MUPAIR. Additionally debugging statements (to
+be activated by keyword EGSDEB) and many comments have been inserted 
+into all EGS routines for easier reading and understanding. Only the 
+quantities related with the cross section file to be read in are still 
+used as single precision variables. The meaning of the quantities
+GBRii (Gamma Branching Ratios) has been interchanged to get better
+precision for processes with low probability, such as mu+mu- pair
+formation. Consequently new EGSDAT sets are necessary now named
+EGSDAT3...; they are not compatible with the EGSDAT2.. sets.
+Moreover an error (use of electron Compton wavelength instead of
+muon Compton wavelength) within the screening functions of the form 
+factor for mu+mu- pair formation has been corrected leading to an 
+onset of this process now at about 1.4 TeV (compared with about 7 GeV 
+in the old version).
+   Photonuclear reactions have been revised, now taking into account
+the diffractive interaction of the photon leading to rho and omega 
+vector mesons. By this reaction type the photon energy is transferred 
+essentially to 2 pions which results in a harder muon spectrum (in 
+contrast with the multi-pion production). This might be of importance 
+for neutrino experiments for detection of muons induced by TeV 
+gamma rays coming from point sources. This extension implies new 
+routines RHOGEN and RHO0DC and changements in PIGEN and RESDEC. 
+   To control the energy balance and energy deposit within a shower 
+additional information on the longitudinal distribution of various
+energies (of gammas, electrons, muons, hadrons,...) and energy 
+deposits are now formed and printed out. This revealed many 
+changements all over the program in routines AAMAIN, BOX3, DECAY1, 
+EM, ETADEC, KDECAY, MUBREM, MUDECY, MUPRPR, MUTRAC, NUCINT, OUTPUT, 
+PI0DEC, SDPM, TSTACK, UPDATE, EGS4, MPPROP, PIGEN1, PIGEN2, ELECTR, 
+PHOTO, PHOTON, CGHEI, BOX60, BOX65, BOX70, HMESON, ISOBAR, NIHILA, 
+SINGLE, VHMESO, DPMJST, HDPM, QGSTOR, SIBLK2, SIBSTR, VSTORE to get 
+the ionization energy loss and the energy of cut particles into 
+this distributions. Within the particle longitudinal array the 
+columns of mu+ and mu- have been interchanged (to have the same 
+sequence as in the particle code).
+   In the muon transport the multiple scattering is now done at
+half of the penetrated matter instead half of the track length.
+Also for muon energies below 65 GeV the transport step is reduced
+to improve the arrival time calculation. (Before muons with 
+E ~ 400 MeV arrived too late by max 60 nsec.) Routine UPDATE has 
+been revised, so that now the angular range may be extented to 
+70 deg. The improvement results also in a better timing information. 
+To the additional muon information the generation counter is added 
+in a similar way as for ordinary particles. For muons originating 
+from pion decay the generation counter is augmented by 50. 
+Therefore by the additional muon information it is possible to 
+distinguish between muons coming form K-decays and those coming from 
+pion decays.
+   Nucleus-air cross-sections for QGSJET are now kept
+in the data file SECTNU to be calculated together 
+with the QGSDATA00 file (rsp. QGSDATAR, not compatible with former 
+QGSDATA files). They have been changed by a few percent. 
+The revised QGSJET code is named QGSJET00.f. 
+   New CMZ options BYTERECL (in combination with DECUNIX), VOLUMEDET,
+and VOLUMECORR have been introduced. As in some unix compilers 
+(IBM RS/6000, HP) the RECL parameter in needed in bytes (default is 
+4-byte words), by the CMZ option BYTERECL this parameter is set 
+correspondingly. The options VOLUMEDET and VOLUMECORR influence the 
+angular dependence of the primary's zenith angle distribution in
+a manner as needed for volume detectors (sphere rsp. long vertical
+string). The default corresponds with an angular dependence as needed 
+for flat horizontal detectors.
+   The routines of the ISOBAR model have been eliminated, as they
+are no longer adequate to the raised requirements of shower 
+simulation. All corresponding variables have been erased, a link 
+with GHEISHA is now necessary in any case.
+   A new option called CURVED is available which permits to overcome 
+the problems of the former HORIZONT option. CURVED uses a piecewise 
+planar atmosphere and is capable to simulate showers as flat as 
+89 deg (for Cherenkov only 88 deg) of zenith angle.
+The introduction of this option needed a lot of changements within
+AAMAIN, BOX2, BOX3, DATAC, EM, INPRM, MUBREM, MUDECY, MUPRPR, MUTRAC, 
+NUCINT, OUTPUT, UPDATE, RESDEC, EGSINI, EGS4, ELECTR, HOWFAR, MPPROP, 
+PHOTON, PIGEN, PIGEN1, PIGEN2, UPHI, and new routines CORINC, CORNEC, 
+NRANGC, PRANGC, THICKC, UPDATC.  For Cherenkov with CURVED the 
+two new functions DISTIP and TOFIP respect the optical
+ray bending by varying refractive index within the atmosphere. 
+The index tables are initialized by the new routine INRTAB.
+   A new keyword PAROUT has been introduced. By the flag FPAROUT 
+the particle output might be disabled, by the flag FTABOUT a table 
+output might be enabled; this table writes essential features of the 
+charged particles of a shower event onto unit 46 with the filename 
+suffix .tab.
+   6 South pole atmospheres are now available by the keyword setting 
+'ATMOD' to  11 ... 16 corresponding to  4 seasons and two different 
+models (MSIS-90-E model and Lipari model).
+------------------------------------------------------------------------
+
+Version 5.800:                     (coupled with VENUS4.12/5,
+(not released  Aug 1998)        SIBYLL 1.6, QGSJET, and DPMJET-II.4)
+
+------------------------------------------------------------------------
+   To get rid of the fixed layer boundaries at 4, 10, 40, and 100 km of 
+the atmosphere, they may be now read in together with the atmospheric
+parameters using the keyword ATMLAY. 
+   The fixed cut (3 MeV) for electrons in the calculation of muonic
+bremsstrahlung and pair formation is replaced by the actual cut of
+electrons.
+   The unnecessary copying of vertex coordinates in many routines has
+been eliminated. Copying is now performed only in NUCINT, PIGEN, EM, 
+RESDEC, MUDECAY, MUBREM, MUPRPR, Nevertheless coordinates CURPAR(2)...
+..CURPAR(4) have to be copied for spectators in all interaction models 
+treating primary nuclei.
+   The cross-section and target of first interaction are now printed 
+out together with the other parameters of first interaction.
+   As some compilers need an EXTERNAL statement for correct linking of
+data initialization routines BLOCK DATA ..., such EXTERNAL statements
+have been added to AAMAIN.
+   To avoid warnings produced by sensitive compilers many declared but
+unused variables have been eliminated. Also expressions using a 
+negative sign heading a variable have been modified by brackets.
+   New subroutines for format-free reading of input replace the lengthy
+routines DATAC and LOWUP.
+   A set of routines to read in external atmospheres and to include 
+more precise calculation of Cherenkov photons may be used for Cherenkov 
+telescopes. They include subroutines written in C by K. Bernloehr for 
+the HEGRA telescopes to be linked with CORSIKA. These new options are 
+available by the CMZ selection words ATMEXT, IACT. The former separate
+Cherenkov routines CERENE and CERENH are now replaced by CERENK with
+CERLDE and CERLDH.
+========================================================================
+
+Version 5.644:                     (coupled with VENUS4.12/5,
+( April 17, 2000)               SIBYLL 1.6, QGSJET, and DPMJET-II.4)
+(only for internal use)
+
+------------------------------------------------------------------------
+   Printout of particle number longitudinal development on extra
+blocks of the DATxxxxxx file (before the EVTE block; first word
+of those blocks contains 'LONG'.)
+   Improved muon tracking by shorter step length according with
+its energy.
+   Hadronic generation counter is incremented by 50 for muons 
+originating from charged pion decay.
+========================================================================
+   Error corrected in Jan 4, 2000; Jan 17, 00; Apr 5, 00; Sept 4, 00
+-   'Millennium' problem in .dbase file eliminated.
+-   Parametrization of pair and brems-cross-sections for muons
+    above 10^5 GeV corrected.
+-   LPCT1 must be set for em primaries.
+-   Coupling SIBYLL 1.6 with CORSIKA improved for energies above 
+    10^16 eV to avoid numerical problems with single precision 
+    representation of the SIBYLL particle momenta.
+------------------------------------------------------------------------
+   Error corrected in Dec 1, 1998:
+A bug in QGSJET producing charmed mesons is detected.  It occurs only 
+with primary nuclei predominantly at energies above 10^15 eV.
+------------------------------------------------------------------------
+   Error correction in Oct 13, 1998:
+An error within dpmjet2.f has been correct to select the dataset BSITE 
+appropriate with the projectile and target of each collision.
+------------------------------------------------------------------------
+
+Version 5.624:                     (coupled with VENUS4.12/5,
+(released August 11, 1998)        SIBYLL 1.6, QGSJET, and DPMJET-II.4)
+
+------------------------------------------------------------------------
+   A bug in subroutine MUPAIR has been eliminated. (The weight for
+subtracting the NKG was not set.) This error became efficiently only
+with the THIN option when giving keywords EGS and NKG in parallel and 
+resulted sometimes (after the rare events of mu+mu- pair formation)
+in an enhanced NKG output.
+   The numbering of some constants used in muon bremsstrahlung has been 
+corrected in START.
+------------------------------------------------------------------------
+
+Version 5.623:                     (coupled with VENUS4.12/5,
+(released June 09, 1998)        SIBYLL 1.6, QGSJET, and DPMJET-II.4)
+
+------------------------------------------------------------------------
+   The step length factor for multiple scattering of em particles is
+now set to 1 as default with the CERENKOV option and with the thin 
+option, with other options the default value is 10 as before.
+   Some irregularities in the energy-elasticity matrix when using EGS
+have been eliminated (undefined EKINL).
+   A bug in subroutine BOX2 calculating the cross sections for muon 
+pair production cross sections at ultrahigh energies has been 
+eliminated (FRACTN must read FRAPTN, FRACTNO must read FRPTNO).
+------------------------------------------------------------------------
+
+Version 5.621:                     (coupled with VENUS4.12/5,
+(released Apr. 20, 1998)        SIBYLL 1.6, QGSJET, and DPMJET-II.4)
+
+------------------------------------------------------------------------
+   An inconsistency in the initialization of the thickness at the
+layer boundaries has been eliminated. (Atmospheres different 
+from the standard atmosphere did not become effective).
+------------------------------------------------------------------------
+
+Version 5.620:                     (coupled with VENUS4.12/5,
+(released Apr.  3, 1998)        SIBYLL 1.6, QGSJET, and DPMJET-II.4)
+
+------------------------------------------------------------------------
+   To prevent a longitudinal fit to be tried to negative electron
+numbers the minimal value of the electron numbers is set to zero.
+   In case that EGS and NKG are activated the contribution of
+gammas producing photonuclear reactions or muon pairs must be 
+subtracted from NKG. The subtracted fraction is calculated more 
+precisely taking into account the exact origin of this photon.
+   To facilitate the extraction of various options for shower
+simulation and interaction tests, the makefiles 'makeall' and
+'makeint' have been installed.
+   Within the 3-body kinematics of PIGEN2 the occurrence of sqrt with 
+negative arguments is prohibited. The printout of the primary energy 
+in case of selection from spectrum is now performed.
+   In QGSJET a bug has been removed, which in case of nuclear primaries
+nearly doubled the shower energy.
+   An error resulting eventually in a negative sqrt has been eliminated 
+in UPDATE.
+------------------------------------------------------------------------
+
+Version 5.611:                     (coupled with VENUS4.12/5,
+(released Mar. 17, 1998)        SIBYLL 1.6, QGSJET, and DPMJET-II.4)
+
+------------------------------------------------------------------------
+   A serious error in the initialization of some constants used for muon 
+multiple scattering according to Moliere's theory has been eliminated.
+A considerable enlarging of the muon lateral distribution by about
+15 % results from this error.
+The error was introduced with version 5203, therefore all results
+obtained with versions between 5203 and 5610 should be examined
+carefully before use. In doubtful cases the simulations should be 
+rerun.  
+   The call for ATMIN in subroutine START was misplaced and is now
+interchanged with the thickness calculation at lower boundaries.
+------------------------------------------------------------------------
+
+Version 5.610:                     (coupled with VENUS4.12/5,
+(released Mar. 09, 1998)        SIBYLL 1.6, QGSJET, and DPMJET-II.4)
+
+------------------------------------------------------------------------
+   The fit function of the longitudinal development has been modified
+from Ball's function to Hillas' function, which gives less fits
+with extreme chi**2. For small chi**2 the two fits coincide.
+   The elasticity in case of nuclear projectiles is now calculated
+for all models as the energy ratio of the most energetic secondary  
+to the primary energy/nucleon.
+  Many print formats have been adapted to avoid overflows also for
+the highest energy showers 5*10**20 eV.
+   To save computing time with the EGS specification it is important
+to take an EGSDATA file which fits best to your specified lower
+boundary of the em particles. (Specifying cuts at 3 MeV and employing 
+an EGSDAT2 data set ranging down to 50 keV needs up to 6 times more
+computing time compared with a data set ranging down only to 3 MeV!)
+Therefore we offer now 5 EGSDAT2 data sets marked with a suffix which 
+gives the lowest kinetic energy (in MeV). Within subroutine EGSINI an 
+automatic selection of the optimal data set is made and the appropriate 
+data set read in.
+   The default hadronic cross sections have been modified as well as 
+radiation length and critical energy for NKG calculations (see 
+footnotes p. 52 and p. 65 in FZKA-6019).
+------------------------------------------------------------------------
+
+Version 5.604:                     (coupled with VENUS4.12/5,
+(released Feb. 16, 1998)        SIBYLL 1.6, QGSJET, and DPMJET-II.4)
+
+------------------------------------------------------------------------
+   Serious errors occurring at electron and gamma energies above 10**17
+eV have been detected within BREMSLPM and LPMEFFECT and are now 
+eliminated. To get the new version of routine PRTIME for DECUNIX 
+computers which overcomes the year 2000 you should select the 
+'NEWDATE' option.  
+------------------------------------------------------------------------
+
+Version 5.603:                     (coupled with VENUS4.12/5,
+(released Feb. 04, 1998)        SIBYLL 1.6, QGSJET, and DPMJET-II.4)
+
+------------------------------------------------------------------------
+  Within HDPM (subroutine PARNUM) an error has been eliminated.
+In connection with the new dataset EGSDAT2 ranging down to 50 keV
+at high energy electrons and gammas (> 10**14 eV) rounding errors
+caused a division by 0 within subroutine MOLLER. As consequence many
+variables within EGS have been declared to double precision.
+------------------------------------------------------------------------
+
+Version 5.602:                     (coupled with VENUS4.12/5,
+(released Jan. 28, 1998)        SIBYLL 1.6, QGSJET, and DPMJET-II.4)
+
+------------------------------------------------------------------------
+  An error within BREMSLPM has been corrected. This error was only
+effective in the THIN option and affected the treatment of particles
+in the LPM energy range.
+  An error in PRANGE has been corrected.
+------------------------------------------------------------------------
+
+Version 5.601:                     (coupled with VENUS4.12/5,
+(released Jan. 15, 1998)        SIBYLL 1.6, QGSJET, and DPMJET-II.4)
+
+------------------------------------------------------------------------
+  A bug in subroutine TSTEND which is effective only with the THIN
+option and concerns the array RESRAN has been fixed.
+  Initialization of RESTMS has been moved from PAMAF to BLOCK1.
+  In connection with CERENKOV a bug in UPDATE has been detected and
+fixed. Also the energy cuts of hadrons emerging from photonuclear
+reactions have been verified.
+------------------------------------------------------------------------
+
+Version 5.600:                     (coupled with VENUS4.12/5, 
+(released Dec. 19, 1997)        SIBYLL 1.6, QGSJET, and DPMJET-II.4)
+
+------------------------------------------------------------------------
+   A revision of the DPMJET routines including the coupling routines
+together with its author J. Ranft was necessary to get them run in
+a manner consistent with the stand alone version of DPMJET. The most 
+recent version DPMJET2.4 is now coupled. This implied many 
+modifications of the DPMJET coupling routines. Our coupling is prepared 
+to contain also the evaporation module of A. Ferrari and P.R. Sala, 
+but we are not allowed to distribute this module.
+   The routine PRTIME giving date and time for DECUNIX computers has 
+been modified to overcome the year 2000 without problems. To get
+the old date routine, you should select 'OFFIC'.
+   To study the influence of meteorological effects within the
+atmosphere we have now built in (besides the US standard atmosphere)
+7 atmospheric parameter sets based on measured data of the Deutsche
+Wetter Dienst (German meteorological service) measured above Stuttgart.
+They represent essentially the seasonal variations of the atmospheric
+depth distribution. The various sets may be chosen by the keyword
+ATMOD. To be independent from the situation of Central Europe, it is
+possible to read in sets of atmospheric parameters suitable for the
+regarded location. These changements affected the routines BLOCK1,
+DATAC, STAEND, and START.
+   Some small errors have been eliminated. They occurred only if
+primaries were penetrating down to the observation level and affected
+PHISCT, VSCAT and BNORMC.
+   A revision of the thinning algorithm caused by unpublished results
+of C. Pryke revealed a large number of changements in the application
+of thinning. Now all particles below ETHINN, which emerge from an
+interaction, are exposed to the algorithm. Also the thinning algorithm 
+is applied in the rare interactions of EGS4 (MUPAIR and PIGEN). These
+changements result in a more efficient thinning, so less particles 
+with low weight are followed which results in a drastic shortening of 
+the computing times. A new table indicating the energy - weight 
+statistics of all observed particles is added to the list output
+in case of thinning. A bug within the energy - elasticity table,
+occurring with the THIN option, is eliminated. Some arrays are 
+redimensioned to adapt to the larger particle numbers at the
+highest energies (QGSJET, internal stack).
+   The suppression of debug output from GHEISHA is now possible and
+selectable by the keyword GHEIDB.
+   A bug in the subroutines ELECTR of the EGS part, which becomes 
+efficient only with the PLOTSH option, has been eliminated.
+   The file EGSDAT2 has been modified to come down with the energy
+of electromagnetic particles as low as 50 keV.
+   Using more than 1 observation level not given in correct sequence
+in the input caused serious errors in the EGS portion. The bug is
+now fixed and any sequence of the observation levels admitted.
+   To improve the quality of CORSIKA at the highest energies, pi(0)'s
+are now tracked and may undergo hadronic interactions. In the same way
+eta's are treated. (Affected routines are BOX2, BOX3, NUCINT, SDPM,
+and the link routines for the hadronic interaction models.) In EGS
+the LPM-effect is respected by suppression of BREMS and PAIR events
+depending on the energy of interacting particle and of the possible
+product particle. The formalism of MOCCA/AIRES has been adapted.
+------------------------------------------------------------------------
+
+Version 5.203:                     (coupled with VENUS4.12/5, 
+(released October 10, 1997)        SIBYLL 1.6, QGSJET, and DPMJET-II)
+
+------------------------------------------------------------------------
+  A bug in the subroutines ELECTR and PHOTON of the EGS part, which
+becomes efficient only in the PLOTSH option, has been eliminated.
+  For calculation of the number of scattering events of muon multiple
+scattering erroneously weight percent have been adopted instead of 
+atomic percent. Effects of this error are negligible, nevertheless 
+the error in subroutine START is now corrected.
+  Within the routine START the calls to the routines DATAC and
+ATMIN (for HORIZONT option)  have been interchanged, to get the
+height of the observation levels corrected for the HORIZONT option.
+------------------------------------------------------------------------
+
+Version 5.202:                     (coupled with VENUS4.12/5, 
+(released April 24, 1997)        SIBYLL 1.6, QGSJET, and DPMJET-II)
+
+------------------------------------------------------------------------
+   To get compatibility with all kinds of computers, the maximum 
+block size for the external stack EXST has to be limited to less than
+32768. Consequently MAXSTK is now at 312 for the THIN option. 
+   Also some of the formats are longer than 132 characters/line,
+which is not tolerated for all computers. Therefore many formats have
+changed to meet with this need.
+  A bug has been fixed in QGSJET for realistic fragmentation.
+  A bug has been fixed in DATAC for DATBAS input.
+------------------------------------------------------------------------
+
+Version 5.201:                     (coupled with VENUS4.12/5, 
+(released April 16, 1997)        SIBYLL 1.6, QGSJET, and DPMJET-II)
+
+------------------------------------------------------------------------
+   Error corrections:
+   Within BOX2 for VENUSSIG the charged pion cross sections are taken 
+instead of the Kaon cross sections. For Kaons the call to VENSIG 
+should read
+          CALL VENSIG(ELAB,3)
+   Within GHEISHA the arrays SNUM and BNUM have been extended to keep
+also the strangeness and baryon numbers of Omega's.
+   A discussion with K. Werner revealed, that the p-p cross section in
+VENSIGINI should comprise also diffraction. The corrected values are
+used only to calculated nucleus-air cross sections, which differ by 
+2 to 3 % from the older ones (at energies above 10**15 eV).
+   To enable the extraction of the system C-file for the LINUX option, 
+the make-file has been modified slightly.
+   A bug in subroutine FREBLK has been indicated by C. Trinchero and
+removed.
+   SIBYLL.f has been corrected for an error in subroutine PART_INT.
+------------------------------------------------------------------------
+
+Version 5.200:                     (coupled with VENUS4.12/5, 
+(released March 15, 1997)        SIBYLL 1.6, QGSJET, and DPMJET-II)
+
+------------------------------------------------------------------------
+   To enable simulations up to the highest energies the so-called
+'thinning' is introduced also into hadronic interactions and decays. 
+It enables to drop the majority of particles emerging from a reaction  
+and keeping only one with simultaneous enlarging its weight. This 
+reduces the calculation times considerably, but may also reduce the 
+correct fluctuations, therefore it should be used with precautions. 
+Many changements had to be made, as now for each particle the weight 
+must be considered and hence the output data structure has to be 
+changed. The moving of particles from SECPAR to the stack has been 
+modified. Now an intermediate stack is used to collect all particles 
+from a reaction and select only one of them for thinning. This needs 
+new routines TSTINI, TSTEND, TSTOUT (the former TSTACK), and a new 
+TSTACK. This collection before writing needs a little bit computer 
+time: about 6 % for HDPM, SIBYLL and QGS, about 2% for DPMJET and 
+VENUS, if the electromagnetic component is not simulated. Also the
+introduction of a new stack needs more than 2 MB memory additionally.
+No special stack handling is needed for the EGS4 routines. The 
+thinning is activated by the CMZ option THIN. 
+   Some parametrizations of the muon cross sections had to be modified
+to meet the extended energy range up to 10**20 eV.
+   The initialization of EGS4 is now performed in the routine EGSINI. 
+The cross section file for the EGS routines is extended up to 
+10**20 eV, new name is EGSDAT2, size is 2621 lines. The dimensions 
+of all arrays keeping the cross sections and branching ratios for 
+EGS have been extended from 200 to 500.
+   A new macro has been implemented into the cmz-file which comfortably 
+permits to extract a FORTRAN file with the desired options watching 
+that no conflicting options are selected simultaneously. To activate
+it, you should give the command 'exec macro' when you have entered the 
+cmz program.
+------------------------------------------------------------------------
+
+Version 5.100: not released        (coupled with VENUS4.12/5, 
+(internally used since Jan 97)      SIBYLL 1.6, QGSJET, and DPMJET-II)
+
+------------------------------------------------------------------------
+  To enable simulations up to the highest energies the so-called
+'thinning' is introduced into EGS4. By thinning one of the particles
+emerging from an interaction is dropped immediately, while the other is 
+kept with increased weight. This reduces the calculation times 
+considerably, but may also reduce the correct fluctuations, therefore 
+it should be used with precautions. Many changements had to be made, as 
+now for each particle the weight must be considered and hence the output 
+data structure has to be changed. The thinning option is activated 
+by the CMZ option THIN.
+   To enable the coupling of routines treating the em-particles at
+energies above 10**16 eV by the Landau-Pomeranchuk-Migdal effect, some
+changements have been made in routines EM, BOX3, and MUDECY. Connecting
+routine to this extension will be routine LPM. The addition of a set
+of LPM routines will be made in a later release.
+   Considerable improvement of the muon tracking has been performed.
+Muons are now no longer tracked by BOX3 but rather by subroutine 
+MUTRAC. Muon bremsstrahlung and muon pair production are treated in
+subroutines MUBREM and MUPRPR. The cross sections for these processes
+are calculated in BOX2 by calling the functions GBRSGM and GPRSGM. 
+The explicit treatment of these processes needs also modifications in
+PRANGE and UPDATE concerning the energy loss of muons at high energies.
+   These improvements take also into account a more frequent 
+multiple scattering. The calculation of the scattering angle in 
+UPDATE is extended by Moliere scattering (besides the existing Gauss
+distribution for the scattering angle). The Moliere option is
+activated by the code word MUMULT and setting the flag FMOLI. The
+Moliere scattering angle is determined in subroutine MMOLIE, which
+calls the routine MMOL4. If the path length is too short for 
+application of Moliere's theory, plural Coulomb scattering 
+events are considered in routine MUCOUL, which calls the routine MPOISS
+for Poisson distribution. Initialization of some parameters for
+Moliere's theory is performed in START.
+   Some changements have been made in AAMAIN, OUTPUT, and BOX3 for 
+keeping the information for the additional muon output option.
+ Some minor changes have been performed: 
+* Gathering of the isobar routines into the PATCH ISOBAR, gathering 
+  the HDPM routines into the PATCH HDPM, gathering the NKG-routines 
+  into the PATCH NKG.
+* Tuning the transverse momentum distribution in the HDPM model to
+  recent experimental findings (UA1/MIMI) by modifications in HDPM,
+  PPARAM, and new subroutine PTRAM
+* Enlarging the array for secondary particles of HDPM from 2000 to
+  3000; this needs also an enlargement of the array for random 
+  numbers by the same amount.
+* In subroutine NKG the minimal distance between the subshower axis 
+  and a point where the electron density is calculated, has been 
+  limited to 1 cm (The old minimal distance of sqrt(10**-5) is 
+  experimentally not reasonable).
+------------------------------------------------------------------------
+
+Version 5.024: not released        (coupled with VENUS4.12/5, 
+(Nov 1996)                          SIBYLL 1.6, QGSJET, and DPMJET-II)
+(used for shower calculations with individual cross sections)
+------------------------------------------------------------------------
+   To use the various hadronic interaction models with their own
+cross sections for determining the free path up to the next hadronic 
+interaction, the options VENUSSIG, QGSSIG, and DPMJETSIG  have been 
+introduced to enable the various cross sections independently from the 
+usage of the hadronic interaction  model, similar to the SIBYLLSIG 
+option. Selecting more than one cross section option gives unpredictable 
+results. From practical reasons the cross sections of nucleus-nucleus
+collisions are calculated using the specific hadron-nucleus cross
+sections of VENUSSIG, QGSSIG, or DPMJETSIG and taking the Glauber tables
+already implemented in CORSIKA.
+   Some smaller improvements have been performed within the DPMJET-2
+package according to the suggestions of J. Ranft.
+   The DPMJET-2 has been updated to get p_t distributions better in
+accordance with experimental data.
+  Corrections of smaller errors:
+*  In subroutine PIGEN1 and PIGEN1 the calculation of the cm angle 3 
+   is faulty; one should read: 
+C ***  ABOVE 1300 MEV THE ANGULAR DISTRIBUTION IS DETERMINED
+C ***  BY THE TRANSVERSE MOMENTUM OF THE PION
+       PT=1.D3*PTRANS(DUMMY)                              <========
+       COSTE3=SQRT(MAX(0.D0,P3CM**2-PT**2))/P3CM
+      END IF
+   and
+C***  NOW SELECT THE THREE INDEPENDENT ANGLES IN C.M. SYSTEM
+      PT3=1.D3*PTRANS(DUMMY)                              <========
+      SIN3CM=MIN(1.,PT3/P3CM)                             <========
+      COS3CM=SQRT(1.-SIN3CM**2)
+      CALL RMMAR(RNNO86,1,2)
+------------------------------------------------------------------------
+
+Version 5.023: not released        (coupled with VENUS4.12/5, 
+(July 1996)                          SIBYLL 1.6, QGSJET, and DPMJET-II)
+(used to produce the results of the report FZKA-5828)
+------------------------------------------------------------------------
+   To compare the influence of interaction models, we have extended the
+coupling also to DPMJET (Version II). The coupling routines are 
+contained within patch DPMJETLINK, DPMJET is activated by the cmz select
+option DPMJET. Selecting more than one interaction model at the same 
+time suppresses DPMJET in favour of VENUS, SIBYLL, or QGS.
+Many modifications within the interaction test routines have been made 
+to treat the spectators and to check energy conservation.
+   Additionally some changements have been made and small errors are 
+eliminated:
+*  To avoid the warnings given by some compilers, quantities declared
+   at the beginning of BOX2, DATAC, KDECAY and MUDECY but only used in
+   the horizontal rsp. neutrino option, are now activated only when 
+   needed.
+*  Modification in PAMAF: To get better agreement in the energy balance 
+   of the interactions, we use now the masses of nuclei without binding 
+   effects. 
+*  BOX2: The treatment of strange baryons is adapted individually to the
+   interaction program. The treatment of sigma(0) and anti-sigma(0)
+   by GHEISHA is definitely excluded now by setting FDECAY=.true..
+*  To increase the angular precision of the EGS-routines, the dimension
+   of the arrays SIN0 and SIN1 is increased from 1002 to 20002, also the
+   value of MXSINC accordingly.
+*  The energy border between high and low energy interaction model
+   is selectable in the interactiontest. Two variables HILOELB and
+   HILOECM are used to steer the border.
+*  Additional check in INPRM for selection of longitudinal sampling
+   in the case of the horizontal shower option, when the atmosphere
+   becomes thicker than 1040 g/cm**2.
+*  The fraction of charge exchange within PIGEN1 has been made
+   consistent with RESDEC, which is based on theoretical considerations.
+New cmz-options have been added. Now an option to generate a program
+version running on PC's under LINUX is available. The PLOTSH option
+causes the write out of start and endpoints of all particle tracks, 
+separately for hadrons, muons, and electromagnetic particles. A special 
+program makes the shower development visible on screen or on plots. 
+------------------------------------------------------------------------
+
+Version 5.012: not released        (coupled with VENUS4.12/5, 
+(Jan 1996)                          SIBYLL 1.6 and QGSJET)
+
+------------------------------------------------------------------------
+   Considerable extensions have been made by coupling with the high 
+energy interaction programs SIBYLL and QGSJET.  The coupling is done via 
+routines contained within the patches SIBYLLINK and QGSLINK. These
+couplings are activated by the cmz select options SIBYLL and QGS rsp.
+Selecting more than one high energy interaction model simultaneously
+is blocked by suppression of SIBYLL and QGS if VENUS is selected,
+and by suppressing QGS if SIBYLL is selected. For all these models
+the low energy interaction routines of GHEISHA are coupled. Transition
+energy is for all cases 80 GeV (Elab). In all models their use
+is activated by default and may be deactivated using a data card
+with the key words VENUS, SIBYLL, and QGSJET.
+  As addition and independent from this model selection the
+QCD-calculated cross sections of the SIBYLL model can be selected using
+the cmz selection option SIBYLLSIG. Their use is then activated by 
+default and may be deactivated using a data card with the key word 
+SIBSIG. 
+   The decay of pi(0) into e(+)+e(-)+gamma has been added to the 
+PI0DEC routine. This requested also changes within DECAY6, MPPROP,
+and SHOWER. (Now all pi(0)'s decay within PI0DEC, while PIZERO of the
+EGS patch is no longer in use.)
+   A new possibility of fragmentation (activated by NFRAGM = 4) is
+introduced, which gives realistic nucleus fragments according to the 
+used model, but without transverse momentum. (Changements within VAPOR 
+and START).
+   Some inconsistencies and small errors have been removed:
+*  DATAB (and if necessary DATAB2) are now reset to 0 at begin of 
+   simulation (changement in START).
+------------------------------------------------------------------------
+
+Version 4.603: not released        (coupled with VENUS4.12/5)
+(for internal use since JAN 18, 1996)
+
+------------------------------------------------------------------------
+   Within the routines HDPM, LEADDF, and LEDENY the calculation of the
+rapidity was modified to formulas which show better numerical stability 
+at very high energy.
+------------------------------------------------------------------------
+
+Version 4.60 : not released        (coupled with VENUS4.12/5)
+
+------------------------------------------------------------------------
+   The key word DATBAS is used to enable a new option which writes a run
+summary to the output unit 45. This output is intended as input to a 
+data base administrating a shower library. 
+------------------------------------------------------------------------
+
+Version 4.502: from DEC 12, 1995   (coupled with VENUS4.12/5)
+
+------------------------------------------------------------------------
+   Some inconsistencies and small errors have been removed:
+*  Bug in PRANGE fixed (occurred, if first interaction above 100km)
+*  Bug in AMOEBA (Dimension Y(MP) instead of Y(NP)); the effect 
+   depends on the compiler.
+*  In DECAY6 by chance COSFI4 could be >1 by rounding errors. Now
+   its value is limited.
+*  Some inconsistencies in using the interactiontest have been removed
+   (ELCUT no longer active in interactiontest, target selection in
+   SDPM for VENUS tests, target settings for arbitrary targets and
+   settings of  diffractive probabilities in VENLNK )
+*  An inconsistency in the monitor printout (for em-particles 
+   with Ekin > ECTMAP the level of the last hadronic interaction was
+   not printed) has been removed.
+------------------------------------------------------------------------
+
+Version 4.501: from NOV 07, 1995   (coupled with VENUS4.12/5)
+
+------------------------------------------------------------------------
+   Some small errors have been eliminated. They refer to:
+*  a typing error in INPRM (statement was beginning before column 7), 
+*  check of the limit of ELCUT(1) in the GHEISHA option (subroutine
+   INPRM),
+*  the redefinition of XCER and YCER in the subroutines CERENE and 
+   CERENH,
+*  definition of CGHSIG as DOUBLE PRECISION at beginning of subroutine
+   BOX2 (instead of REAL)
+*  the limitation of GAM0 to values above 1.0001 (subroutines PRANGE 
+   and UPDATE).
+*  the fit at the average longitudinal distribution (the fit was made 
+   to PLONG instead of APLONG), 
+*  the position of the CLOSE statements at the end of AAMAIN, 
+*  the routine HISOUT forming the dsname for the HISTDS output file, 
+*  a wrong format statement label used in many WRITE statements in
+   subroutine GETBUS.
+------------------------------------------------------------------------
+
+Version 4.50 : from OCT 06, 1995   (coupled with VENUS4.12/5)
+
+------------------------------------------------------------------------
+   A significant improvement of the range of all particles, which 
+suffer from ionization energy loss before decay, has been made in BOX2, 
+implementing the new subroutine PRANGE.  The range's error is now 
+less than 0.6 % also in unfavorable cases, e.g. muons with energy 
+of 3.7 GeV starting in 30 km altitude at 45 degrees, which penetrate 
+down to sea level. As this new approach is only possible for an 
+exponential atmosphere, it can not be applied in combination with 
+the horizontal shower option, which still uses the range calculation 
+of version 4.114.
+   The new formulas for the ionization and pair formation energy loss 
+are now also used in subroutine UPDATE for all charged particles to
+calculate the gamma factor at the end of the flight path.
+   The variable THICKH has been added to COMMON PARPAR, a new COMMON 
+ATMOS2 has been introduced to keep the layer boundary altitudes and 
+their thicknesses.
+   An inconsistency (the altitude H in COMMON PARPAR was not set
+correctly) in the call of UPDATE from the MAIN has been eliminated
+in the case, the primary penetrates through down to the lowest 
+observation level.
+   Instead of 1 Cherenkov array now up to 20 Cherenkov arrays are
+considered, which are (with respect to the origin) scattered at random 
+within a predefined area. Keyword is CSCAT.
+------------------------------------------------------------------------
+
+Version 4.468: from SEPT 29, 1995            (coupled with VENUS4.12/5,
+                                                          not released)
+
+------------------------------------------------------------------------
+   Using FIXHEI to fix the height of the first interaction, in the case
+of decaying particles (pions, kaons, str. baryons) the first action 
+of those particles is no longer determined by BOX2, but rather will be 
+always an interaction and not a decay.
+   With the new keyword FIXCHI the starting altitude of the primary is 
+shifted from the top of the atmosphere to the value of CHI0 
+(in g/cm**2), which serves to study the development of subshowers.
+   Changements in subroutine NUCINT to treat deuterons, tritons and
+alpha particles by GHEISHA, if selected and if the energy is in the 
+correct range.
+   When entering EGS, the energy of EM-particles is checked to fall 
+below the upper limit (at present 10**7 GeV) of the EGSDATA set. The
+calculation of the EM-rejection boundary is moved into the main program.
+  In the Cherenkov case now the EGS-flag FEGS is set in START; the
+FEGS condition is still checked in subroutine EM also in the Cherenkov
+case (as it was in the versions before 4.11).
+   The bunch size is printed now, and when calculated in GETBUS it 
+is printed always after the GETBUS call.
+   All the printing statements for the interaction models have now been
+collected from INPRM into START, while the check of shower parameters
+and their printing is taken from START into INPRM. 
+   The routine DATAC has been modified to accept format free input data,
+including lower case characters, which are converted within the new
+subroutine LOWUP.
+   A check of the lateral distribution of Cherenkov photons produced by
+low energy gammas (20 GeV to 1 TeV) shows, that the mean free path
+between two multiple scattering events should be reduced in critical
+cases on the expenses of longer computing time. During the check the
+routine CERENE has been modified to take into account the continuous
+energy loss EDEP along the step considered in CERENE, which becomes 
+essential for low energy electrons just above the Cherenkov threshold.
+New keywords STEPFC (giving the step size prolongation factor for
+electron multiple scattering in EGS) and CWAVLG (to specify the
+Cherenkov wave length band) have been built in.
+   The random distribution for the zenith angles has been modified to
+get an intensity proportional to  sin(theta)*cos(theta), where the
+sin(theta) comes from the solid angle element and the cos(theta) comes 
+from the horizontal area of the measuring array. (The older versions 
+neglected the cos(theta) dependence, which is only correct for spherical
+detectors.)
+   Some small errors have been eliminated: 
+* Typing error in KDECAY (Neutrino Version COSTCM instead of COSCM); 
+* OPEN of files also for VMS in INPRM; 
+* Calculation of the elasticity matrix table corrected 
+  (MAIN, HDPM, CGHEI, VSTORE)
+------------------------------------------------------------------------
+
+Version 4.114: from SEPT 11, 1995 (not released)
+
+------------------------------------------------------------------------
+   Erroneously in the calculation of the range to decay for neutral 
+kaons and neutral strange baryons an ionization energy loss was 
+accounted for.  This mistake in BOX2 is now eliminated.
+   The printout of the random generator status and the event number at 
+VENUS error messages or error stops is improved in VENINI and VENLNK.
+    A revised version of the subroutine CERENE has been built in to
+improve the Cherenkov intensities at low energy photon induced showers.
+    Correction of an error in CHISQ by demanding positive width.
+------------------------------------------------------------------------
+
+Version 4.113: from JUNE 23, 1995  (withdrawn August 23, 1995 because of
+                                    problems with VENUS 5.01/6)
+
+------------------------------------------------------------------------
+   The sequence of the columns header of the longitudinal distribution
+was not correct and has been changed to give the correct sequence of the
+columns beginning with 'gammas, POSITRONS, ELECTRONS, mu-, mu+, ...'.
+------------------------------------------------------------------------
+
+Version 4.112: from JUNE 19, 1995  (withdrawn August 23, 1995 because of
+                                    problems with VENUS 5.01/6)
+
+------------------------------------------------------------------------
+   Eliminating bugs from Subroutine BOX2: Errors in COR2 and DH. 
+The quantity PLAB was not set for the use in GHEISHA.
+------------------------------------------------------------------------
+
+Version 4.11 : from MAY 19, 1995   (withdrawn August 23, 1995 because of
+                                    problems with VENUS 5.01/6)
+
+------------------------------------------------------------------------
+   Including of subroutine VAPOR for treatment of fragmentation in
+realistic manner, regarding transverse momentum for the fragments.
+  The VENUS version 5.01 is now coupled with CORSIKA.
+  All strange baryons with s = +-2 and +-3 are now generated by VENUS
+and tracked explicitly, low energy treatment is done by GHEISHA. As 
+their treatment by the isobar-model is not possible, a selection of 
+VENUS needs also an automatic selection of GHEISHA. Kaon and gamma 
+induced interactions are now also treated by VENUS, if energy is high 
+enough. 
+   The longitudinal profiles of various particle species are now 
+calculated if corresponding flag LLONGI is set. A fit is made for the 
+longitudinal distribution of the 'all charged particles' and the fit 
+parameters are written to the EVTE block., if the fit flag FLGFIT is 
+set. New subroutines are AMOEBA, CHISQ, LONGFT.
+   Cherenkov routines are modified to enable the photon registration in 
+an array with selectable detector number NCERX, NCERY, grid spacing
+DCERX, DCERY, and detector size ACERX, ACERY. The orientation of the 
+array relative to magnetic north may be chosen by ARRANG, the angle 
+between the array x-axis and north. The Cherenkov output may now be
+directed to the Cherenkov output (LCERFI=.true.) or to the particle 
+output (LCERFI=.false.). An error in the FORMAT-statement (label 100) 
+of subroutine GETBUS is corrected.
+   The refractive index of air in the routines CERENE and CERENH is
+calculated in a more precise way. This affects the emission angle 
+and also the arrival time of the Cherenkov photon bunches. The velocity 
+of the Cherenkov emitting electrons is now considered.
+This eliminates the uncertainty of the older calculation of the arrival
+time, which is in the order < 1 nsec. The arrival time of the Cherenkov
+photons is no longer given relative to the arrival of the shower axis,
+but - in consistency with the other particles - relative to the first 
+interaction.
+   The option names CERENK and INTTST are changed to CERENKOV and 
+INTTEST, the new option VMS for running on VAX or DEC-AXP under VMS 
+is added. A new option to select the target nucleus of the first 
+interaction is added to the keyword FIXHEI. The variable N1STTR may 
+have the values 0 = random target, 1 = nitrogen, 2 = oxygen, 3 = argon.
+   The EQUIVALENCE of the nuclear cross sections PN30 ... PA60
+with PNOA.... and the collision probabilities SEQU14...SEQU40 with 
+SE14...  SE40 has been eliminated.
+   NKG-routines AVAGE and MITAGE improved to calculate mean and 
+deviation in a consistent manner.
+   Selecting simultaneously EGS and NKG gave a too high value for 
+the number of electrons for NKG. The effect was most pronounced in 
+gamma-initiated showers and came from em-subshowers, originating 
+from pi(0) after gamma-induced hadronic interactions. Now the 
+contribution to NKG from gammas, producing muon pairs or hadrons 
+(subroutines MUPAIR, PIGEN) is subtracted from the NKG output by 
+calling NKG with negative argument. This implies changes in AVAGE, 
+MITAGE, NKG, MUPAIR, PIGEN.
+   All input parameters which are selected by the routine DATAC are 
+checked in INPRM, whether they are in the range for which CORSIKA is 
+designed for a proper use. If a parameter is outside of this range of 
+confidence, the program will issue a warning and correct the parameter 
+or stop. 
+   By the VENPAR data card VENUS parameters may be changed relative to
+the standard setting of subroutine VENINI.
+   The generator for normal distributed random numbers RANNOR is
+replaced by a new version which avoids trigonometric functions and 
+therefore is a little bit faster.
+   A new option MUADDI is available which causes by setting the flag
+FMUADD the program to write additional information on the origin of 
+the muons onto the particle tape just preceding the muon particle. 
+The information corresponds with the particles' properties, but 
+instead the time since first interaction, the altitude of origin is 
+written. The particle codes for these additional information are 75 
+and 76 for positive and negative muons.
+   The calculation of the range of decaying particles (muons, charged
+pions, kaons, and strange baryons), which is done in subroutine BOX2
+has been improved by considering the slowing down during the flight
+path. But the new range calculation is still not quite satisfactory, 
+so we will try to improve it further in next future. 
+Also the ionization loss in the tracking of the charged particles 
+(subroutine UPDATE) is not sufficient, especially at lower energies, 
+and will be improved in future.
+------------------------------------------------------------------------
+
+Version 4.068: from October, 1994
+
+------------------------------------------------------------------------
+Debugging of VENUS is improved by the keyword VENDBG, which enables to
+set the amount of debug printout for VENUS. CERSIZ is now correctly
+taken from input data card or computed internally by GETBUS, 
+if set to 0. in the data card. 
+------------------------------------------------------------------------
+
+Version 4.065: from July, 1994
+
+------------------------------------------------------------------------
+The passage of the primary particle through the observation levels was
+not watched and is now added to MAIN-program. 
+The cut for low energy EM-particles, which have very small chance to 
+produce measurable particles at the observation levels, is now 
+calculated for each individual shower.
+The cross section of pions in VENLNK is now calculated more consistent.
+In VENLNK there was an error (LAPROJ was not set to -1),
+which causes the internal use of a proton instead of a pion as the
+leading particle of a pion-induced VENUS-collision. 
+------------------------------------------------------------------------
+
+Version 4.06 : from March, 1994
+
+------------------------------------------------------------------------
+CORSIKA is now available as DECUNIX and MACintosh version with 
+the corresponding HISTORIAN flags. The DECUNIX version runs on
+DEC-stations under ULTRIX and ALPHAs under OSF/Unix, the MAC 
+version runs under SYSTEM 7 with the ABSOFT Fortran 77.
+
+The HISTORIAN flag INTTST selects now the code for a detailed
+interaction test. The additional routines are 
+  TSTINT   common deck for interaction test
+  TST      block data for testing
+  HISINI   initialization of histograms
+  HISRES   reset histograms
+  HISPRP   prepare histograming
+  HISTRA   transform to a convenient reference system
+  HISFIL   fill histograms 
+  HISOUT   store histograms
+For this interaction test HBOOK and ZEBRA from the CERN lib
+has to be linked to the program.
+The implementation of the interaction tests entailed a number of
+minor changes in several CORSIKA routines.
+
+GHEISHA interaction routines have been implemented for treatment of the
+low energy hadronic interaction (selectable by the data card GHEISH  T).
+If GHEISHA is selected as well the interaction cross sections are used
+as parametrized in the GHEISHA code.
+This improves the simulation of low energy interactions compared to the
+crude treatment with the isobar model routines.
+The time consumption goes up, however, by roughly a factor 2.
+New routines necessary for running GHEISHA :
+  UCOPY    copy of the CERN routine with the same name 
+  VZERO    copy of the CERN routine with the same name
+  FLPSOR   copy of the CERN routine with the same name
+  GRANOR   random number generator adapted to the one used in CORSIKA
+  GRNDM    random number generator adapted to the one used in CORSIKA
+  GARNDM   random number generator adapted to the one used in CORSIKA
+  CGCOMP   common deck
+  CGHINI   initialization of GHEISHA
+  CGHSIG   cross section calculation of GHEISHA
+  CGHEI    interface to interaction routines 
+All the above routines are appending at the end of CORSIKA.
+The original GHEISHA routines, that are used together with CORSIKA
+are in a separate file with about 16100 lines.
+
+For high energy collisions the program VENUS for
+ultrarelativistic heavy ion collisions has been implemented.
+VENUS improves especially the nucleus-nucleus collision 
+simulation at highest energies.  It increases the computing time
+however by a factor of 15!!. The interface routines are
+activated by the HISTORIAN flag VENUS. New routines for VENUS are
+  VENUS    common deck
+  VENINI   initialization of VENUS
+  VENLNK   interface to interaction routines
+  UTQSEA   structure function due to sea quarks
+  UTQVAL   structure function due to valence quarks
+  VSTORE   stores secondaries on stack
+  RANGEN   random number generator adapted to the one used in CORSIKA
+  VENDAT   block data for VENUS
+These routines are appending the CORSIKA code, whereas the interaction
+routine are in a separate file of about 17700 lines length. 
+  VENDATA  external dataset with numerical values of structure
+           function integrals. To be read at initialization time.
+
+In routine AVAGE and MITAGE the printout of the NKG results
+(looking like the union jack) gave the electron densities in
+particles/Rmol**2. Now it is changed to particles/m**2 as it was
+(and is) in the output on tape.
+
+In BOX2 the cross sections are calculated by GHEISHA if the GHEISH
+data card is set TRUE.
+
+The muon decay code in BOX3 is now extracted to the new routine
+MUDECY. BOX3 was changed consequently.
+
+Now the last secondaries created in an interaction are always
+written to the stack. Before the last one was kept as the new
+current particle in the routines BOX60, BOX61, ... BOX74, HMESON,
+VHMESON, SINGLE, ISOBAR, NIHILA, NUCINT. The return codes in these
+routines have been removed.
+
+The philosophy of energy and angular cutting has been changed.
+Before a particle that was below the energy cut was still tracked and
+stored on the stack if there was the chance to create in a decay
+or interaction other particles that might be above their cuts.
+Thus it could happen that hadrons were tracked down to zero energy
+when the electron cut was at 3 MeV.
+For angular cuts such a future vision was not applied.
+Now rigorously all particles below some cuts are discarded before
+being written to the stack. It is now in the responsibility of the 
+user to take care that the cuts for the different particles are 
+chosen reasonably. 
+
+All ENTRY statements (AUSGB2, TSTACK, FSTACK, OUTEND, OUTEND2,
+STAEND, INPRM, TOBUFC) have been converted to separate routines,
+to be able to use a special programming tool for program
+development here in Karlsruhe.
+
+The tracking routine UPDATE has been improved and streamlined.
+The new array SIGN in common PAM gives the charges of all particles.
+It is filled in routine PAMAF.
+
+The array declarations in RMMAQ, RMMAR, TOBUF were changed to get 
+the program running even with explicit checking of array boundaries.
+
+The limit between low and high energy interaction model is shifted 
+to Elab = 80 GeV.
+
+The standard energy cuts were changed to 0.3, 0.3, 0.003 and 
+0.003 GeV for hadrons, muons, electrons and photons, respectively.
+
+Some commons had to be rearranged to meet the requirements of 
+standard Fortran 77.
+
+The descriptions of the commons has been updated.
+
+Minor changes in several routines due to the implementation of
+VENUS, GHEISHA and the interaction test routines.
+
+The postal code of Karlsruhe changed. Please regard the new
+address in the header of the CORSIKA source in case you want to
+send us paper mail.
+
+Since beginning of 1994 we develop and run CORSIKA on DEC Alpha
+stations. Therefore, and because of several other groups do not have
+access to HISTORIAN we maintain CORSIKA now with the the help of the
+CERN software CMZ (Code Management with Zebra). This package is
+available from CERN for free and is probably used already by most of
+the labs being involved in particle physics.
+Now everybody is able to create the desired version of CORSIKA on his
+own. 
+
+There exists an updated version of the CORSIKA users guide, where the 
+structure and the handling of the CMZ source is described. 
+------------------------------------------------------------------------
+
+Version 4.01 : from May 28, 1993
+
+------------------------------------------------------------------------
+DPHI in routine ADDANI was not properly defined.
+The new angle phi at the end of the routine is stored in the
+the variable DPH instead of the variable DPHI which is the 
+subroutine argument. 
+In case of CERENK and TRANSP code the statement number 447
+appeared twice in the MAIN program.
+Directly before the open of the Cherenkov tape the do loop
+statement number has to be changed to 449.
+In routine HDPM where the width of the gaussians for neutral
+particles WIDN2 is calculated in the statement
+      WIDN2 = MAX(1.D0 , 1.12275D0 - 0.0208D0 * RSLOG) * WIDC2
+the MAX function has to be replaced by the MIN function to get 
+correctly
+      WIDN2 = MIN(1.D0 , 1.12275D0 - 0.0208D0 * RSLOG) * WIDC2
+
+In routine SDPM directly before the loops 200 and 210 respectively,
+the code should be included inside the IF blocks
+C  CALCULATE GAMMA, BETA AND ENERGY IN CENTER OF MASS
+          GCM = SQRT ( GAMMA * 0.5D0 + 0.5D0 ) 
+          ECM = PAMA(ITYPE) * GCM * 2.D0 
+          BETACM = SQRT ( 1.D0 - 1.D0 / GCM**2 )
+
+In addition in SDPM the second loop over the HDPM calls (for protons;
+statement number 210) should read
+      DO 210 LL=1,NPRPRO 
+instead of
+      DO 210 LL=1,NNEPRO
+
+In the routine AVAGE the write statements for the NKG-output for
+each shower were activated only if the logical variable LPRINT is
+true (in analogy to all the other printouts in the MAIN program).
+
+The NKG routine uses now the energy cut for electrons that is specified
+in ELCUT(3) and allows thus to account for detection thresholds.
+The NKG electron number and the lateral distributions
+are now depending on this cut.
+
+The neutrinos are treated now explicitly when choosing the HISTORIAN
+flag NEUTRINO. ...
+
+The flag INTTST allows to create histograms about many quantities
+of the interaction model. This version requires then HBOOK from 
+the CERN library.
+------------------------------------------------------------------------
+
+Version 4.00 : from April 22, 1993
+
+------------------------------------------------------------------------ 
+Since Version 3.05 many changes in subroutines and common blocks 
+have been made and we recommend to install the program completely
+new.
+
+The major changes were: 
+In the hadronic interaction model the charge exchange and
+resonance formation have been treated more consistently.  The
+leading and antileading particle are treated in the same way.
+They may form Delta resonances, rho mesons or K* with immediate
+decays according to their branching ratios. This may lead to an
+effective charge exchange of the leading or antileading 
+particles. The charge exchange and the resonance production are
+selected energy dependent and the decays are performed in a way
+that the charge of the secondaries is conserved.
+Strange baryon production is implemented and the decays of the 
+baryons follow the measured branching ratios.
+The eta meson production and their decays into neutral particles
+are taken into account.
+In former versions the transverse momentum and the energy of hadronic
+interactions were conserved but not the longitudinal momentum.
+Now we adopted the so called Jadach filter to conserve all quantities
+at the same time.
+The hadronic interaction model (HDPM) has been subdivided into many
+subroutines to clarify the structure and to improve the maintenance
+and readability.
+As muons from pion and kaon decays are polarized the distribution
+of there decay electrons may be influenced. Therefore we included
+the polarization into the decay of muon and kaon.
+Cherenkov radiation from electrons and hadrons has been
+implemented following an approach from M. Rozanska, F. Arqueros
+and S. Martinez from the HEGRA Collaboration.  The routines 
+CERENE and CERENH are called from ELECTR (EGS) and UPDATE for
+electrons and hadrons respectively.  As the number of Cherenkov
+photons is rather large, only representative subsamples of 
+photons are recorded.  Nevertheless there is substantial output
+on an additional output file. As the EGS version has to be used
+and some accelerating tricks have to be abandoned for Cherenkov
+calculations the computing time rises strongly.
+There exists a option of the program to simulate showers under
+zenith angles up to 90 degrees. To avoid the tracking in spherical
+coordinates we adopt a modified density profile of the atmosphere.
+The density profiles have to be read from an external dataset.
+
+In addition there were many minor changes and corrections.
+------------------------------------------------------------------------
+
+Version 3.05 : from 13.3. 92 
+
+------------------------------------------------------------------------
+Calculation of ATAN in routine NIHILA corrected. First argument
+has to be y and second argument x.
+
+New COMMON /MAGNET/ to track all charged particles with earth magnetic
+field. Initiation of the magnetic field in START.
+New routine UPDATE to perform the tracking with magnetic field.
+The EGS routines are effected as well.
+BOX2 has been changed to calculate the place of next interaction 
+faster and simpler. The decision whether decay or interaction is
+moved from NUCINT to BOX2.  New flag FDECAY in COMMON /RUNPAR/ 
+tells the routine NUCINT which decision has been taken in BOX2.
+In BOX2 in addition some sign errors in the parametrizations of the
+cross sections have been corrected and the parametrization has been
+smoothed a bit.
+Plus some minor changes
+All common decks/routines that have been effected by the changes are:
+MAGNET, RUNPAR
+BOX2, DATAC, EGS, NIHILA, NUCINT, START, UPDATE, VHMESO 
+------------------------------------------------------------------------ 
+
+Version 3.04 : from 1.12. 91
+
+------------------------------------------------------------------------
+Main changes in fragmentation fo primary nuclei:
+  Optional use of fragmentation model, which keeps all spectator
+  nucleons of the first interaction together as a new nucleus. 
+  To treat those nuclei one needs the cross section tables for all
+  nuclei with A < 56 and the probabilities how many nucleons interact
+  in a collision with air nuclei. This rather long table is supported
+  in a separate data set.
+  In addition we switched to experimentally determined cross sections
+  for inelastic hadron - proton collisions including annihilation
+  to calculate the distance to the next interaction. 
+Commons  ADDCST, HWNPR, PARAM  were no longer needed.
+Commons  AIR, NCSNCS, SIGM     were added.
+The new option can be chosen in the HADFLG data card as 6th flag,
+routine DATAC and START consequently had to be extended.
+The contents of common NCSNCS has to be read in routine START from an
+external file (on unit 11). It is sent in data set NUCNUCCS.
+The subroutines BOX2 and SDPM have been replaced by new ones, 
+containing all the changes needed for the new option.
+Experimentally available hadron-nucleon cross sections from the particle
+data group have been implemented in BOX2 and HDPM, the constants 
+C(16), C(17), C(31), C(32), CKA(15) and CKA(16) are no longer used. 
+The interaction length statistics for muons has been renamed to decay
+length statistics (format in routine OUTPUT).
+Routines BOX60 to BOX63 use now the experimental annihilation cross
+sections. In NUCINT the new interaction mean free pathes have been
+included for pions and kaons. 
+Because we do not need longer the common ADDCST the constants CAD(.)
+have no longer to be written to the run header. For compatibility 
+reasons we keep the structure in the header unchanged.
+
+In routine VHMESO the statement
+      IF ( SECPAR(3) .GE. C(29) ) GOTO 7
+was wrong. We corrected this error and restructured the treatment of
+the angular cuts.
+
+The calculation of EKINL for heavy primaries in routine NUCINT was
+wrong. It is now calculated for all particles in the same way.
+
+The calculation of the point of next interaction for particles
+with competing decay and interaction has been refined in BOX2.
+
+In the EGS routines, the common CLOCK has been renamed to ACLOCK 
+to avoid problems with internal function CLOCK of some compilers.
+
+Some minor changes.
+
+All decks that have been effected by changes since CORSIKA 3.03 are:
+DATACRD, EXPLAIN, DPMFLG, NEUTR,
+AVAGE, BLOCKDAT, BOX2, BOX60, BOX61, BOX62, BOX63, DATAC, EGS, hdpm,
+HMESON, ISOBAR, MITAGE, NIHILA, NUCINT, OUTPUT, SDPM, SINGLE, START,
+VHMESO,
+AIR, NCSNCS, SIGM
+------------------------------------------------------------------------
+
+Version 3.03 : from 1.10. 91
+
+------------------------------------------------------------------------
+Variable ELEFT introduced in common ETHMAP.  It contains the sum of
+the energy of all particles on the stack.  It is printed out in 
+routine OUTPUT with each particle being mapped to see how much 
+computing time is still necessary for a long running shower. In
+routine OUTPUT the common ETHMAP was added and the printout of
+particles has been extended by ELEFT.  In routine ISTACK the commons
+ETHMAP and PAM were added and the calculation of the new ELEFT when a
+particle was taken from or written to the stack In MAIN the output
+format of the header line was changed.
+
+In routine HDPM the statements
+C  EXCESS OF CHARGED PARTICLE WHICH COME FROM AIR TARGET
+C  IS GIVEN BY SUBROUTINE DIFRAC IN CASE OF DIFFRACTION
+        ANCJ = FLOAT(NC1)
+have to be moved before the statement
+C  CHARGED PARTICLES FROM TARGET
+        BNCJ = XZ * ANCJ
+        IF (NCH .LE. 1) ISEL=1
+      ......
+
+In routine HDPM after the statement
+ 1009  CONTINUE
+the statement
+       NCH = NPC
+has to be included and before the comment
+C  NOW  NCH = (NNC+KKC)*2 + NPC
+the statement
+       I = I + 1
+was missing and has been added.
+------------------------------------------------------------------------
+
+Version 3.02 : from 16.4. 91
+
+------------------------------------------------------------------------
+To avoid double initialization of coordinates for incident pi 0 in
+program MAIN change the statement
+          T = -100.
+to
+          IF ( CURPAR(1) .LE. 3. ) T = -100.
+
+Error in parametrization of position and width of gaussian in routines
+DIFRAC and HDPM corrected.
+Replace in DIFRAC:
+C  WIDTH OF GAUSSIAN FOR THE FRAGMENTATION SYSTEM
+      DPI1 = 0.146429D0   * E1LOG + 0.1641717D0
+C  POSITION IN CMS OF FRAGMENTATION SYSTEM
+      SPI1 = 0.11987884D0 * E1LOG + 0.25484387D0
+by the code
+C  WIDTH OF GAUSSIAN FOR THE FRAGMENTATION SYSTEM
+      DPI1 = 0.11987884D0 * E1LOG + 0.25484387D0
+C  POSITION IN CMS OF FRAGMENTATION SYSTEM
+      SPI1 = 0.146429D0   * E1LOG + 0.1641717D0
+Replace in HDPM :
+C  SOME CALCULATION ; FINAL POSITION CALCULATED LATER
+      SPIO = 0.11987884D0 * ELABLG + 0.25484387D0
+C  WIDTH GAUSSIAN FOR CHARGED SECONDARIES
+      DPIO = 0.146429D0 * ELABLG + 0.1641717D0
+by the code
+C  SOME CALCULATION ; FINAL POSITION CALCULATED LATER
+      SPIO = 0.146429D0 * ELABLG + 0.1641717D0
+C  WIDTH GAUSSIAN FOR CHARGED SECONDARIES
+      DPIO = 0.11987884D0 * ELABLG + 0.25484387D0
+
+All distances in NKG, AVAGE, MITAGE, ININKG have been changed to cm
+instead of meters to fit to the rest of the program.
+New routine NIHILA giving better kinematics of secondary particles.
+Therefore as well the initialization of the array CAN had to be changed.
+In routine AVEPT the calculation of ratio of Pt for nucleons, pions and
+kaons was changed
+      AVPT = 1.D0 + AVPT                                                       
+      AVPK = 1.D0 + AVPK
+      AVPN = 1.D0 + AVPN
+by the statements
+C  SET AVERAGE PT RELATED TO AVERAGE PT FOR PIONS
+      AVPK = 1.3D0 * AVPK / AVPT
+      AVPN = 1.3D0 * AVPN / AVPT
+      AVPT = 1.3D0
+In subroutine UPHI it is saver to insert
+      SAVE A,B,C
+The data card input for selecting debug output has been changed.
+Now the logical unit for debug output can be chosen, too. The default
+value for MDEBUG is 6. The printout in routine START has been slightly
+modified and MDEBUG is no longer set in BLOCKDATA.
+The routine PIGEN has been changed and the routines
+PIGEN1 and PIGEN2 have been added to allow photons
+producing one or more hadrons, for high energies via the routine HDPM.
+PHOTON, HDPM and SLEAPA have been modified for this reason.
+Commented debug statements improved in all EGS routines.
+Routine AUSGB2 is now an ENTRY in routine AUSGAB.
+
+Changes in PHOTON
+=================
+In routine PHOTON after the call to PIGEN
+        IF (NP.EQ.0) THEN
+         IRCODE=2
+         RETURN
+        END IF
+has to be inserted.
+
+Changes in HDPM
+===============
+In the beginning of routine HDPM the calculation of ELAB and PLAB has
+been modified to
+C  CALCULATE LAB AND CM ENERGY
+      IF ( ITYPE .EQ. 1 ) THEN
+        ELAB = GAMMA
+        PLAB = ELAB
+        GNU =  1
+      ELSE
+        ELAB = PAMA(ITYPE) * GAMMA
+        PLAB = ELAB * BETA
+      ENDIF
+
+The calculation of the number of collisions in target is not performed
+for gammas. changed to
+C  CHOSE NUMBER OF INTERACTIONS IN TARGET ,IF NOT GAMMA INITIATED
+      IF ( ITYPE .NE. 1 ) THEN
+C  NFLAIN = 1 : AVERAGE INTERACTIONS IN TARGET IS TAKEN
+C  NFLAIN = 0 : NUMBER OF INTERACTIONS IN TARGET CHOSEN BY MC
+        IF ( NFLAIN .EQ. 1 ) THEN
+          GNU = 0.575D0 * (1.D0 + 0.041D0 * ELABLG) * TAR**0.31D0
+          IF (DEBUG) WRITE(MDEBUG,*) 'NFLAIN=1 GNU=',GNU
+        ELSE 
+ .........
+ .........
+ .........
+
+C  NUMBER OF COLLISIONS IN TARGET
+ 7332     CONTINUE
+          GNU = FLOAT(JL)
+        ENDIF
+      ENDIF
+
+The calculation of the rapidity of center of mass system in lab has 
+been improved
+C  RAPIDITY OF CENTER OF MASS SYSTEM IN LAB
+      YCM = 0.5D0 * LOG( (ELAB + PAMA(14) + PLAB) /
+     *                   (ELAB + PAMA(14) - PLAB) )
+
+Before the return point for wrong calculation an if statement has to 
+be introduced. The code looks then like this:
+C  EXCESS OF CHARGED PARTICLE WHICH COME FROM AIR TARGET
+      ANCI0 = 2. * VNEG0
+C  FOR GAMMA-INDUCED REACTION TAKE PI0 AS LEADING PARTICLE
+      IF ( ITYPE .EQ. 1 ) ITYPE = 7
+
+C  RETURN POINT IF CALCULATION OF PARTICLES GOES WRONG
+  1   CONTINUE
+
+Diffractive interactions are forbidden for gamma induced interactions.
+Now the comment and the if statement has to be changed to:
+C  NO DIFFRACTION IF
+C           THE NUMBER OF INTERACTIONS IN TARGET IS CHOSEN RANDOMLY 
+C     AND   MORE THAN ONE INTERACTION TAKES PLACE
+C  OR       PRIMARY PARTICLE IS GAMMA (PI0)
+C  NOW NFLDIF DECIDES WETHER DIFFRACTIVE PROCESS POSSIBLE OR NOT
+      IF ( ( NFLAIN.EQ.0 .AND. GNU.GT.1.D0 .AND. NFLDIF.EQ.0 )
+     *      .OR. ( ITYPE .EQ. 7 ) ) THEN
+        IDIF = 0 
+      ELSE
+
+Charge exchange reactions for incident PI0s is included after the call
+of SLEAPA
+            IF ( RD(1) .LE. CHFF ) CALL SLEAPA
+          ELSEIF ( ITYPE. EQ. 7 ) THEN
+C  TEST IF CHARGE EXCHANGE REACTION FOR PI0
+C  ASSUME 50% CHARGE EXCHANGE FOR GAMMA INITIATED INTERACTION
+            CALL RMMAR(RD,1,1)
+            IF ( RD(1) .LE. 0.5 ) CALL SLEAPA
+          ENDIF
+        ENDIF 
+
+Changes in SLEAPA
+=================
+Charge exchange for pi0 is added:
+      IF ( RD(1) .LE. 0.5 ) THEN
+
+C  REACTION WITH NEUTRON (CHARGE EXCHANGE ALLOWED FOR PI0 PI+ K+ K0)
+C  NEUTRON ALWAYS CHANGED TO PROTON
+C  CHARGE EXCHANGE FLAG IFRA IS SET
+
+C  PI0 + NEUTRON  --> PI- + PROTON
+        IF     ( LEPAR1 .EQ. 7 ) THEN
+          LEPAR1 = 9
+          LEPAR2 = 14
+          IFRA = 1
+C  PI+ + NEUTRON  --> PI0 + PROTON
+        ELSEIF ( LEPAR1 .EQ. 8 ) THEN
+      ..........
+      ..........
+      ..........
+      ELSE
+
+C  REACTION WITH PROTON (CHARGE EXCHANGE ALLOWED FOR pi0 PI- K- K0)
+C  PROTON ALWAYS CHANGED TO NEUTRON
+C  CHARGE EXCHANGE FLAG IFRA IS SET
+
+C  PI0 + PROTON  --> PI+ + NEUTRON
+        IF     ( LEPAR1 .EQ. 7 ) THEN
+          LEPAR1 = 8 
+          LEPAR2 = 13
+          IFRA = 1
+C  PI- + PROTON  --> PI0 + NEUTRON
+        ELSEIF ( LEPAR1 .EQ. 9 ) THEN
+------------------------------------------------------------------------
+
+Version 3.01 : from 28.1. 91
+
+------------------------------------------------------------------------
+To avoid the high values in the printout of the electron lateral
+distribution from NKG (Union Jack) replace the 2 divisions in
+the following statement in routine AVAGE by multiplications.
+remove
+        WRITE(MONIOU,512)  DISX(0),
+     *                     (CZY(I,IOL)/RMLSQI(IOL),I=10,-10,-2),
+     *                     (CZY(J,IOL)/RMLSQI(IOL),J=10-1,-10+1,-2)
+add
+        WRITE(MONIOU,512)  DISX(0),
+     *                     (CZY(I,IOL)*RMLSQI(IOL),I=10,-10,-2),
+     *                     (CZY(J,IOL)*RMLSQI(IOL),J=10-1,-10+1,-2)
+
+At the end of routine NKG the 4 statements
+  YM = SMRM * SQRT(...)                have been replaced by
+  YM = SMRM * MAX(SQRT(...),1.D-5)
+to avoid YM = 0 and the resulting divide check.
+In MAIN the statement
+  SBBIN(30) = 1.D70         was changed to
+  SBBIN(30) = 1.D37
+to avoid problems for VAX-type calculators.
+At the end of routine ANNIH in the EGS part the code was slightly
+modified to avoid neg. arguments of a sqrt by rounding.
+The statements 
+  COSTHE = MIN(1.,(ESG1-RM)*POT/ESG1)
+  SINTHE = SQRT(1.0-COSTHE*COSTHE)
+were changed to
+  COSTHE = (ESG1-RM)*POT/ESG1
+  SINTHE = SQRT(MAX(0.,1.0-COSTHE*COSTHE))
+and the statements
+  COSTHE = MIN(1.,(ESG2-RM)*POT/ESG2)
+  SINTHE = -SQRT(1.0-COSTHE*COSTHE)
+were changed to
+  COSTHE = (ESG1-RM)*POT/ESG1
+  SINTHE = -SQRT(MAX(0.,1.0-COSTHE*COSTHE))
+
+In subroutine START the line
+  IF ( FEGS .AND. NSEQ .LT. 2 ) NSEQ = 2
+has been introduced before the initialization of the random generator
+to avoid problems if EGS should be used but only 1 SEED data card has
+been supplied.
+In subroutine ISOBAR in the do loop GOTO 101 changed into GOTO 102
+and labeled statement 102 introduced  to improve energy conservation
+       DO 101 J=1,INOPI
+         .....
+         IF ( CTHETA .LT. C(27) ) GOTO 102
+         .....
+         IF ( SECPAR(3) .LT. C(29) ) GOTO 102
+         .....
+ 102     CONTINUE
+         IF ( RESTE .LE. PAMA(14) ) GOTO 110
+ 101   CONTINUE
+
+In subroutine ININKG the Moliere radius was calculated in cm instead 
+of meters as expected by NKG.
+The statements
+      RMOL  (1) = RMGCM / RHOF(OBSATI(1))
+      ...
+        RMOL  (2) = RMGCM / RHOF(OBSATI(2))
+were changed to
+      RMOL  (1) = 1.D-2 * RMGCM / RHOF(OBSATI(1))
+      ...
+        RMOL  (2) = 1.D-2 * RMGCM / RHOF(OBSATI(2))
+------------------------------------------------------------------------
+
+Version 3.00 : from 5.12. 90
+
+------------------------------------------------------------------------
+Routine PTRANS made more effective (less rejections).
+Parameter changed to PCUTOFF = 20. for all purposes.
+Function PAMA changed into array PAMA which is filled by PAMAF;
+all particle masses only taken from array PAMA (C(1), C(8)... removed)
+Function PTRAN changed to compute as well PT in x and y direction.
+Computation of parameter k for neg. binomial distribution changed
+and taken into routine RNEGBI.
+Subroutine NKG structure optimized.
+Routine INIDPM renamed to ININKG because only NKG variables were 
+set initialization of RMOL as a function of h corrected and placed 
+in ININKG array CZX and CZX2 combined (analog for CZY, CZXY, CZYX).
+Second NKG level information added to printout.
+OUPNKG removed.
+subroutine HDPM corrected error in calculating momentum balance
+                charge exchange allowed as well for K0
+                structure optimized
+calculation of average PT taken out of routines HDPM and DIFRAC to
+routine AVEPT.
+subroutine NUCINT corrected error in K0L decays
+                  Kaon decays taken in a separate routine KDECAY
+Calculation of angle PHI corrected in EGS routines.
+Particles in VHMESO allowed to be emitted backward in cm system.
+VHMESO streamlined and adapted to HMESON.
+Energy conservation in HMESON and VHMESO improved.
+Antineutron proton annihilation in NIHILA corrected by changing 
+NPIPOS and NPINEG;  now charge is conserved for this case.
+Explicit reset of DATAB array to avoid problems with very small 
+showers.
+Error in charge assignment to pions in routine NIHILA removed.
+Output blocking changed from 30 * 273 to 21 * 273 words per block
+to use effectively the IBM mass storage system.
+Routine DATAC added to improve data card input for program steering
+(see example at the beginning of the program).
+Height of 1. interaction can be fixed by a data card.
+Some commons reorganized,  local variables removed.
+Some minor changes to improve runtime and readability.
+------------------------------------------------------------------------
+
+Version 2.06 : from 2. 7. 90
+
+------------------------------------------------------------------------
+method for calculating mean free path of nuclei changed from
+    FP(A) = FP(p) / A**.666    to
+    FP(A) = FP(p) * 14.56**0.72 / (14.56**.333 + A**.333 - 1.12)**2
+
+routine FLUCM replaced by routine RNEGBI, which gives random numbers
+distributed like the real negative binomial distribution and not the
+approximated gamma distribution.
+routine PAMA improved for masses below 30 AMUs.
+routine HMESON streamlined.
+routine DECAY3 modified to be called as well for heavy meson decays 
+in pi or K mesons (replacing HMESON and VHMESO in future).
+routine GAMA1 replaced by streamlined routine GAM.
+local variables removed from common blocks.
+unused common blocks removed from routines.
+------------------------------------------------------------------------
+only minor changes in printer output formats
+------------------------------------------------------------------------
+
+Version 2.04 : from  8. 6.90
+
+------------------------------------------------------------------------
+improved coordinate corrections for skew EM induced NKG calculations.
+particle counting for first interaction of shower.
+energy cut for secondaries corrected.
+------------------------------------------------------------------------
+
+Version 2.03 : from 31. 5.90
+
+------------------------------------------------------------------------
+time calculation for muons with multiple scattering in UPDATE 
+corrected.
+avoid some ATAN calculations.
+------------------------------------------------------------------------
+
+Version 2.02 : from 23. 5.90
+
+------------------------------------------------------------------------
+height of 1. interaction for inclined showers corrected.
+asymmetric generation of secondaries in HDPM corrected.
+------------------------------------------------------------------------
+
+Version 2.01 : from 24. 4.90
+
+------------------------------------------------------------------------
+extension of common ELABCUT array ELCUT to contain kin. energy cuts 
+for hadrons, muons, electrons and photons separately.
+consequently changes everywhere where ELCUT is used, especially the
+data card input is now 3 words longer.
+
+application of angular cuts to particles in EGS and the new NUCINT of
+version 2.0.
+
+HDPM got a new parametrization including TEVATRON data.
+SDPM allows now more than 25 nucleons to interact.
+
+plus some minor changes
+------------------------------------------------------------------------
+
+Version 2    : from  2. 4.90
+
+------------------------------------------------------------------------
+2 and 3 body decays treated more exactly by new routines DECAY2, DECAY3
+consequently changes in BOX3   for muon decay
+                     in NUCINT for kaon decay
+                     in PI0DEC for pi0 decay
+                     in common KAONS array CKA extended
+                     in BLOCK DATA and START array CKA initialized
+
+In addition some formal changes in EGS, ISTACK, SEKDAT
+plus some minor changes
+------------------------------------------------------------------------
+
+C O R S I K A
+Version 1    : from  7. 2.90
+
+------------------------------------------------------------------------
+multiple collisions in target and projectile were randomly allowed.
+new rapidity distribution for pi 0 according to collider data.
+no diffractive process at second interaction in a nucleus.
+diffractive interaction possible down to low energies.
+charge exchange reactions possible.
+Argon in the air was taken into account.
+cross section everywhere energy dependent. 
+correct kinematics in pi 0 decays. 
+modified EGS4 adapted to the program (special speed up, barom. change 
+of density, muon pair production).
+photoproduction of hadrons included in EGS (simple model).
+NKG formulas extended to treat electrons as well
+improved mean free paths for different particles in air.
+new random generator with indep. sequences and huge period implemented.
+
+plus many major and minor changes
+========================================================================
+
+History :
+
+a first version of the simulation program consisted of a program of
+P.K.F. Grieder for hadronic interactions at energies below 10 GeV,
+a dual parton model based routine (according J.N. Capdevielle) to
+simulate high energetic hadronic interactions and the NKG formulas
+for treating gammas from pi 0 decays. The structure of the atmosphere
+was used in a parametrization from J. Linsley. To allow for nucleus-
+nucleus and nucleon-nucleus collisions a simple model was applied
+based on nuclear densities.
+
+This program (CTG58) was used to simulate a first set of data.
+------------------------------------------------------------------------

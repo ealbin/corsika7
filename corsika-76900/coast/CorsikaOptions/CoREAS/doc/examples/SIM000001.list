@@ -1,0 +1,5 @@
+AntennaPosition = 10000	0	140000.0	pole_100m_0deg
+AntennaPosition = 0	-10000	140000.0	pole_100m_270deg
+
+AntennaPosition = 40000	0	140000.0	pole_400m_0deg
+AntennaPosition = 0	-40000	140000.0	pole_400m_270deg

@@ -1,0 +1,48 @@
+This subroutine contains various utilities to read binary files produced by 
+CORSIKA. The fortran files usually depend on the options choosen (thin, 
+multithin, history) while the C++ files are more flexible:
+
+            * a "coast/" subdirectory containing COAST based utilities
+              BEST CHOICE FOR BEGINNERS (see below)
+            * a C++ routine to read the binary particle output file
+              (corsikaread.cpp),
+            * a Fortran routine cors2input.f to reestablish the used
+              input from the binary particle output file,
+	    * 3 Fortran routines to read the binary particle output files
+              (corsikaread.f, corsikaread_history.f, and corsikaread_thin.f) 
+            * a Fortran routine corsplitevts.f to split a large particle
+              output file into several files containing single events each,
+            * a C-routine map2png.c to visualize shower plots established 
+              with the option PLOTSH2.
+            * a Fortran routine modelprint.f which displays the used 
+              high-energy and low-energy models from the binary particle
+              output file,
+            * a Fortran routine (plottracks3c.f) and its include file 
+              (work.inc) to visualize shower plots established with the 
+              option PLOTSH.
+            * a Fortran routine readcsk2asci.f converting a binary
+              particle output file into a (readable) ASCII file,
+            * a Fortran routine readtimes.f to sum up the CPU times of 
+              several .lst files (useful at parallel runs),
+            * 2 Fortran routines showsimprods.f and showsimulist.f to 
+              establish a tabular of several simulations giving 
+              characteristic values of each simulation 
+              (primary-id, energy, angles of incidence, ... ) 
+              from the binary particle output files,
+            * a Fortran routine sumlistnkginfo.f to sum up the NKG-output 
+              of .lst files to get XMAX averaged over the used showers,
+            * a Fortran routine sumlongifiles.f to sum up the content of 
+              several .longi files (also in case of parallel simulations),
+            * a Python program "gdastool" to create some atmospheric
+              profile readable by CORSIKA from GDAS database,
+            * several other shell scripts and data handling programs to
+              treat the CORSIKA output files.
+
+Please read the source file to have more informations.
+
+In the "coast" subdirectory, there is other more modern tools to handle binary
+CORSIKA files. They are using COAST libaries to allow an easy link to ROOT and
+a easier way to extract selected variables from the CORSIKA output file.
+More examples based on COAST are available in coast/Documentation/Examples/novice/. If COAST is installed (see coast/README in this directory), a simple "make" will compile these examples.
+
+20/12/2018 T. Pierog

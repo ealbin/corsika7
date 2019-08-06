@@ -1,0 +1,2 @@
+corsika-76900/conex/conex-6.4000.tar.gz filter=lfs diff=lfs merge=lfs -text
+corsika-76900/run/qgsdat-II-04 filter=lfs diff=lfs merge=lfs -text

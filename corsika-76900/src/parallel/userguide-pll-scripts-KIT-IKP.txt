@@ -1,0 +1,202 @@
+  
+    @@@@@                                 @     @                 
+   @     @                                      @                 
+   @           @@@     @  @@     @@@@     @     @   @     @@@@    
+   @          @   @    @ @      @         @     @  @     @   @    
+   @          @   @    @@       @@@@@     @     @ @      @   @    
+   @     @    @   @    @            @     @     @@ @     @   @    
+    @@@@@      @@@     @        @@@@      @     @   @     @@@@ 
+
+                                              @      @                @  
+                                              @      @                @  
+         @@@@      @@@@    @  @@     @@@@     @      @       @@@      @  
+         @   @    @   @    @ @      @   @     @      @      @   @     @  
+         @   @    @   @    @@       @   @     @      @      @@@@@     @  
+         @@@@     @   @    @        @   @     @      @      @         @  
+         @         @@@@    @         @@@@     @@     @@      @@@      @@ 
+
+ **************************************************************************
+ *                                                                        *
+ *           IKP computing cluster bldg. 425                              *
+ *                                                                        *
+ *           Author: juergen.oehlschlaeger@kit.edu    19. Oct. 2017       *
+ **************************************************************************
+
+ Short instruction, how to run parallel CORSIKA on KIT-CN IKP computing 
+ cluster in building 425 sometimes denoted by the grammalogue `ik3`, that
+ is to reference this IKP computing cluster; a valid submit to the IKP job 
+ queue is `qsub -l q=augx.q script.sh`; check this submit command in all
+ necessary parallel scripts
+ `corsika-initial-ik3.sh`, `corsika-initial.ik3.sh`,
+ `corsika-secondary-ik3.sh`, `corsika-secondary.ik3.sh`.
+
+ path: $WORK/corsika.trunk/
+ --------------------------
+
+ (1)  run ./coconut to create an executable with parallelization by
+      scripts by selecting `p - PARALLEL treatment of subshowers`
+      and `1 - Special stack for shell script without MPI`, then the name
+      will be similar to `corsika76301Linux_QGSII_gheisha_parallel`.
+
+ path: $WORK/corsika.trunk/run/
+ ------------------------------
+
+ (2)  go to subdirectory run/ and rename the executable in a way to
+      distinguish standard and thinning simulations, and to mark the 
+      parallelization by scripts by another additional appendix `_pll`,
+      i.e. new name is `corsika76301_stnd_QGSII4_gheisha_pll`.
+
+ (3)  prepare a corsika steering file `parallel-002414` for the parallel
+      simulation containing keyword PARALLEL with `T` as forth parameter by
+      copying a formerly used parallel steering file or by executing the
+      program `acreinphc3.f` from the main corsika path .../src/parallel/, 
+      select PARALLEL params Ecutmin and Ecutmax some bigger than in using
+      MPI parallelization; example see appendix (A-3);
+
+ (4)  run script `preprocess-ik3.sh` (to be copied from path
+      .../src/parallel/) with two arguments: the first argument
+      is the name of the parallel steering file and the second argument
+      is the name of the corsika executable:
+
+ ./preprocess-ik3.sh parallel-002414 corsika76301_stnd_QGSII4_gheisha_pll
+
+      which then displays the following info lines:
+           ... creating directory csk002414/ and copy utilities;
+           ... copying all corsika model-dependent tabular files;
+           ... cd csk002414/
+ ./corsika-initial-ik3.sh parallel-002414 corsika76301_stnd_QGSII4_gheisha_pll ik3
+ 
+ now switch to the new subdir csk002414/
+ ---------------------------------------
+
+ (5)  start the simulation (foreground run without `&`) by
+
+ ./corsika-initial-ik3.sh parallel-002414 corsika76301_stnd_QGSII4_gheisha_pll ik3
+
+      which gives the first message
+           Your job 7497970 ("corsika-initial.ik3.sh") has been submitted
+           . . . . . . .
+           . . . . . . . (after a number of seconds)
+           . . . . . . . (many more submissions follow)  
+           . . . . . . .  
+      The simulation is finished when the terminal prompt is shown again 
+      after all parts of the shower simulation.
+
+ (6)  staying in the subdirectory csk002414/ and execute the script
+                          ./postprocess-ik3.sh
+      which deletes all simulation tabular files, runs program 
+      ./sumlistnkginfo (summing up NKG averages from `*.lst-files`), 
+      and runs program ./totaljobfile (reading text file `job-file` to
+      calculate the total time of the corsika simulation, and runs program
+      ./totaltimeik3 (to finally create time info file `time.txt002414`).
+      Remaining output files are now all particle data files of type 
+      `DAT002414-.........-........., and few files `*.lst`, and the long
+      file `DAT002414.899999999.long` renamed from file `fort.48`, the
+      original file `job-file` and `Job002414_ik3.[err,out]` and 
+      `time.txt002414`; see appendix (A-6);
+
+ **************************************************************************
+
+
+ (A-3) parallel steering file
+ ============================
+
+RUNNR       2414
+PARALLEL    300.   300000.    1    T    !!! this T is necessary.
+NSHOW          1
+PRMPAR        14
+EVTNR          1
+SEED        7035         0         0
+SEED        7036         0         0
+SEED        7037         0         0
+SEED        7038         0         0
+SEED        7039         0         0
+SEED        7040         0         0
+ERANGE   7.4132E+07   7.4132E+07
+THETAP       17.00       17.00
+PHIP         26.43       26.43
+OBSLEV   1452.e2        870.000 g/cm^2
+MAGNET     19.71        -14.18     Auger
+MAXPRT         1
+ECTMAP     1.E11
+ECUTS       0.1000   0.1000   2.5e-4   2.5e-4
+RADNKG    200.E2
+HADFLG    0    0    0    0    0    2
+ELMFLG         T         T
+QGSJET         T         0
+QGSSIG         T
+MUADDI         T
+MUMULT         T
+STEPFC        1.
+LONGI          T      5.     T      T
+HILOW       100.00
+DIRECT ./             !!! path ./ is necessary. 
+HOST   iklx289
+USER   you
+EXIT
+
+ **************************************************************************
+
+
+ (A-4) `./preprocess-ik3.sh` to prepare simulation
+ =================================================
+
+ ./preprocess-ik3.sh parallel-002414 corsika76301_stnd_QGSII4_gheisha_pll  
+ 
+#!/bin/bash
+#
+# jobik3-002414
+# =============
+# CORSIKA simulation using parallel scripts at ik3 cluster;
+# parallel-002414 and jobik3-002414 must exist.
+# ---------------------------------------------------------
+#
+# (a) corsika.trunk/run/
+# preprocess-ik3.sh parallel-002414 corsika76400_stnd_QGSII4_gheisha_pll
+#
+# (b) corsika.trunk/run/csk002414/
+./corsika-initial-ik3.sh parallel-002414 corsika76400_stnd_QGSII4_gheisha_pll ik3
+
+
+
+ **************************************************************************
+
+
+ (A-6) `./postprocess-ik3.sh` writes info to some text files
+ ===========================================================
+
+ Job protocol file Job002414_ik3.out:
+ ------------------------------------
+
+1585410347 1:08.12 Real-time 0.44 TotalCPUseconds ./DAT002414-000000000-000000001.lst
+1585411565 19:24.06 Real-time 0.58 TotalCPUseconds ./DAT002414-000007449-000000020.lst
+       171 Files 
+     12870 sec 
+ .................
+RUNNR       2414
+PARALLEL    300.   300000.    1    T    !!! this T is necessary.
+NSHOW          1
+PRMPAR        14
+EVTNR          1
+.......
+DIRECT ./             !!! path ./ is necessary. 
+HOST   iklx289
+USER   you
+EXIT
+                           2.511521 GBy      !!! last line.
+
+
+ time info file time.txt002414:
+ ------------------------------
+
+     START TIME          STOP TIME       TIME (min)
+1585410279.002414   1585411565.002414     21.450000
+LONGEST JOB: MPIID =   171 and Time =   1164.100000
+ Total number of jobs =  171
+Maximum size of group =   17
+TOTAL CPU TIME (days) =    0.827588
+time.txt002414
+
+ 
+ **************************************************************************
+ 
