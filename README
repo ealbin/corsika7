@@ -19,4 +19,4 @@
 
     $ cd corsika-76900
 
-    $ ./coconut --enable-COASTUSERLIB=yes --enable-ROOTOUT=yes --with-root=yes --with-COASTUSERLIB=yes
+    $ ./coconut 
