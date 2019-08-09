@@ -2,6 +2,10 @@
 Selected ./corsika-76900/coconut options
 ========================================
 
+# works fine (do this):
+$ ./coconut
+
+# for "rootout" and special coast options:
 $ ./coconut --enable-COASTUSERLIB=yes --enable-ROOTOUT=yes --with-root=yes --with-COASTUSERLIB=yes
 
 
@@ -91,7 +95,7 @@ $ ./coconut --enable-COASTUSERLIB=yes --enable-ROOTOUT=yes --with-root=yes --wit
     c - CoREAS Radio Simulations
     d1 - Inclined observation plane
     d2 - ROOT particle OUTput file
-    d3 - Use an external COAST user library (COrsika data AccesS Tool)
+    d3 - Use an external COAST user library (COrsika data AccesS Tool)  (ONLY PRESENT IF $COAST_USER_LIB IS DEFINED, see coast-init.sh)
     e - interaction test version (only for 1st interaction)
     f - Auger-info file instead of dbase file
     g - COMPACT particle output file
@@ -106,5 +110,5 @@ $ ./coconut --enable-COASTUSERLIB=yes --enable-ROOTOUT=yes --with-root=yes --wit
     r - restart (reset all options to cached values)
     x - exit make
 
-    (multiple selections accepted, leading '-' removes option): d2 d3
+    (multiple selections accepted, leading '-' removes option): 
 
