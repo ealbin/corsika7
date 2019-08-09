@@ -18,7 +18,7 @@ fi
 export COAST_DIR="$(pwd)/$COAST_VERSION"
 [ ! -d $COAST_DIR ] && mkdir $COAST_DIR
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$COAST_DIR/lib"
-export COAST_USER_LIB="$(pwd)/src/coast-interfaces-v4r1p3/CorsikaRead"
+export COAST_USER_LIB="$(pwd)/src/coast-interfaces-v4r1p3/Histogram"
 
 cd "./src/coast-$COAST_VERSION"
 ./configure --with-root=yes && \
