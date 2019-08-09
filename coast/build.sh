@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 
+# >>> Edit this if needed <<<
 COAST_VERSION='v4r5'
+# optional feature packages:
+#export COAST_USER_LIB="$(pwd)/src/coast-interfaces-v4r1p3/Histogram"
 
 if [ -z $ROOTSYS ]
 then
@@ -18,7 +21,6 @@ fi
 export COAST_DIR="$(pwd)/$COAST_VERSION"
 [ ! -d $COAST_DIR ] && mkdir $COAST_DIR
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$COAST_DIR/lib"
-export COAST_USER_LIB="$(pwd)/src/coast-interfaces-v4r1p3/Histogram"
 
 cd "./src/coast-$COAST_VERSION"
 ./configure --with-root=yes && \

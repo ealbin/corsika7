@@ -1,0 +1,7 @@
+
+If you change the coast version in ./src, update ./build.sh
+
+If you need coast-interface packages, uncomment and edit line 6 of ./build.sh
+
+Otherwise, just run ./build.sh
+ 
