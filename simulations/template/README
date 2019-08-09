@@ -1,0 +1,13 @@
+
+Example simulation for a 1e12 proton primary using QGSJET (high-energy model)
+and gheisha (low-energy model).
+
+1) Edit run.sh for the correct filenames (lines 4 and 5).
+
+2) Rename and edit input-proton-1e12.txt as needed (reference
+corsika-76900/doc/CORSIKA_GUIDE7.6900.pdf)
+
+3) $ ./run.sh
+
+4) Profit
+
