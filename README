@@ -3,13 +3,13 @@
     
     $ git checkout master
 
-2) Compile COAST:
+2) Compile COAST (see ./coast/README for customizations):
 
     $ cd coast
 
     $ ./build.sh
 
-3) Source COAST:
+3) Source COAST (edit ./coast-init.sh to reflect any customizations above):
 
     $ cd -
 
