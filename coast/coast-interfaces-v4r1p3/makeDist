@@ -1,0 +1,36 @@
+#!/bin/bash
+LOCAL=${PWD}
+VER=${PWD##*/}
+echo "VER=$VER"
+NAME=coast-interfaces-${VER}
+echo "NAME=$NAME"
+DIRBASE=/tmp/coast-interfaces
+DIR=${DIRBASE}/${NAME}
+echo "DIR=$DIR"
+echo "remove $DIR"
+rm -rf ${DIR}
+echo "create $DIR"
+mkdir -p ${DIR}
+echo "copy code from $PWD to $DIR"
+cp -r * ${DIR}/.
+echo "cleanup"
+find ${DIR} -name ".svn" | xargs rm -rf
+find ${DIR} -name ".root" | xargs rm -rf
+find ${DIR} -name ".gif" | xargs rm -rf
+find ${DIR} -name "DAT*" | xargs rm -rf
+find ${DIR} -name "log*" | xargs rm -rf
+find ${DIR} -name "*log" | xargs rm -rf
+find ${DIR} -name "*out" | xargs rm -rf
+find ${DIR} -name ".root_hist" | xargs rm -rf
+find ${DIR} -name "*~" | xargs rm -rf
+find ${DIR} -name "*.so" | xargs rm -rf
+find ${DIR} -name "*.a" | xargs rm -rf
+find ${DIR} -name "*.o" | xargs rm -rf
+find ${DIR} -name ".cvs*" | xargs rm -rf
+find ${DIR} -name "*gz" | xargs rm -rf
+find ${DIR} -name "deleteme*" | xargs rm -rf
+echo "package"
+cd $DIRBASE
+tar czvf ${LOCAL}/${NAME}.tar.gz ${NAME}
+echo "remove $DIR"
+rm -rf ${DIR}	
