@@ -4,7 +4,7 @@ NSHOW   1                              number of showers to generate - YUP
 PRMPAR  14                             particle type of prim. particle - PROTON
 ESLOPE  -2.7                           slope of primary energy spectrum - (DISSABLED BY FIXED ENERGY)
 ERANGE  1.E3  1.E3                     energy range of primary particle - 1e12 eV, FIXED
-THETAP  0.  0  .                       range of zenith angle (degree) - 0 deg, FIXED
+THETAP  0.  0.                         range of zenith angle (degree) - 0 deg, FIXED
 PHIP    0.  0.                         range of azimuth angle (degree) - 0 deg, FIXED
 SEED    1   0   0                      seed for 1. random number sequence - NOT CLEAR
 SEED    2   0   0                      seed for 2. random number sequence - NOT CLEAR
