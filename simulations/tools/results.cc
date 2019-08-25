@@ -7,8 +7,10 @@
 // [] Results r;
 // [] r.blablabla
 
-Results::Results(TTree *vRun, TTree *vSim) {
-   
+using namespace std;
+
+//Results::Results(TTree *vRun, TTree *vSim) {
+/*   
     fRun = NULL;
     fSim = NULL; 
     
@@ -32,7 +34,8 @@ Results::Results(TTree *vRun, TTree *vSim) {
     fAll_good = true;
     cout << " [info] saul goodman\n";
     initializeHistograms();
-}
+*/
+//}
 
 // Locates sim and run ttrees if they exist
 //------------------------------------------------------------------------
@@ -133,7 +136,7 @@ void Results::PlotDensity(Int_t vObsLevel) {
     }
     
     TString name = fDensityOpts.name;
-    TString expression = "sqrt(particle.x**2 + particle.y**2)";
+    TString expression = "sqrt(particle.x*particle.x + particle.y*particle.y)";
     
     TString title;
     TString selection = "";
@@ -157,12 +160,12 @@ void Results::PlotDensity(Int_t vObsLevel) {
         ((TH1D*)fDensity->At(i))->Reset("ICEM");
     }
 
-    //TTree *sim = fSim->fChain;
+    TTree *sim = fSim->fChain;
     TString id = "particle.ParticleID == ";
     TString select;
 
     select = Form("%s(%s%d)", selection.Data(), id.Data(), 1);
-    fSim->fChain->Project(name + "_photon", expression, select);
+    sim->Project(name + "_photon", expression, select);
 /*
     select = Form("%s(%s%d || %s%d)", selection.Data(), id.Data(), 2, id.Data(), 3);
     sim->Project(name + "_electron", expression, select);
@@ -369,13 +372,12 @@ void Results::initializeHistograms() {
     logBinning(fImpact->GetYaxis());
     for (Int_t i = 1; i <= xbins; i++)
         fImpact->GetXaxis()->SetBinLabel(i, fImpactOpts.GetLabel(i));
-
 }
 
 
 //////////////////////////////////////////////////////////////////////////////
 
-void Results::printStdErr() {
+void Results::printStdError() {
     cout << " [ERROR] Sorry, data file was not successfully loaded.\n";
     cout << "         You'll need to try again from scratch.\n";
 }

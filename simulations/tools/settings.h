@@ -257,8 +257,8 @@ struct ContentOpts {
             vID == 190 || // Lambdab0_bar
             vID == 193 )  // Xib0_bar
             return 10;    // (other neutral)
-        else if (vID >= 200)
-            Int_t intPart;
+        else if (vID >= 200) {
+            Double_t intPart;
             Int_t Z = (Int_t)(100. * modf(vID / 100., &intPart));
             if (Z == 1)       // H
                 return 12;
@@ -314,6 +314,7 @@ struct ContentOpts {
                 return 37;
             else 
                 return 0;
+        }
         else
             return 11; // (other charged) 
     }

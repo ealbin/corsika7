@@ -2,17 +2,32 @@
 #ifndef tools_results_h
 #define tools_results_h
 
+#include <iostream>
+#include <iomanip>
+#include <math.h>
+
+#include <TROOT.h>
+#include <TObject.h>
+#include <TAxis.h>
+#include <TBranch.h>
+#include <TCanvas.h>
+#include <TChain.h>
+#include <TClonesArray.h>
+#include <TFile.h>
+#include <TH1D.h>
+#include <TH2D.h>
+#include <TList.h>
+#include <TMath.h>
+#include <TString.h>
+#include <TTree.h>
+
 #include "settings.h"
 #include "run.h"
 #include "sim.h"
 
-#include <TAxis.h>
-#include <TH1D.h>
-#include <TH2D.h>
-
 class Results {
 
-private:
+public:
 
     Run *fRun;
     Sim *fSim;
@@ -33,17 +48,16 @@ private:
 
     void logBinning(TAxis *vAxis);
     void initializeHistograms();
-    void printStdError();
-
-public:    
+    void printStdError();    
 
     // Assumes there is a file open, locates sim and run ttrees if they exist
     Results();
 
     // Uses supplied TChain or TTree
-    Results(TTree *vRun=NULL, TTree *vSim=NULL);
+    //Results(TTree *vRun=NULL, TTree *vSim=NULL);
 
     ~Results() {
+        cout << "delete!\n";
         if (gDirectory->IsOnHeap()) {
             if (fRun != NULL )
                 delete fRun;
@@ -70,10 +84,10 @@ public:
     }
 
     // Get run ttree if it was found
-    Run* Run() { return fRun; }
+    Run* GetRun() { return fRun; }
 
     // Get sim ttree if it was found
-    Sim* Sim() { return fSim; }
+    Sim* GetSim() { return fSim; }
 
     // Print observation level choices
     void ObservationLevels();

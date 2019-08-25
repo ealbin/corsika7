@@ -9,9 +9,12 @@
 #ifndef run_h
 #define run_h
 
+#include <iostream>
+
 #include <TROOT.h>
 #include <TChain.h>
 #include <TFile.h>
+#include <TObject.h>
 
 // Fixed size dimensions of array or collections stored in the TTree if any.
    const Int_t kMaxrun = 1;
@@ -176,7 +179,7 @@ Run::Run(TTree *tree) : fChain(0)
 {
 // if parameter tree is not specified (or zero), die.
    if (tree == 0) {
-      cout << " [ERROR] No TTree or TChain\n";
+       std::cout << " [ERROR] No TTree or TChain\n";
       return;
    }
    Init(tree);
