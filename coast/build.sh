@@ -23,6 +23,7 @@ export COAST_DIR="$(pwd)/$COAST_VERSION"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$COAST_DIR/lib"
 
 cd "./src/coast-$COAST_VERSION"
+make clean all
 ./configure --with-root=yes && \
 make install && \
 printf "\n\nFinished successfully!\n"

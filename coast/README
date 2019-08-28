@@ -1,7 +1,14 @@
 
-If you change the coast version in ./src, update ./build.sh
+If you change the coast version in ./src, update ./build.sh to reflect that
+change.
 
-If you need coast-interface packages, uncomment and edit line 6 of ./build.sh
+If you need coast-interface packages (customizations), uncomment and edit line 6 of ./build.sh
 
-Otherwise, just run ./build.sh
+Otherwise, just run ./build.sh to build corsika2root.
+
+(be sure to source /your/path/to/root/thisroot.sh before running ./build.sh)
+
+(also, coast only works with a ROOT version < 6. see
+https://github.com/ealbin/root to "easy" install another ROOT version if you
+need to)
  

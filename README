@@ -9,19 +9,35 @@
 
     $ ./build.sh
 
-3) Source COAST (edit ./coast-init.sh to reflect any customizations above):
+Optional 2a) (only needed if you want to compile COAST with your CORSIKA build
+-- i.e. you have some customizations from above) 
+    
+    Source COAST (edit ./coast-init.sh to reflect any customizations above):
 
     $ cd -
 
     $ source ./coast-init.sh
 
-4) Compile CORSIKA (optional, for easy reference, record your choices in SELECTED_OPTIONS):
+    Your options should appear when you do step 3) now, but if they don't you
+probably haven't sourced /your/path/to/root/thisroot.sh (version < 6).
+    If you have, you can try to force things as an alternate 3):    
+
+    $ cd corsika-76900
+
+    $ ./coconut --enable-COASTUSERLIB=yes
+
+    or
+
+    $ ./coconut --with-COASTUSERLIB=yes
+
+
+3) Compile CORSIKA:
 
     $ cd corsika-76900
 
     $ ./coconut
 
-Optional 5) If you try to compile the NEXUS hadronic interaction model, it
+Optional 4) If you try to compile the NEXUS hadronic interaction model, it
 might error on function "sbet".  This function doesn't appear to do anything
 as it isn't called by any other line of code.  To dissable it so NEXUS will
 compile:
@@ -30,4 +46,8 @@ compile:
 
     ** Caution: only do this once! Repeating this will only clutter 
        ./corsika-76900/nexus/nexus-uti-3972.f 
+
+Final remark 5) If you're having trouble getting your option to appear with
+./coconut, you can try to force it by editing ./corsika-76900/include/config.h
+
 
