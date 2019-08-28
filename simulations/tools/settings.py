@@ -34,7 +34,7 @@ Colors['oneutral'] = R.kGray
 Colors['nuclei']   = R.kBlack
 
 
-Palette = 55
+Palette = 57 
 # 53 = R.kDarkBodyRadiator
 # 54 = R.kBlueYellow
 # 55 = R.kRainbow
@@ -44,10 +44,11 @@ Palette = 55
 
 
 Margins = {}
-Margins['left']   = 0.12
-Margins['right']  = 0.05
-Margins['top']    = 0.1
-Margins['bottom'] = 0.12
+Margins['left']    = 0.12
+Margins['right']   = 0.05
+Margins['right2D'] = 0.17
+Margins['top']     = 0.1
+Margins['bottom']  = 0.12
 
 
 TitleOffset = {}

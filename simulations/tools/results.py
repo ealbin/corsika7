@@ -7,12 +7,42 @@ from . import nuclei
 from . import particle
 from . import settings
 
-__directory__ = os.path.dirname(os.path.realpath(__file__))
-R.gInterpreter.ProcessLine('.L {}/run.h+'.format(__directory__))
-R.gInterpreter.ProcessLine('.L {}/sim.h+'.format(__directory__))
-
+# TODO: replace this with load
 __data__ = R.TFile('./proton-1e14/DAT000001.root')
 
+
+##############################################################################
+
+def relative_diff_1D(hist1, hist2):
+    diff = hist1.Clone()
+    diff.Add(hist2, hist1, -1.)
+    for _ in range(1, 1 + diff.GetNbinsX()):
+        h1 = hist1.GetBinContent(_)
+        if (h1 == 0.):
+            diff.SetBinContent(_, 0.)
+        else:
+            d  = diff.GetBinContent(_)
+            diff.SetBinContent(_, d / h1)
+    return diff
+
+
+##############################################################################
+
+def relative_diff_2D(hist1, hist2):
+    diff = hist1.Clone()
+    diff.Add(hist2, hist1, -1.)
+    for i in range(1, 1 + diff.GetNbinsX()):
+        for j in range(1, 1 + diff.GetNbinsY()):
+            h1 = hist1.GetBinContent(i, j)
+            if (h1 == 0.):
+                diff.SetBinContent(i, j, 0.)
+            else:
+                d  = diff.GetBinContent(i, j)
+                diff.SetBinContent(i, j, d / h1)
+    return diff
+
+
+##############################################################################
 
 class Results:
     
@@ -155,13 +185,8 @@ class Results:
         name   = 'density_canvas'
         width  = settings.Density['width']
         height = settings.Density['height']
-        left   = settings.Margins['left']
-        right  = settings.Margins['right']
-        bottom = settings.Margins['bottom']
-        top    = settings.Margins['top']
-        self.density_canvas = R.TCanvas(name, title, width, height)
-        self.density_canvas.SetFillStyle(4000)
-        self.density_canvas.SetMargin(left, right, bottom, top)
+        self.density_canvas = Results.__1D_canvas__(
+                name, title=title, width=width, height=height)
         self.density_canvas.SetLogx()
         self.density_canvas.SetLogy()
 
@@ -170,10 +195,7 @@ class Results:
             self.density[_].SetMaximum(np.power(10., settings.Density['ymax']))
             self.density[_].Draw('hist pe same')
 
-        self.legend = R.TLegend(.6, .89, .94, .7)
-        self.legend.SetFillStyle(4000)
-        self.legend.SetBorderSize(0)
-        self.legend.SetNColumns(2)
+        self.legend = Results.__1D_legend__()
         self.legend.AddEntry(self.density['photon'],   '#gamma',      'pe')
         self.legend.AddEntry(self.density['proton'],   'p, #bar{p}',  'pe')
         self.legend.AddEntry(self.density['electron'], 'e^{#pm}',     'pe')
@@ -250,10 +272,6 @@ class Results:
         name   = 'slice_canvas'
         width  = settings.Slice['width']
         height = settings.Slice['height']
-        left   = settings.Margins['left']
-        right  = .17 #settings.Margins['right']
-        bottom = settings.Margins['bottom']
-        top    = settings.Margins['top']
         self.slice_canvases = {}
         self.legend = []
         for _ in settings.Catagories:
@@ -262,9 +280,8 @@ class Results:
             if (self.slice[_].GetEntries() == 0.):
                 continue
 
-            canvas = R.TCanvas(name + '_' + _, title, width, height)
-            canvas.SetFillStyle(4000)
-            canvas.SetMargin(left, right, bottom, top)
+            canvas = Results.__2D_canvas__(
+                    name + '_' + _, title=title, width=width, height=height)
             canvas.SetLogz()
             self.slice_canvases[_] = canvas
 
@@ -272,9 +289,7 @@ class Results:
             self.slice[_].SetMaximum(np.power(10., settings.Slice['zmax']))
             self.slice[_].Draw('colz')
             
-            legend = R.TLegend(.6, .89, .8, .8)
-            legend.SetFillStyle(4000)
-            legend.SetBorderSize(0)
+            legend = Results.__2D_legend__()
             legend.AddEntry(self.slice[_], settings.Symbols[_], '')
             legend.Draw()
             self.legend.append(legend)
@@ -358,13 +373,8 @@ class Results:
         name   = 'spectrum_canvas'
         width  = settings.Density['width']
         height = settings.Density['height']
-        left   = settings.Margins['left']
-        right  = settings.Margins['right']
-        bottom = settings.Margins['bottom']
-        top    = settings.Margins['top']
-        self.spectrum_canvas = R.TCanvas(name, title, width, height)
-        self.spectrum_canvas.SetFillStyle(4000)
-        self.spectrum_canvas.SetMargin(left, right, bottom, top)
+        self.spectrum_canvas = Results.__1D_canvas__(
+                name, title=title, width=width, height=height)
         self.spectrum_canvas.SetLogx()
         self.spectrum_canvas.SetLogy()
 
@@ -373,10 +383,7 @@ class Results:
             self.spectrum[_].SetMaximum(np.power(10., settings.Spectrum['ymax']))
             self.spectrum[_].Draw('hist pe same')
 
-        self.legend = R.TLegend(.6, .89, .94, .7)
-        self.legend.SetFillStyle(4000)
-        self.legend.SetBorderSize(0)
-        self.legend.SetNColumns(2)
+        self.legend = Results.__1D_legend__()
         self.legend.AddEntry(self.density['photon'],   '#gamma',      'pe')
         self.legend.AddEntry(self.density['proton'],   'p, #bar{p}',  'pe')
         self.legend.AddEntry(self.density['electron'], 'e^{#pm}',     'pe')
@@ -441,13 +448,8 @@ class Results:
         name   = 'content_canvas'
         width  = settings.Content['width']
         height = settings.Content['height']
-        left   = settings.Margins['left']
-        right  = settings.Margins['right']
-        bottom = settings.Margins['bottom']
-        top    = settings.Margins['top']
-        self.content_canvas = R.TCanvas(name, title, width, height)
-        self.content_canvas.SetFillStyle(4000)
-        self.content_canvas.SetMargin(left, right, bottom, top)
+        self.content_canvas = Results.__1D_canvas__(
+                name, title=title, width=width, height=height)
         self.content_canvas.SetLogy()
 
         self.content.SetMinimum(np.power(10., settings.Content['ymin']))
@@ -482,13 +484,8 @@ class Results:
         name   = 'impact_canvas'
         width  = settings.Impact['width']
         height = settings.Impact['height']
-        left   = settings.Margins['left']
-        right  = .17 #settings.Margins['right']
-        bottom = settings.Margins['bottom']
-        top    = settings.Margins['top']
-        self.impact_canvas = R.TCanvas(name, title, width, height)
-        self.impact_canvas.SetFillStyle(4000)
-        self.impact_canvas.SetMargin(left, right, bottom, top)
+        self.impact_canvas = Results.__2D_canvas__(
+                name, title=title, width=width, height=height)
         self.impact_canvas.SetLogz()
 
         self.impact.SetMinimum(np.power(10., settings.Impact['zmin']))
@@ -548,13 +545,8 @@ class Results:
         name   = 'efficiency_canvas'
         width  = settings.Efficiency['width']
         height = settings.Efficiency['height']
-        left   = settings.Margins['left']
-        right  = settings.Margins['right']
-        bottom = settings.Margins['bottom']
-        top    = settings.Margins['top']
-        self.efficiency_canvas = R.TCanvas(name, 'Energy Efficiency', width, height)
-        self.efficiency_canvas.SetFillStyle(4000)
-        self.efficiency_canvas.SetMargin(left, right, bottom, top)
+        self.efficiency_canvas = Results.__1D_canvas__(
+                name, title='Energy Efficiency', width=width, height=height)
 
 #        self.efficiency.SetMinimum(settings.Efficiency['ymin'])
 #        self.efficiency.SetMaximum(settings.Efficiency['ymax'])
@@ -740,5 +732,58 @@ class Results:
     def __print_std_err__(self):
         print(' [ERROR] Sorry, data file was not successfully loaded.')
         print("         You'll need to try again from scratch.")
+
+
+    ##########################################################################
+
+    def __1D_canvas__(name, title='', width=800, height=800):
+        left   = settings.Margins['left']
+        right  = settings.Margins['right']
+        bottom = settings.Margins['bottom']
+        top    = settings.Margins['top']
+        canvas = R.TCanvas(name, title, width, height)
+        canvas.SetFillStyle(4000)
+        canvas.SetMargin(left, right, bottom, top)
+        return canvas
+
+
+    ##########################################################################
+
+    def __2D_canvas__(name, title='', width=800, height=800):
+        left   = settings.Margins['left']
+        right  = settings.Margins['right2D']
+        bottom = settings.Margins['bottom']
+        top    = settings.Margins['top']
+        canvas = R.TCanvas(name, title, width, height)
+        canvas.SetFillStyle(4000)
+        canvas.SetMargin(left, right, bottom, top)
+        return canvas
+
+
+    ##########################################################################
+
+    def __1D_legend__():
+        x1 = .6
+        x2 = .94
+        y1 = .7
+        y2 = .89
+        legend = R.TLegend(x1, y1, x2, y2)
+        legend.SetFillStyle(4000)
+        legend.SetBorderSize(0)
+        legend.SetNColumns(2)
+        return legend
+
+    ##########################################################################
+
+    def __2D_legend__():
+        x1 = .6
+        x2 = .8
+        y1 = .8
+        y2 = .89
+        legend = R.TLegend(x1, y1, x2, y2)
+        legend.SetFillStyle(4000)
+        legend.SetBorderSize(0)
+        return legend
+
 
 
