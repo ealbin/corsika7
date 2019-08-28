@@ -143,3 +143,17 @@ Impact['Random']   = 0
 Impact['Nitrogen'] = 1
 Impact['Oxygen']   = 2
 Impact['Argon']    = 3
+
+
+Efficiency = {}
+Efficiency['name']   = 'efficiency'
+Efficiency['title']  = ''
+Efficiency['xtitle'] = 'Observation Altitude [km]'
+Efficiency['ytitle'] = 'Energy Efficiency of Simulation'
+Efficiency['stats']  = False
+Efficiency['xbins']  = 10
+Efficiency['ymin']   = .8
+Efficiency['ymax']   = 1.05
+Efficiency['width']  = 800
+Efficiency['height'] = 800
+

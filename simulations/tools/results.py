@@ -145,6 +145,13 @@ class Results:
         else:
             del self.density_canvas
 
+        try:
+            self.legend
+        except:
+            pass
+        else:
+            del self.legend
+        
         name   = 'density_canvas'
         width  = settings.Density['width']
         height = settings.Density['height']
@@ -163,19 +170,19 @@ class Results:
             self.density[_].SetMaximum(np.power(10., settings.Density['ymax']))
             self.density[_].Draw('hist pe same')
 
-        legend = R.TLegend(.6, .89, .94, .7)
-        legend.SetFillStyle(4000)
-        legend.SetBorderSize(0)
-        legend.SetNColumns(2)
-        legend.AddEntry(self.density['photon'],   '#gamma',      'pe')
-        legend.AddEntry(self.density['proton'],   'p, #bar{p}',  'pe')
-        legend.AddEntry(self.density['electron'], 'e^{#pm}',     'pe')
-        legend.AddEntry(self.density['neutron'],  'n, #bar{n}',  'pe')
-        legend.AddEntry(self.density['muon'],     '#mu^{#pm}',   'pe')
-        legend.AddEntry(self.density['ocharged'], 'other^{#pm}', 'pe')
-        legend.AddEntry(self.density['nuclei'],   'nuclei',      'pe')
-        legend.AddEntry(self.density['oneutral'], 'other^{0}',   'pe')
-        legend.Draw()
+        self.legend = R.TLegend(.6, .89, .94, .7)
+        self.legend.SetFillStyle(4000)
+        self.legend.SetBorderSize(0)
+        self.legend.SetNColumns(2)
+        self.legend.AddEntry(self.density['photon'],   '#gamma',      'pe')
+        self.legend.AddEntry(self.density['proton'],   'p, #bar{p}',  'pe')
+        self.legend.AddEntry(self.density['electron'], 'e^{#pm}',     'pe')
+        self.legend.AddEntry(self.density['neutron'],  'n, #bar{n}',  'pe')
+        self.legend.AddEntry(self.density['muon'],     '#mu^{#pm}',   'pe')
+        self.legend.AddEntry(self.density['ocharged'], 'other^{#pm}', 'pe')
+        self.legend.AddEntry(self.density['nuclei'],   'nuclei',      'pe')
+        self.legend.AddEntry(self.density['oneutral'], 'other^{0}',   'pe')
+        self.legend.Draw()
         self.density_canvas.Update()
 
     ##########################################################################
@@ -232,6 +239,13 @@ class Results:
         else:
             del self.slice_canvases
 
+        try:
+            self.legend
+        except:
+            pass
+        else:
+            del self.legend
+        
         R.gStyle.SetPalette(settings.Palette)
         name   = 'slice_canvas'
         width  = settings.Slice['width']
@@ -241,6 +255,7 @@ class Results:
         bottom = settings.Margins['bottom']
         top    = settings.Margins['top']
         self.slice_canvases = {}
+        self.legend = []
         for _ in settings.Catagories:
             
             # skip empty plots
@@ -262,6 +277,7 @@ class Results:
             legend.SetBorderSize(0)
             legend.AddEntry(self.slice[_], settings.Symbols[_], '')
             legend.Draw()
+            self.legend.append(legend)
             canvas.Update()
 
     ##########################################################################
@@ -332,6 +348,13 @@ class Results:
         else:
             del self.spectrum_canvas
 
+        try:
+            self.legend
+        except:
+            pass
+        else:
+            del self.legend
+        
         name   = 'spectrum_canvas'
         width  = settings.Density['width']
         height = settings.Density['height']
@@ -350,19 +373,19 @@ class Results:
             self.spectrum[_].SetMaximum(np.power(10., settings.Spectrum['ymax']))
             self.spectrum[_].Draw('hist pe same')
 
-        legend = R.TLegend(.6, .89, .94, .7)
-        legend.SetFillStyle(4000)
-        legend.SetBorderSize(0)
-        legend.SetNColumns(2)
-        legend.AddEntry(self.density['photon'],   '#gamma',      'pe')
-        legend.AddEntry(self.density['proton'],   'p, #bar{p}',  'pe')
-        legend.AddEntry(self.density['electron'], 'e^{#pm}',     'pe')
-        legend.AddEntry(self.density['neutron'],  'n, #bar{n}',  'pe')
-        legend.AddEntry(self.density['muon'],     '#mu^{#pm}',   'pe')
-        legend.AddEntry(self.density['ocharged'], 'other^{#pm}', 'pe')
-        legend.AddEntry(self.density['nuclei'],   'nuclei',      'pe')
-        legend.AddEntry(self.density['oneutral'], 'other^{0}',   'pe')
-        legend.Draw()
+        self.legend = R.TLegend(.6, .89, .94, .7)
+        self.legend.SetFillStyle(4000)
+        self.legend.SetBorderSize(0)
+        self.legend.SetNColumns(2)
+        self.legend.AddEntry(self.density['photon'],   '#gamma',      'pe')
+        self.legend.AddEntry(self.density['proton'],   'p, #bar{p}',  'pe')
+        self.legend.AddEntry(self.density['electron'], 'e^{#pm}',     'pe')
+        self.legend.AddEntry(self.density['neutron'],  'n, #bar{n}',  'pe')
+        self.legend.AddEntry(self.density['muon'],     '#mu^{#pm}',   'pe')
+        self.legend.AddEntry(self.density['ocharged'], 'other^{#pm}', 'pe')
+        self.legend.AddEntry(self.density['nuclei'],   'nuclei',      'pe')
+        self.legend.AddEntry(self.density['oneutral'], 'other^{0}',   'pe')
+        self.legend.Draw()
         self.spectrum_canvas.Update()
 
     ##########################################################################
@@ -416,8 +439,8 @@ class Results:
             del self.content_canvas
 
         name   = 'content_canvas'
-        width  = settings.Density['width']
-        height = settings.Density['height']
+        width  = settings.Content['width']
+        height = settings.Content['height']
         left   = settings.Margins['left']
         right  = settings.Margins['right']
         bottom = settings.Margins['bottom']
@@ -473,6 +496,72 @@ class Results:
         self.impact.Draw('colz')
         
         self.impact_canvas.Update()
+
+    ##########################################################################
+
+    def plot_efficiency(self):
+        if (not self.all_good):
+            self.__print_std_err__()
+            return
+
+        self.efficiency.Reset('ICEM')
+        max_energy = self.sim.shower_Energy # GeV
+
+        nlevels = self.run.run_ObservationLevel.size()
+        for _ in range(nlevels):
+            xbin = _ + 1
+            obs_level = _ + 1
+            if (_ == 9):
+                obs_level = 0
+
+            energy_GeV = 0.
+            for i in range(self.sim.particle__):
+            
+                if (self.sim.particle__ObservationLevel[i] != obs_level):
+                    continue
+
+                pid = self.sim.particle__ParticleID[i]
+                px  = self.sim.particle__Px[i] # GeV
+                py  = self.sim.particle__Py[i] # GeV
+                pz  = self.sim.particle__Pz[i] # GeV
+
+                if (str(pid) in particle.ID):
+                    mass     = particle.ID[str(pid)]['mass'] # GeV
+                elif (str(pid)[-2:] in nuclei.ID):
+                    mass     = nuclei.ID[str(pid)[-2:]]['mass'] # GeV
+                else:
+                    print(' [ERROR] Unknown particle ID: {}'.format(pid))
+                    continue
+
+                energy_GeV += np.sqrt(px*px + py*py + pz*pz + mass*mass) # GeV
+
+            efficiency = energy_GeV / max_energy
+            self.efficiency.SetBinContent(xbin, efficiency)
+
+        try:
+            self.efficiency_canvas
+        except:
+            pass
+        else:
+            del self.efficiency_canvas
+
+        name   = 'efficiency_canvas'
+        width  = settings.Efficiency['width']
+        height = settings.Efficiency['height']
+        left   = settings.Margins['left']
+        right  = settings.Margins['right']
+        bottom = settings.Margins['bottom']
+        top    = settings.Margins['top']
+        self.efficiency_canvas = R.TCanvas(name, 'Energy Efficiency', width, height)
+        self.efficiency_canvas.SetFillStyle(4000)
+        self.efficiency_canvas.SetMargin(left, right, bottom, top)
+
+#        self.efficiency.SetMinimum(settings.Efficiency['ymin'])
+#        self.efficiency.SetMaximum(settings.Efficiency['ymax'])
+        self.efficiency.Draw('hist pl')
+        
+        self.efficiency_canvas.Update()
+
 
     ##########################################################################
 
@@ -612,6 +701,39 @@ class Results:
         axis = self.impact.GetXaxis()
         for _ in ['Random', 'Nitrogen', 'Oxygen', 'Argon']:
             axis.SetBinLabel(settings.Impact[_] + 1, _)
+
+
+        # Energy Efficiency
+        #---------------------------------------------------------------------
+        name   = settings.Efficiency['name']
+        title  = settings.Efficiency['title']
+        xtitle = settings.Efficiency['xtitle']
+        ytitle = settings.Efficiency['ytitle']
+        title  = '{};{};{}'.format(title, xtitle, ytitle)
+        stats  = settings.Efficiency['stats']
+        xbins  = settings.Efficiency['xbins']
+        ymin   = settings.Efficiency['ymin']
+        ymax   = settings.Efficiency['ymax']
+
+        self.efficiency = R.TH1D(name, title, xbins, 1, xbins+1)
+        self.efficiency.SetStats(stats)
+        self.efficiency.SetMarkerColor(R.kBlack)
+        self.efficiency.SetMarkerStyle(R.kFullCircle)
+        self.efficiency.SetLineColor(R.kBlack)
+        self.efficiency.GetXaxis().SetTitleOffset(settings.TitleOffset['x'])
+        self.efficiency.GetYaxis().SetTitleOffset(settings.TitleOffset['y'])
+        
+        axis    = self.efficiency.GetXaxis()
+        nlevels = self.run.run_ObservationLevel.size()
+        for _ in range(nlevels):
+            xbin  = _ + 1
+            index = _ + 1
+            if (_ == 9):
+                index = 0
+            altitude = self.run.run_ObservationLevel.at(_) / 1e5
+            altstr   = '{:.2f}'.format(altitude).rstrip('0').rstrip('.')
+            axis.SetBinLabel(xbin, altstr)
+
 
     ##########################################################################
 
