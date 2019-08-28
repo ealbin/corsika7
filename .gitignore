@@ -3,3 +3,6 @@
 *.so
 *.pyc
 *.pcm
+coast/src/
+coast/v4r5/
+corsika-76900/
