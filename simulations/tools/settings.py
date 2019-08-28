@@ -33,6 +33,7 @@ Colors['ocharged'] = R.kOrange
 Colors['oneutral'] = R.kGray
 Colors['nuclei']   = R.kBlack
 
+
 Palette = 55
 # 53 = R.kDarkBodyRadiator
 # 54 = R.kBlueYellow
@@ -40,6 +41,7 @@ Palette = 55
 # 56 = R.kInvertedDarkBodyRadiator
 # 57 = R.kBird
 #113 = R.kCividis
+
 
 Margins = {}
 Margins['left']   = 0.12
@@ -122,6 +124,7 @@ Content['nuclei']   = 6
 Content['ocharged'] = 7
 Content['oneutral'] = 8
 
+
 Impact = {}
 Impact['name']   = 'impact'
 Impact['title']  = ''
@@ -140,4 +143,3 @@ Impact['Random']   = 0
 Impact['Nitrogen'] = 1
 Impact['Oxygen']   = 2
 Impact['Argon']    = 3
-
