@@ -1,0 +1,83 @@
+c
+c Lines beginning with "c" are comment lines
+c Go over each parameter listed, you'll need to edit them
+c Reference: ../../corsika-76900/doc/CORSIKA_*.pdf 
+c
+c
+RUNNR       1                               number of run 
+EVTNR       1                               number of first shower event
+NSHOW       1                               number of showers to simulate
+c
+c                                           full path to output directory
+DIRECT /edit/this/FULL/path/but/note/upper/case/paths/could/be/trouble/NO/SPACES
+c
+c                                           a note about the seeds:
+c                                               1st value: is the "seed", which can optionally become the seed for a seed if 2 and 3 are non-zero.
+c                                               2nd and 3rd value: the number of times a seed generator is called based off of the
+c                                               first value, such that the number of times, N = 2nd + (3rd * 10^9).
+c                                               The seeds are assigned to the various parts below in the order they appear:
+c        -->vv<--in short, replace this columns' numbers, leave the other two as zeros
+SEED        12   0   0                       seed for hadronic part
+SEED        34   0   0                       seed for EGS4 part
+SEED        56   0   0                       seed for Cherenkov photons (only for CERENKOV option)
+SEED        78   0   0                       seed for Cherenkov telescope offsets
+SEED        90   0   0                       seed for HERWIG for NUPRIM option      
+SEED        23   0   0                       seed for PARALLEL option
+SEED        45   0   0                       seed for CONEX option
+c
+PRMPAR      5626                            primary particle code (iron) ref: ../../corsika-76900/doc/CORSIKA_GUIDE7.6900.pdf, pp. 116-117 
+ERANGE      1.E6   1.E6                     energy range of primary [GeV] (same values fix the energy)
+ESLOPE      -2.7                            slope of energy spectrum (applies if a range is specified above)
+ECUTS       .05     .01     .001  .001      energy cuts for particles [GeV] (hadrons, muons, electrons, photons)
+c                                                             minimums are:   .05      .01    .00005    .00005
+ECTMAP      .001                            cut on gamma-factor (or energy in GeV for em/neutrino particles), saved if above this level (min: .00005)     
+c
+THETAP      0.      0.                      range of zenith angle [deg] (same values fix the angle)
+PHIP        0.      0.                      range of azimuth angle [deg] (same values fix the angle)
+c
+OBSLEV      0.                              observation level above sea level (up to 10 can be specified) [cm]
+OBSLEV      500.E2 
+OBSLEV      1000.E2 
+OBSLEV      1400.E2 ... ... ... ... ... ...(Telescope Array Project, UT, FYI)
+OBSLEV      2000.E2 
+OBSLEV      5000.E2 
+OBSLEV      10000.E2 
+OBSLEV      20000.E2 
+OBSLEV      50000.E2 
+OBSLEV      100000.E2
+c
+FIXCHI      0.                              starting altitude overburden [g/cm**2], 0 = top of atmosphere
+ATMOD       1                               U.S. standard atmosphere as parameterized by Linsley                     
+MAGNET      21.82   45.51                   local magnetic field value [uT] for Telescope Array, UT
+c                                                 Lat: 39d 17m 49s N, Lon: 112d 54m 31s, Alt: 1400m, Sept 20 2019, Model: IGRF/WMM/EMM average         
+c                                                 (reference: https://www.ngdc.noaa.gov/geomag/)
+c
+c ** uncomment for cluster (parallel) computing **
+cPARALLEL    1000.   100000.     1   F       only works if compiled with the PARALLEL option, comment this out otherwise
+c                                           1st value = particles with energies above this [GeV] get drawn from the 6th seed
+c                                           2nd value = maximum energy [GeV] for a complete subshower before splitting the task
+c                                           3rd value = MPI identification number
+c                                           4th value = particles above the 1st value are written to a .cut file 
+c
+ELMFLG      T   T                           electromagnetic interaction flags
+c                                           1st value: use NKG T/F  -- it's analytical, fast and approximate
+c                                           2nd value: use EGS4 T/F -- it's monte carlo, slow and increasingly accurate with energy
+c                                                                      also, it uses the SEED #2
+RADNKG      20000.E2                        outer radius for NKG treatment of the electromagnetic component if enabled above [cm]
+STEPFC      1.                              electron multiple scatter length factor (for EGS4) = 10 speeds up computation ~2x, = .1 slows down ~5x
+MUMULT      T                               use Moliere theory and Coulomb scattering for muon multiple scattering (if F, do a Gauss approx)
+HADFLG      0   1   0   1   0   2           hadronic interaction flags
+c                                           1st value: = 0 and the number of interactions fluctuates, > 0 and an average is used
+c                                           2nd value: = 0 and no diffractive interactions allowed,   > 0 and they are possible         
+c                                           3rd value: = 0 and use collider data for pi0 rapidity,    > 0 and treat them like charged pions
+c                                           4th value: = 0 and the number of pi0 fluctuates like charged pions, > 1 and use collider data
+c                                           5th value: = 0 and charge exchange reactions allowed,     > 0 and they're inhibited
+c                                           6th value: = 0 and primary nucleus fragments at first interaction completely into free nucleons,
+c                                                      = 1 and fragments successively assuming non-interacting nucleons proceed as one new nucleus,
+c                                                      = 2 and new nucleus may evaporate with an experimental data driven distribution,
+c                                                      = 3 and evaporate according to Goldhaber theory,
+c                                                      = 4 and identical fragments as 2 or 3, but without transverse momenta
+c
+MAXPRT      10                              max number of events to print in detail in log
+c
+EXIT                           

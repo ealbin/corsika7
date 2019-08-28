@@ -1,13 +1,13 @@
 
-Example simulation for a 1e12 proton primary using QGSJET (high-energy model)
-and gheisha (low-energy model).
+Example simulation templates for single and parallel cluster use.
 
-1) Edit run.sh for the correct filenames (lines 4 and 5).
+1) Copy these file into a new directory
 
-2) Rename and edit input-proton-1e12.txt as needed (reference
-corsika-76900/doc/CORSIKA_GUIDE7.6900.pdf)
+2) Edit input.txt and either single.sh or parallel.sh depending on what you're doing
 
-3) $ ./run.sh
+3) Run them!  ./single.sh or sbatch parallel.sh
 
-4) Profit
+4) Run corsika2root if you've compiled it (see ../../coast/README)
+
+5) Check out PyROOT tools in ../tools
 
