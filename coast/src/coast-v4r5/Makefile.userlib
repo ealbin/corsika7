@@ -1,0 +1,16 @@
+all:
+ifdef COAST_USER_LIB
+	@echo "building directory COAST_USER_LIB=$(COAST_USER_LIB)"
+	cp COASTconfig.h $(COAST_DIR)/include
+	$(MAKE) -C $(COAST_USER_LIB)
+else 
+	@echo "INFO: COAST_USER_LIB is not defined"
+endif
+
+clean:
+ifdef COAST_USER_LIB
+	@echo "cleaning up directory COAST_USER_LIB=$(COAST_USER_LIB)"
+	$(MAKE) -C $(COAST_USER_LIB) clean
+else 
+	@echo "INFO: COAST_USER_LIB is not defined"
+endif

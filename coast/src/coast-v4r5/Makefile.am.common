@@ -1,0 +1,18 @@
+###########################################################################
+# Common head for all Makefile.am's
+# $Id: Makefile.am.common,v 1.2 2007-07-31 17:51:02 rulrich Exp $
+###########################################################################
+
+ACLOCAL_AMFLAGS = -I m4
+
+AM_CXXFLAGS = -I@abs_top_builddir@/include
+
+nobase_nodist_include_HEADERS = 
+nobase_dist_include_HEADERS = 
+EXTRA_DIST =
+
+# documentation
+docdir = $(pkgdatadir)/doc
+nobase_doc_DATA = 
+nobase_nodist_doc_DATA =
+nobase_dist_doc_DATA =
