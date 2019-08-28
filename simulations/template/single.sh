@@ -9,9 +9,7 @@ executable="corsika76900Linux_QGSJET_gheisha"   # <-- !!! Definitely Edit This !
 
 cd /your/path/to/corsika-76900/run              # <-- Edit this
 
-/usr/bin/time -v -a -o $out_file ./$executable < $in_file > $out_file 
-
-printf "\nFinished!\n"
+/usr/bin/time -v -a -o $outfile ./$executable < $infile > $outfile 
 
 # run:
 # $ ./single.sh

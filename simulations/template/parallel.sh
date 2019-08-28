@@ -16,8 +16,7 @@ executable="corsika76900Linux_QGSJET_gheisha_parallel"  # <-- !!! Definitely Edi
 
 cd /your/path/to/corsika-76900/run                      # <-- Edit this
 
-srun ./$executable < $infile > $outfile 
-printf "\nFinished!\n"
+/usr/bin/time -v -a -o $outfile srun ./$executable < $infile > $outfile 
 
 # submit this to slurm with:
 # $ sbatch parallel.sh
