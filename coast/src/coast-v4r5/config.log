@@ -36,20 +36,7 @@ PATH: /sbin
 PATH: /bin
 PATH: /usr/games
 PATH: /usr/local/games
-PATH: /mnt/c/ProgramData/DockerDesktop/version-bin
-PATH: /mnt/c/Program Files/Docker/Docker/Resources/bin
-PATH: /mnt/c/Program Files (x86)/Common Files/Intel/Shared Libraries/redist/intel64/compiler
-PATH: /mnt/c/ProgramData/Oracle/Java/javapath
-PATH: /mnt/c/WINDOWS/system32
-PATH: /mnt/c/WINDOWS
-PATH: /mnt/c/WINDOWS/System32/Wbem
-PATH: /mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/
-PATH: /mnt/c/Program Files/Git/cmd
-PATH: /mnt/c/WINDOWS/System32/OpenSSH/
-PATH: /mnt/c/Users/EricK/Anaconda3
-PATH: /mnt/c/Users/EricK/Anaconda3/Scripts
-PATH: /mnt/c/Users/EricK/Anaconda3/Library/bin
-PATH: /mnt/c/Users/EricK/AppData/Local/Microsoft/WindowsApps
+PATH: /mnt/c/Program\ Files/Docker/Docker/resources/bin
 
 
 ## ----------- ##
@@ -67,478 +54,12 @@ configure:2640: found /usr/bin/gawk
 configure:2651: result: gawk
 configure:2662: checking whether make sets $(MAKE)
 configure:2684: result: yes
-configure:2836: checking for g++
-configure:2852: found /usr/bin/g++
-configure:2863: result: g++
-configure:2890: checking for C++ compiler version
-configure:2899: g++ --version >&5
-g++ (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0
-Copyright (C) 2017 Free Software Foundation, Inc.
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-configure:2910: $? = 0
-configure:2899: g++ -v >&5
-Using built-in specs.
-COLLECT_GCC=g++
-COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper
-OFFLOAD_TARGET_NAMES=nvptx-none
-OFFLOAD_TARGET_DEFAULT=1
-Target: x86_64-linux-gnu
-Configured with: ../src/configure -v --with-pkgversion='Ubuntu 7.4.0-1ubuntu1~18.04.1' --with-bugurl=file:///usr/share/doc/gcc-7/README.Bugs --enable-languages=c,ada,c++,go,brig,d,fortran,objc,obj-c++ --prefix=/usr --with-gcc-major-version-only --program-suffix=-7 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-libmpx --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib --enable-objc-gc=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
-Thread model: posix
-gcc version 7.4.0 (Ubuntu 7.4.0-1ubuntu1~18.04.1) 
-configure:2910: $? = 0
-configure:2899: g++ -V >&5
-g++: error: unrecognized command line option '-V'
-g++: fatal error: no input files
-compilation terminated.
-configure:2910: $? = 1
-configure:2899: g++ -qversion >&5
-g++: error: unrecognized command line option '-qversion'; did you mean '--version'?
-g++: fatal error: no input files
-compilation terminated.
-configure:2910: $? = 1
-configure:2930: checking whether the C++ compiler works
-configure:2952: g++    conftest.cpp  >&5
-configure:2956: $? = 0
-configure:3004: result: yes
-configure:3007: checking for C++ compiler default output file name
-configure:3009: result: a.out
-configure:3015: checking for suffix of executables
-configure:3022: g++ -o conftest    conftest.cpp  >&5
-configure:3026: $? = 0
-configure:3048: result: 
-configure:3070: checking whether we are cross compiling
-configure:3078: g++ -o conftest    conftest.cpp  >&5
-configure:3082: $? = 0
-configure:3089: ./conftest
-configure:3093: $? = 0
-configure:3108: result: no
-configure:3113: checking for suffix of object files
-configure:3135: g++ -c   conftest.cpp >&5
-configure:3139: $? = 0
-configure:3160: result: o
-configure:3164: checking whether we are using the GNU C++ compiler
-configure:3183: g++ -c   conftest.cpp >&5
-configure:3183: $? = 0
-configure:3192: result: yes
-configure:3201: checking whether g++ accepts -g
-configure:3221: g++ -c -g  conftest.cpp >&5
-configure:3221: $? = 0
-configure:3262: result: yes
-configure:3296: checking for style of include used by make
-configure:3324: result: GNU
-configure:3350: checking dependency style of g++
-configure:3461: result: gcc3
-configure:3540: checking build system type
-configure:3554: result: x86_64-unknown-linux-gnu
-configure:3574: checking host system type
-configure:3587: result: x86_64-unknown-linux-gnu
-configure:3628: checking how to print strings
-configure:3655: result: printf
-configure:3724: checking for gcc
-configure:3740: found /usr/bin/gcc
-configure:3751: result: gcc
-configure:3980: checking for C compiler version
-configure:3989: gcc --version >&5
-gcc (Ubuntu 7.4.0-1ubuntu1~18.04.1) 7.4.0
-Copyright (C) 2017 Free Software Foundation, Inc.
-This is free software; see the source for copying conditions.  There is NO
-warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-configure:4000: $? = 0
-configure:3989: gcc -v >&5
-Using built-in specs.
-COLLECT_GCC=gcc
-COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper
-OFFLOAD_TARGET_NAMES=nvptx-none
-OFFLOAD_TARGET_DEFAULT=1
-Target: x86_64-linux-gnu
-Configured with: ../src/configure -v --with-pkgversion='Ubuntu 7.4.0-1ubuntu1~18.04.1' --with-bugurl=file:///usr/share/doc/gcc-7/README.Bugs --enable-languages=c,ada,c++,go,brig,d,fortran,objc,obj-c++ --prefix=/usr --with-gcc-major-version-only --program-suffix=-7 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-libmpx --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib --enable-objc-gc=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
-Thread model: posix
-gcc version 7.4.0 (Ubuntu 7.4.0-1ubuntu1~18.04.1) 
-configure:4000: $? = 0
-configure:3989: gcc -V >&5
-gcc: error: unrecognized command line option '-V'
-gcc: fatal error: no input files
-compilation terminated.
-configure:4000: $? = 1
-configure:3989: gcc -qversion >&5
-gcc: error: unrecognized command line option '-qversion'; did you mean '--version'?
-gcc: fatal error: no input files
-compilation terminated.
-configure:4000: $? = 1
-configure:4004: checking whether we are using the GNU C compiler
-configure:4023: gcc -c   conftest.c >&5
-configure:4023: $? = 0
-configure:4032: result: yes
-configure:4041: checking whether gcc accepts -g
-configure:4061: gcc -c -g  conftest.c >&5
-configure:4061: $? = 0
-configure:4102: result: yes
-configure:4119: checking for gcc option to accept ISO C89
-configure:4182: gcc  -c -g -O2  conftest.c >&5
-configure:4182: $? = 0
-configure:4195: result: none needed
-configure:4217: checking dependency style of gcc
-configure:4328: result: gcc3
-configure:4343: checking for a sed that does not truncate output
-configure:4407: result: /bin/sed
-configure:4425: checking for grep that handles long lines and -e
-configure:4483: result: /bin/grep
-configure:4488: checking for egrep
-configure:4550: result: /bin/grep -E
-configure:4555: checking for fgrep
-configure:4617: result: /bin/grep -F
-configure:4652: checking for ld used by gcc
-configure:4719: result: /usr/bin/ld
-configure:4726: checking if the linker (/usr/bin/ld) is GNU ld
-configure:4741: result: yes
-configure:4753: checking for BSD- or MS-compatible name lister (nm)
-configure:4802: result: /usr/bin/nm -B
-configure:4932: checking the name lister (/usr/bin/nm -B) interface
-configure:4939: gcc -c -g -O2  conftest.c >&5
-configure:4942: /usr/bin/nm -B "conftest.o"
-configure:4945: output
-0000000000000000 B some_variable
-configure:4952: result: BSD nm
-configure:4955: checking whether ln -s works
-configure:4959: result: yes
-configure:4967: checking the maximum length of command line arguments
-configure:5097: result: 1572864
-configure:5114: checking whether the shell understands some XSI constructs
-configure:5124: result: yes
-configure:5128: checking whether the shell understands "+="
-configure:5134: result: yes
-configure:5169: checking how to convert x86_64-unknown-linux-gnu file names to x86_64-unknown-linux-gnu format
-configure:5209: result: func_convert_file_noop
-configure:5216: checking how to convert x86_64-unknown-linux-gnu file names to toolchain format
-configure:5236: result: func_convert_file_noop
-configure:5243: checking for /usr/bin/ld option to reload object files
-configure:5250: result: -r
-configure:5324: checking for objdump
-configure:5340: found /usr/bin/objdump
-configure:5351: result: objdump
-configure:5383: checking how to recognize dependent libraries
-configure:5585: result: pass_all
-configure:5670: checking for dlltool
-configure:5700: result: no
-configure:5730: checking how to associate runtime and link libraries
-configure:5757: result: printf %s\n
-configure:5818: checking for ar
-configure:5834: found /usr/bin/ar
-configure:5845: result: ar
-configure:5882: checking for archiver @FILE support
-configure:5899: gcc -c -g -O2  conftest.c >&5
-configure:5899: $? = 0
-configure:5902: ar cru libconftest.a @conftest.lst >&5
-ar: `u' modifier ignored since `D' is the default (see `U')
-configure:5905: $? = 0
-configure:5910: ar cru libconftest.a @conftest.lst >&5
-ar: `u' modifier ignored since `D' is the default (see `U')
-ar: conftest.o: No such file or directory
-configure:5913: $? = 1
-configure:5925: result: @
-configure:5983: checking for strip
-configure:5999: found /usr/bin/strip
-configure:6010: result: strip
-configure:6082: checking for ranlib
-configure:6098: found /usr/bin/ranlib
-configure:6109: result: ranlib
-configure:6211: checking command to parse /usr/bin/nm -B output from gcc object
-configure:6331: gcc -c -g -O2  conftest.c >&5
-configure:6334: $? = 0
-configure:6338: /usr/bin/nm -B conftest.o \| sed -n -e 's/^.*[ ]\([ABCDGIRSTW][ABCDGIRSTW]*\)[ ][ ]*\([_A-Za-z][_A-Za-z0-9]*\)$/\1 \2 \2/p' | sed '/ __gnu_lto/d' \> conftest.nm
-configure:6341: $? = 0
-configure:6407: gcc -o conftest -g -O2   conftest.c conftstm.o >&5
-configure:6410: $? = 0
-configure:6448: result: ok
-configure:6485: checking for sysroot
-configure:6515: result: no
-configure:6592: gcc -c -g -O2  conftest.c >&5
-configure:6595: $? = 0
-configure:6771: checking for mt
-configure:6787: found /bin/mt
-configure:6798: result: mt
-configure:6821: checking if mt is a manifest tool
-configure:6827: mt '-?'
-configure:6835: result: no
-configure:7477: checking how to run the C preprocessor
-configure:7508: gcc -E  conftest.c
-configure:7508: $? = 0
-configure:7522: gcc -E  conftest.c
-conftest.c:11:10: fatal error: ac_nonexistent.h: No such file or directory
- #include <ac_nonexistent.h>
-          ^~~~~~~~~~~~~~~~~~
-compilation terminated.
-configure:7522: $? = 1
-configure: failed program was:
-| /* confdefs.h */
-| #define PACKAGE_NAME "COAST"
-| #define PACKAGE_TARNAME "coast"
-| #define PACKAGE_VERSION "v4r5"
-| #define PACKAGE_STRING "COAST v4r5"
-| #define PACKAGE_BUGREPORT "http://www-ik.fzk.de/~rulrich/COAST"
-| #define PACKAGE_URL ""
-| #define PACKAGE "coast"
-| #define VERSION "v4r5"
-| /* end confdefs.h.  */
-| #include <ac_nonexistent.h>
-configure:7547: result: gcc -E
-configure:7567: gcc -E  conftest.c
-configure:7567: $? = 0
-configure:7581: gcc -E  conftest.c
-conftest.c:11:10: fatal error: ac_nonexistent.h: No such file or directory
- #include <ac_nonexistent.h>
-          ^~~~~~~~~~~~~~~~~~
-compilation terminated.
-configure:7581: $? = 1
-configure: failed program was:
-| /* confdefs.h */
-| #define PACKAGE_NAME "COAST"
-| #define PACKAGE_TARNAME "coast"
-| #define PACKAGE_VERSION "v4r5"
-| #define PACKAGE_STRING "COAST v4r5"
-| #define PACKAGE_BUGREPORT "http://www-ik.fzk.de/~rulrich/COAST"
-| #define PACKAGE_URL ""
-| #define PACKAGE "coast"
-| #define VERSION "v4r5"
-| /* end confdefs.h.  */
-| #include <ac_nonexistent.h>
-configure:7610: checking for ANSI C header files
-configure:7630: gcc -c -g -O2  conftest.c >&5
-configure:7630: $? = 0
-configure:7703: gcc -o conftest -g -O2   conftest.c  >&5
-configure:7703: $? = 0
-configure:7703: ./conftest
-configure:7703: $? = 0
-configure:7714: result: yes
-configure:7727: checking for sys/types.h
-configure:7727: gcc -c -g -O2  conftest.c >&5
-configure:7727: $? = 0
-configure:7727: result: yes
-configure:7727: checking for sys/stat.h
-configure:7727: gcc -c -g -O2  conftest.c >&5
-configure:7727: $? = 0
-configure:7727: result: yes
-configure:7727: checking for stdlib.h
-configure:7727: gcc -c -g -O2  conftest.c >&5
-configure:7727: $? = 0
-configure:7727: result: yes
-configure:7727: checking for string.h
-configure:7727: gcc -c -g -O2  conftest.c >&5
-configure:7727: $? = 0
-configure:7727: result: yes
-configure:7727: checking for memory.h
-configure:7727: gcc -c -g -O2  conftest.c >&5
-configure:7727: $? = 0
-configure:7727: result: yes
-configure:7727: checking for strings.h
-configure:7727: gcc -c -g -O2  conftest.c >&5
-configure:7727: $? = 0
-configure:7727: result: yes
-configure:7727: checking for inttypes.h
-configure:7727: gcc -c -g -O2  conftest.c >&5
-configure:7727: $? = 0
-configure:7727: result: yes
-configure:7727: checking for stdint.h
-configure:7727: gcc -c -g -O2  conftest.c >&5
-configure:7727: $? = 0
-configure:7727: result: yes
-configure:7727: checking for unistd.h
-configure:7727: gcc -c -g -O2  conftest.c >&5
-configure:7727: $? = 0
-configure:7727: result: yes
-configure:7741: checking for dlfcn.h
-configure:7741: gcc -c -g -O2  conftest.c >&5
-configure:7741: $? = 0
-configure:7741: result: yes
-configure:7928: checking for objdir
-configure:7943: result: .libs
-configure:8210: checking if gcc supports -fno-rtti -fno-exceptions
-configure:8228: gcc -c -g -O2  -fno-rtti -fno-exceptions conftest.c >&5
-cc1: warning: command line option '-fno-rtti' is valid for C++/ObjC++ but not for C
-configure:8232: $? = 0
-configure:8245: result: no
-configure:8572: checking for gcc option to produce PIC
-configure:8579: result: -fPIC -DPIC
-configure:8587: checking if gcc PIC flag -fPIC -DPIC works
-configure:8605: gcc -c -g -O2  -fPIC -DPIC -DPIC conftest.c >&5
-configure:8609: $? = 0
-configure:8622: result: yes
-configure:8651: checking if gcc static flag -static works
-configure:8679: result: yes
-configure:8694: checking if gcc supports -c -o file.o
-configure:8715: gcc -c -g -O2  -o out/conftest2.o conftest.c >&5
-configure:8719: $? = 0
-configure:8741: result: yes
-configure:8749: checking if gcc supports -c -o file.o
-configure:8796: result: yes
-configure:8829: checking whether the gcc linker (/usr/bin/ld -m elf_x86_64) supports shared libraries
-configure:9986: result: yes
-configure:10023: checking whether -lc should be explicitly linked in
-configure:10031: gcc -c -g -O2  conftest.c >&5
-configure:10034: $? = 0
-configure:10049: gcc -shared  -fPIC -DPIC conftest.o  -v -Wl,-soname -Wl,conftest -o conftest 2\>\&1 \| /bin/grep  -lc  \>/dev/null 2\>\&1
-configure:10052: $? = 0
-configure:10066: result: no
-configure:10226: checking dynamic linker characteristics
-configure:10737: gcc -o conftest -g -O2   -Wl,-rpath -Wl,/foo conftest.c  >&5
-configure:10737: $? = 0
-configure:10971: result: GNU/Linux ld.so
-configure:11078: checking how to hardcode library paths into programs
-configure:11103: result: immediate
-configure:11643: checking whether stripping libraries is possible
-configure:11648: result: yes
-configure:11683: checking if libtool supports shared libraries
-configure:11685: result: yes
-configure:11688: checking whether to build shared libraries
-configure:11709: result: yes
-configure:11712: checking whether to build static libraries
-configure:11716: result: no
-configure:11739: checking how to run the C++ preprocessor
-configure:11766: g++ -E  conftest.cpp
-configure:11766: $? = 0
-configure:11780: g++ -E  conftest.cpp
-conftest.cpp:23:10: fatal error: ac_nonexistent.h: No such file or directory
- #include <ac_nonexistent.h>
-          ^~~~~~~~~~~~~~~~~~
-compilation terminated.
-configure:11780: $? = 1
-configure: failed program was:
-| /* confdefs.h */
-| #define PACKAGE_NAME "COAST"
-| #define PACKAGE_TARNAME "coast"
-| #define PACKAGE_VERSION "v4r5"
-| #define PACKAGE_STRING "COAST v4r5"
-| #define PACKAGE_BUGREPORT "http://www-ik.fzk.de/~rulrich/COAST"
-| #define PACKAGE_URL ""
-| #define PACKAGE "coast"
-| #define VERSION "v4r5"
-| #define STDC_HEADERS 1
-| #define HAVE_SYS_TYPES_H 1
-| #define HAVE_SYS_STAT_H 1
-| #define HAVE_STDLIB_H 1
-| #define HAVE_STRING_H 1
-| #define HAVE_MEMORY_H 1
-| #define HAVE_STRINGS_H 1
-| #define HAVE_INTTYPES_H 1
-| #define HAVE_STDINT_H 1
-| #define HAVE_UNISTD_H 1
-| #define HAVE_DLFCN_H 1
-| #define LT_OBJDIR ".libs/"
-| /* end confdefs.h.  */
-| #include <ac_nonexistent.h>
-configure:11805: result: g++ -E
-configure:11825: g++ -E  conftest.cpp
-configure:11825: $? = 0
-configure:11839: g++ -E  conftest.cpp
-conftest.cpp:23:10: fatal error: ac_nonexistent.h: No such file or directory
- #include <ac_nonexistent.h>
-          ^~~~~~~~~~~~~~~~~~
-compilation terminated.
-configure:11839: $? = 1
-configure: failed program was:
-| /* confdefs.h */
-| #define PACKAGE_NAME "COAST"
-| #define PACKAGE_TARNAME "coast"
-| #define PACKAGE_VERSION "v4r5"
-| #define PACKAGE_STRING "COAST v4r5"
-| #define PACKAGE_BUGREPORT "http://www-ik.fzk.de/~rulrich/COAST"
-| #define PACKAGE_URL ""
-| #define PACKAGE "coast"
-| #define VERSION "v4r5"
-| #define STDC_HEADERS 1
-| #define HAVE_SYS_TYPES_H 1
-| #define HAVE_SYS_STAT_H 1
-| #define HAVE_STDLIB_H 1
-| #define HAVE_STRING_H 1
-| #define HAVE_MEMORY_H 1
-| #define HAVE_STRINGS_H 1
-| #define HAVE_INTTYPES_H 1
-| #define HAVE_STDINT_H 1
-| #define HAVE_UNISTD_H 1
-| #define HAVE_DLFCN_H 1
-| #define LT_OBJDIR ".libs/"
-| /* end confdefs.h.  */
-| #include <ac_nonexistent.h>
-configure:12008: checking for ld used by g++
-configure:12075: result: /usr/bin/ld -m elf_x86_64
-configure:12082: checking if the linker (/usr/bin/ld -m elf_x86_64) is GNU ld
-configure:12097: result: yes
-configure:12152: checking whether the g++ linker (/usr/bin/ld -m elf_x86_64) supports shared libraries
-configure:13157: result: yes
-configure:13193: g++ -c -g -O2 -Wall  conftest.cpp >&5
-configure:13196: $? = 0
-configure:13716: checking for g++ option to produce PIC
-configure:13723: result: -fPIC -DPIC
-configure:13731: checking if g++ PIC flag -fPIC -DPIC works
-configure:13749: g++ -c -g -O2 -Wall  -fPIC -DPIC -DPIC conftest.cpp >&5
-configure:13753: $? = 0
-configure:13766: result: yes
-configure:13789: checking if g++ static flag -static works
-configure:13817: result: yes
-configure:13829: checking if g++ supports -c -o file.o
-configure:13850: g++ -c -g -O2 -Wall  -o out/conftest2.o conftest.cpp >&5
-configure:13854: $? = 0
-configure:13876: result: yes
-configure:13881: checking if g++ supports -c -o file.o
-configure:13928: result: yes
-configure:13958: checking whether the g++ linker (/usr/bin/ld -m elf_x86_64) supports shared libraries
-configure:13997: result: yes
-configure:14138: checking dynamic linker characteristics
-configure:14817: result: GNU/Linux ld.so
-configure:14870: checking how to hardcode library paths into programs
-configure:14895: result: immediate
-configure:14966: checking for root
-configure:14987: result: /home/groot/root/v5-34-38
-configure:15022: checking whether root can be used
-configure:15035: g++ -o conftest -g -O2 -Wall -pthread -m64 -I/home/groot/root/v5-34-38/include  -Wl,--no-as-needed  -L/home/groot/root/v5-34-38/lib -lCore -lCint -lRIO -lNet -lHist -lGraf -lGraf3d -lGpad -lTree -lRint -lPostscript -lMatrix -lPhysics -lMathCore -lThread -pthread -lm -ldl -rdynamic conftest.cpp  >&5
-conftest.cpp: In function 'int main()':
-conftest.cpp:27:10: warning: unused variable 'c' [-Wunused-variable]
- TCanvas* c = new TCanvas("test");
-          ^
-configure:15035: $? = 0
-configure:15037: result: yes
-configure:15263: creating ./config.status
-
-## ---------------------- ##
-## Running config.status. ##
-## ---------------------- ##
-
-This file was extended by COAST config.status v4r5, which was
-generated by GNU Autoconf 2.69.  Invocation command line was
-
-  CONFIG_FILES    = 
-  CONFIG_HEADERS  = 
-  CONFIG_LINKS    = 
-  CONFIG_COMMANDS = 
-  $ ./config.status 
-
-on Hyper-Abacus
-
-config.status:1160: creating Makefile
-config.status:1160: creating CorsikaFileIO/Makefile
-config.status:1160: creating CorsikaInterface/Makefile
-config.status:1160: creating CorsikaIntern/Makefile
-config.status:1160: creating CorsikaROOT/Makefile
-config.status:1160: creating CorsikaToROOT/Makefile
-config.status:1160: creating Documentation/Makefile
-config.status:1160: creating rootout/Makefile
-config.status:1160: creating Documentation/Doxyfile
-config.status:1160: creating COASTconfig.h
-config.status:1341: COASTconfig.h is unchanged
-config.status:1389: executing depfiles commands
-config.status:1389: executing libtool commands
+configure:2767: error: $COAST_DIR environment variable needs to be defined! ABORTING ...
 
 ## ---------------- ##
 ## Cache variables. ##
 ## ---------------- ##
 
-ac_cv_build=x86_64-unknown-linux-gnu
-ac_cv_c_compiler_gnu=yes
-ac_cv_cxx_compiler_gnu=yes
 ac_cv_env_CCC_set=
 ac_cv_env_CCC_value=
 ac_cv_env_CC_set=
@@ -565,134 +86,70 @@ ac_cv_env_host_alias_set=
 ac_cv_env_host_alias_value=
 ac_cv_env_target_alias_set=
 ac_cv_env_target_alias_value=
-ac_cv_header_dlfcn_h=yes
-ac_cv_header_inttypes_h=yes
-ac_cv_header_memory_h=yes
-ac_cv_header_stdc=yes
-ac_cv_header_stdint_h=yes
-ac_cv_header_stdlib_h=yes
-ac_cv_header_string_h=yes
-ac_cv_header_strings_h=yes
-ac_cv_header_sys_stat_h=yes
-ac_cv_header_sys_types_h=yes
-ac_cv_header_unistd_h=yes
-ac_cv_host=x86_64-unknown-linux-gnu
-ac_cv_objext=o
-ac_cv_path_EGREP='/bin/grep -E'
-ac_cv_path_FGREP='/bin/grep -F'
-ac_cv_path_GREP=/bin/grep
-ac_cv_path_SED=/bin/sed
 ac_cv_path_install='/usr/bin/install -c'
 ac_cv_path_mkdir=/bin/mkdir
 ac_cv_prog_AWK=gawk
-ac_cv_prog_CPP='gcc -E'
-ac_cv_prog_CXXCPP='g++ -E'
-ac_cv_prog_ac_ct_AR=ar
-ac_cv_prog_ac_ct_CC=gcc
-ac_cv_prog_ac_ct_CXX=g++
-ac_cv_prog_ac_ct_MANIFEST_TOOL=mt
-ac_cv_prog_ac_ct_OBJDUMP=objdump
-ac_cv_prog_ac_ct_RANLIB=ranlib
-ac_cv_prog_ac_ct_STRIP=strip
-ac_cv_prog_cc_c89=
-ac_cv_prog_cc_g=yes
-ac_cv_prog_cxx_g=yes
 ac_cv_prog_make_make_set=yes
-am_cv_CC_dependencies_compiler_type=gcc3
-am_cv_CXX_dependencies_compiler_type=gcc3
-coast_cv_root_root=/home/groot/root/v5-34-38
-lt_cv_ar_at_file=@
-lt_cv_archive_cmds_need_lc=no
-lt_cv_deplibs_check_method=pass_all
-lt_cv_file_magic_cmd='$MAGIC_CMD'
-lt_cv_file_magic_test_file=
-lt_cv_ld_reload_flag=-r
-lt_cv_nm_interface='BSD nm'
-lt_cv_objdir=.libs
-lt_cv_path_LD=/usr/bin/ld
-lt_cv_path_LDCXX='/usr/bin/ld -m elf_x86_64'
-lt_cv_path_NM='/usr/bin/nm -B'
-lt_cv_path_mainfest_tool=no
-lt_cv_prog_compiler_c_o=yes
-lt_cv_prog_compiler_c_o_CXX=yes
-lt_cv_prog_compiler_pic='-fPIC -DPIC'
-lt_cv_prog_compiler_pic_CXX='-fPIC -DPIC'
-lt_cv_prog_compiler_pic_works=yes
-lt_cv_prog_compiler_pic_works_CXX=yes
-lt_cv_prog_compiler_rtti_exceptions=no
-lt_cv_prog_compiler_static_works=yes
-lt_cv_prog_compiler_static_works_CXX=yes
-lt_cv_prog_gnu_ld=yes
-lt_cv_prog_gnu_ldcxx=yes
-lt_cv_sharedlib_from_linklib_cmd='printf %s\n'
-lt_cv_shlibpath_overrides_runpath=yes
-lt_cv_sys_global_symbol_pipe='sed -n -e '\''s/^.*[	 ]\([ABCDGIRSTW][ABCDGIRSTW]*\)[	 ][	 ]*\([_A-Za-z][_A-Za-z0-9]*\)$/\1 \2 \2/p'\'' | sed '\''/ __gnu_lto/d'\'''
-lt_cv_sys_global_symbol_to_c_name_address='sed -n -e '\''s/^: \([^ ]*\)[ ]*$/  {\"\1\", (void *) 0},/p'\'' -e '\''s/^[ABCDGIRSTW]* \([^ ]*\) \([^ ]*\)$/  {"\2", (void *) \&\2},/p'\'''
-lt_cv_sys_global_symbol_to_c_name_address_lib_prefix='sed -n -e '\''s/^: \([^ ]*\)[ ]*$/  {\"\1\", (void *) 0},/p'\'' -e '\''s/^[ABCDGIRSTW]* \([^ ]*\) \(lib[^ ]*\)$/  {"\2", (void *) \&\2},/p'\'' -e '\''s/^[ABCDGIRSTW]* \([^ ]*\) \([^ ]*\)$/  {"lib\2", (void *) \&\2},/p'\'''
-lt_cv_sys_global_symbol_to_cdecl='sed -n -e '\''s/^T .* \(.*\)$/extern int \1();/p'\'' -e '\''s/^[ABCDGIRSTW]* .* \(.*\)$/extern char \1;/p'\'''
-lt_cv_sys_max_cmd_len=1572864
-lt_cv_to_host_file_cmd=func_convert_file_noop
-lt_cv_to_tool_file_cmd=func_convert_file_noop
 
 ## ----------------- ##
 ## Output variables. ##
 ## ----------------- ##
 
-ACLOCAL='${SHELL} /home/groot/corsika/corsika7/coast/src/coast-v4r5/config/missing --run aclocal-1.11'
-AMDEPBACKSLASH='\'
-AMDEP_FALSE='#'
+ACLOCAL='${SHELL} /home/groot/corsika/corsika7/coast/coast-v4r5/config/missing --run aclocal-1.11'
+AMDEPBACKSLASH=''
+AMDEP_FALSE=''
 AMDEP_TRUE=''
 AMTAR='$${TAR-tar}'
-AR='ar'
-AUTOCONF='${SHELL} /home/groot/corsika/corsika7/coast/src/coast-v4r5/config/missing --run autoconf'
-AUTOHEADER='${SHELL} /home/groot/corsika/corsika7/coast/src/coast-v4r5/config/missing --run autoheader'
-AUTOMAKE='${SHELL} /home/groot/corsika/corsika7/coast/src/coast-v4r5/config/missing --run automake-1.11'
+AR=''
+AUTOCONF='${SHELL} /home/groot/corsika/corsika7/coast/coast-v4r5/config/missing --run autoconf'
+AUTOHEADER='${SHELL} /home/groot/corsika/corsika7/coast/coast-v4r5/config/missing --run autoheader'
+AUTOMAKE='${SHELL} /home/groot/corsika/corsika7/coast/coast-v4r5/config/missing --run automake-1.11'
 AWK='gawk'
-CC='gcc'
-CCDEPMODE='depmode=gcc3'
-CFLAGS='-g -O2'
-CPP='gcc -E'
+CC=''
+CCDEPMODE=''
+CFLAGS=''
+CPP=''
 CPPFLAGS=''
-CXX='g++'
-CXXCPP='g++ -E'
-CXXDEPMODE='depmode=gcc3'
-CXXFLAGS='-g -O2 -Wall'
+CXX=''
+CXXCPP=''
+CXXDEPMODE=''
+CXXFLAGS=''
 CYGPATH_W='echo'
-DEFS='-DHAVE_CONFIG_H'
-DEPDIR='.deps'
-DLLTOOL='false'
+DEFS=''
+DEPDIR=''
+DLLTOOL=''
 DSYMUTIL=''
 DUMPBIN=''
 ECHO_C=''
 ECHO_N='-n'
 ECHO_T=''
-EGREP='/bin/grep -E'
+EGREP=''
 EXEEXT=''
-FGREP='/bin/grep -F'
-GREP='/bin/grep'
-HAVE_DOXYGEN_FALSE='#'
+FGREP=''
+GREP=''
+HAVE_DOXYGEN_FALSE=''
 HAVE_DOXYGEN_TRUE=''
-HAVE_ROOT_FALSE='#'
+HAVE_ROOT_FALSE=''
 HAVE_ROOT_TRUE=''
 INSTALL_DATA='${INSTALL} -m 644'
 INSTALL_PROGRAM='${INSTALL}'
 INSTALL_SCRIPT='${INSTALL}'
 INSTALL_STRIP_PROGRAM='$(install_sh) -c -s'
-LD='/usr/bin/ld -m elf_x86_64'
+LD=''
 LDFLAGS=''
 LIBOBJS=''
 LIBS=''
-LIBTOOL='$(SHELL) $(top_builddir)/libtool'
+LIBTOOL=''
 LIPO=''
-LN_S='ln -s'
+LN_S=''
 LTLIBOBJS=''
-MAKEINFO='${SHELL} /home/groot/corsika/corsika7/coast/src/coast-v4r5/config/missing --run makeinfo'
-MANIFEST_TOOL=':'
+MAKEINFO='${SHELL} /home/groot/corsika/corsika7/coast/coast-v4r5/config/missing --run makeinfo'
+MANIFEST_TOOL=''
 MKDIR_P='/bin/mkdir -p'
-NM='/usr/bin/nm -B'
+NM=''
 NMEDIT=''
-OBJDUMP='objdump'
-OBJEXT='o'
+OBJDUMP=''
+OBJEXT=''
 OTOOL64=''
 OTOOL=''
 PACKAGE='coast'
@@ -703,55 +160,55 @@ PACKAGE_TARNAME='coast'
 PACKAGE_URL=''
 PACKAGE_VERSION='v4r5'
 PATH_SEPARATOR=':'
-RANLIB='ranlib'
-ROOTCINT='/home/groot/root/v5-34-38/bin/rootcint'
+RANLIB=''
+ROOTCINT=''
 ROOTSYS='/home/groot/root/v5-34-38'
-ROOT_CXXFLAGS='-pthread -m64 -I/home/groot/root/v5-34-38/include'
-ROOT_GLIBS='-L/home/groot/root/v5-34-38/lib -lGui -lCore -lCint -lRIO -lNet -lHist -lGraf -lGraf3d -lGpad -lTree -lRint -lPostscript -lMatrix -lPhysics -lMathCore -lThread -pthread -lm -ldl -rdynamic'
-ROOT_LIBDIR='/home/groot/root/v5-34-38/lib'
-ROOT_LIBS='-L/home/groot/root/v5-34-38/lib -lCore -lCint -lRIO -lNet -lHist -lGraf -lGraf3d -lGpad -lTree -lRint -lPostscript -lMatrix -lPhysics -lMathCore -lThread -pthread -lm -ldl -rdynamic'
-SED='/bin/sed'
+ROOT_CXXFLAGS=''
+ROOT_GLIBS=''
+ROOT_LIBDIR=''
+ROOT_LIBS=''
+SED=''
 SET_MAKE=''
 SHELL='/bin/bash'
-STRIP='strip'
+STRIP=''
 VERSION='v4r5'
-ac_ct_AR='ar'
-ac_ct_CC='gcc'
-ac_ct_CXX='g++'
+ac_ct_AR=''
+ac_ct_CC=''
+ac_ct_CXX=''
 ac_ct_DUMPBIN=''
 am__EXEEXT_FALSE=''
-am__EXEEXT_TRUE='#'
-am__fastdepCC_FALSE='#'
+am__EXEEXT_TRUE=''
+am__fastdepCC_FALSE=''
 am__fastdepCC_TRUE=''
-am__fastdepCXX_FALSE='#'
+am__fastdepCXX_FALSE=''
 am__fastdepCXX_TRUE=''
-am__include='include'
+am__include=''
 am__isrc=''
 am__leading_dot='.'
-am__nodep='_no'
+am__nodep=''
 am__quote=''
 am__tar='$${TAR-tar} chof - "$$tardir"'
 am__untar='$${TAR-tar} xf -'
 bindir='${exec_prefix}/bin'
-build='x86_64-unknown-linux-gnu'
+build=''
 build_alias=''
-build_cpu='x86_64'
-build_os='linux-gnu'
-build_vendor='unknown'
+build_cpu=''
+build_os=''
+build_vendor=''
 datadir='${datarootdir}'
 datarootdir='${prefix}/share'
 docdir='${datarootdir}/doc/${PACKAGE_TARNAME}'
 dvidir='${docdir}'
-exec_prefix='${prefix}'
-host='x86_64-unknown-linux-gnu'
+exec_prefix='NONE'
+host=''
 host_alias=''
-host_cpu='x86_64'
-host_os='linux-gnu'
-host_vendor='unknown'
+host_cpu=''
+host_os=''
+host_vendor=''
 htmldir='${docdir}'
 includedir='${prefix}/include'
 infodir='${datarootdir}/info'
-install_sh='${SHELL} /home/groot/corsika/corsika7/coast/src/coast-v4r5/config/install-sh'
+install_sh='${SHELL} /home/groot/corsika/corsika7/coast/coast-v4r5/config/install-sh'
 libdir='${exec_prefix}/lib'
 libexecdir='${exec_prefix}/libexec'
 localedir='${datarootdir}/locale'
@@ -760,7 +217,7 @@ mandir='${datarootdir}/man'
 mkdir_p='/bin/mkdir -p'
 oldincludedir='/usr/include'
 pdfdir='${docdir}'
-prefix='/home/groot/corsika/corsika7/coast/v4r5'
+prefix='NONE'
 program_transform_name='s,x,x,'
 psdir='${docdir}'
 sbindir='${exec_prefix}/sbin'
@@ -781,18 +238,5 @@ target_alias=''
 #define PACKAGE_URL ""
 #define PACKAGE "coast"
 #define VERSION "v4r5"
-#define STDC_HEADERS 1
-#define HAVE_SYS_TYPES_H 1
-#define HAVE_SYS_STAT_H 1
-#define HAVE_STDLIB_H 1
-#define HAVE_STRING_H 1
-#define HAVE_MEMORY_H 1
-#define HAVE_STRINGS_H 1
-#define HAVE_INTTYPES_H 1
-#define HAVE_STDINT_H 1
-#define HAVE_UNISTD_H 1
-#define HAVE_DLFCN_H 1
-#define LT_OBJDIR ".libs/"
-#define HAVE_ROOT 1
 
-configure: exit 0
+configure: exit 1

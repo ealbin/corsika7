@@ -1,0 +1,7 @@
+
+*
+!.gitignore
+!input.txt
+!parallel.sh
+!README
+!single.sh

@@ -1,0 +1,10 @@
+
+*
+!.gitignore
+!__init__.py
+!nuclei.py
+!particle.py
+!results.py
+!run.h
+!settings.py
+!sim.h

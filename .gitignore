@@ -1,7 +1,9 @@
-*.swp
-*.d
-*.so
-*.pyc
-*.pcm
-coast/v4r5/
-corsika-76900/
+
+*
+!.gitignore
+!coast-init.sh
+!fix_nexus.sh
+!README
+!coast/
+!corsika-76900/
+!simulations/

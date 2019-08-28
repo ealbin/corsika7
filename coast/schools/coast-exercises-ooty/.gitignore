@@ -1,0 +1,8 @@
+
+*
+!.gitignore
+!DAT000001
+!hist.inp
+!plot2D.inp
+!setEnvironment.csh
+!setEnvironment.sh
