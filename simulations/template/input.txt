@@ -53,7 +53,7 @@ c                                                 Lat: 39d 17m 49s N, Lon: 112d 
 c                                                 (reference: https://www.ngdc.noaa.gov/geomag/)
 c
 c ** uncomment for cluster (parallel) computing **
-cPARALLEL    1000.   100000.     1   F       only works if compiled with the PARALLEL option, comment this out otherwise
+c PARALLEL    1000.   100000.     1   F     only works if compiled with the PARALLEL option, comment this out otherwise
 c                                           1st value = particles with energies above this [GeV] get drawn from the 6th seed
 c                                           2nd value = maximum energy [GeV] for a complete subshower before splitting the task
 c                                           3rd value = MPI identification number
