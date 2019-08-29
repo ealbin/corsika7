@@ -19,7 +19,7 @@
 
 // Fixed size dimensions of array or collections stored in the TTree if any.
    const Int_t kMaxshower = 1;
-   const Int_t kMaxparticle_ = 82724;
+   const Int_t kMaxparticle_ = 10000000; // 10 million, increase if needed
    const Int_t kMaxlong_ = 1;
    const Int_t kMaxcherenkov_ = 1;
 

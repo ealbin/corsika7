@@ -12,15 +12,15 @@ def mmass2GeV(mmass):
 # Nuclei IDs are A x 100 + Z
 # But this list only considers the "Z" part, e.g. the ones and tens place
 ID = {}
-ID['1']  = {'catagory':'nuclei', 'symbol':'H',  'mass':mmass2GeV(1.0079)}
-ID['2']  = {'catagory':'nuclei', 'symbol':'He', 'mass':mmass2GeV(4.0026)}
-ID['3']  = {'catagory':'nuclei', 'symbol':'Li', 'mass':mmass2GeV(6.941) }
-ID['4']  = {'catagory':'nuclei', 'symbol':'Be', 'mass':mmass2GeV(9.0122)}
-ID['5']  = {'catagory':'nuclei', 'symbol':'B',  'mass':mmass2GeV(10.811)}
-ID['6']  = {'catagory':'nuclei', 'symbol':'C',  'mass':mmass2GeV(12.011)}
-ID['7']  = {'catagory':'nuclei', 'symbol':'N',  'mass':mmass2GeV(14.067)}
-ID['8']  = {'catagory':'nuclei', 'symbol':'O',  'mass':mmass2GeV(15.999)}
-ID['9']  = {'catagory':'nuclei', 'symbol':'F',  'mass':mmass2GeV(18.998)}
+ID['01'] = {'catagory':'nuclei', 'symbol':'H',  'mass':mmass2GeV(1.0079)}
+ID['02'] = {'catagory':'nuclei', 'symbol':'He', 'mass':mmass2GeV(4.0026)}
+ID['03'] = {'catagory':'nuclei', 'symbol':'Li', 'mass':mmass2GeV(6.941) }
+ID['04'] = {'catagory':'nuclei', 'symbol':'Be', 'mass':mmass2GeV(9.0122)}
+ID['05'] = {'catagory':'nuclei', 'symbol':'B',  'mass':mmass2GeV(10.811)}
+ID['06'] = {'catagory':'nuclei', 'symbol':'C',  'mass':mmass2GeV(12.011)}
+ID['07'] = {'catagory':'nuclei', 'symbol':'N',  'mass':mmass2GeV(14.067)}
+ID['08'] = {'catagory':'nuclei', 'symbol':'O',  'mass':mmass2GeV(15.999)}
+ID['09'] = {'catagory':'nuclei', 'symbol':'F',  'mass':mmass2GeV(18.998)}
 ID['10'] = {'catagory':'nuclei', 'symbol':'Ne', 'mass':mmass2GeV(20.180)}
 ID['11'] = {'catagory':'nuclei', 'symbol':'Na', 'mass':mmass2GeV(22.990)}
 ID['12'] = {'catagory':'nuclei', 'symbol':'Mg', 'mass':mmass2GeV(24.305)}
