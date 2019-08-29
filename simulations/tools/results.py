@@ -8,7 +8,7 @@ from . import particle
 from . import settings
 
 # TODO: replace this with load
-__data__ = R.TFile('./proton-1e14/DAT000001.root')
+#__data__ = R.TFile('./proton-1e14/DAT000001.root')
 
 
 ##############################################################################
@@ -46,7 +46,19 @@ def relative_diff_2D(hist1, hist2):
 
 class Results:
     
-    def __init__(self):
+    def __init__(self, run=None, sim=None):
+        if (run is None or sim is None):
+            self.__init2__()
+            return
+        self.run = R.Run(run)
+        self.sim = R.Sim(sim)
+        self.run.GetEntry(0)
+        self.sim.GetEntry(0)
+        self.all_good = True
+        self.__initialize_histograms__()
+
+
+    def __init2__(self):
         filename = R.gDirectory.GetName()
         is_data_file  = filename.endswith('.root')
         has_run_tree  = False
@@ -131,42 +143,45 @@ class Results:
             self.density[_].SetTitle(title)
             self.density[_].Reset('ICEM')
 
-        for _ in range(self.sim.particle__):
-            
-            if (obs_level != -1):
-                if (self.sim.particle__ObservationLevel[_] != obs_level):
+        entries = self.sim.fChain.GetEntries()
+        for entry in range(entries):
+            self.sim.GetEntry(entry)
+
+            for _ in range(self.sim.particle__):
+                
+                if (obs_level != -1):
+                    if (self.sim.particle__ObservationLevel[_] != obs_level):
+                        continue
+
+                pid = self.sim.particle__ParticleID[_]
+                x   = self.sim.particle__x[_] / 1e5 # [km]
+                y   = self.sim.particle__y[_] / 1e5 # [km]
+
+                if (str(pid) in particle.ID):
+                    catagory = particle.ID[str(pid)]['catagory']
+                elif (str(pid)[-2:] in nuclei.ID):
+                    catagory = nuclei.ID[str(pid)[-2:]]['catagory']
+                else:
+                    print(' [ERROR] Unknown particle ID: {}'.format(pid))
                     continue
 
-            pid = self.sim.particle__ParticleID[_]
-            x   = self.sim.particle__x[_] / 1e5 # [km]
-            y   = self.sim.particle__y[_] / 1e5 # [km]
-
-            if (str(pid) in particle.ID):
-                catagory = particle.ID[str(pid)]['catagory']
-            elif (str(pid)[-2:] in nuclei.ID):
-                catagory = nuclei.ID[str(pid)[-2:]]['catagory']
-            else:
-                print(' [ERROR] Unknown particle ID: {}'.format(pid))
-                continue
-
-            r = np.sqrt(x*x + y*y)
-            self.density[catagory].Fill(r)
+                r = np.sqrt(x*x + y*y)
+                self.density[catagory].Fill(r)
 
         xaxis = self.density[settings.Catagories[0]].GetXaxis()
-        for _ in range(xaxis.GetNbins()):
-            i     = _ + 1
-            low   = xaxis.GetBinLowEdge(i)
-            width = xaxis.GetBinWidth(i)
+        for _ in range(1, xaxis.GetNbins() + 1):
+            low   = xaxis.GetBinLowEdge(_)
+            width = xaxis.GetBinWidth(_)
             high  = low + width
             area  = np.pi * (high*high - low*low) # [km^2]
             area  = area * (1e5)*(1e5) # [cm^2]
 
             for cat in settings.Catagories:
                 raw = self.density[cat].GetBinContent(_)
-                self.density[cat].SetBinContent(_, raw / area)
+                self.density[cat].SetBinContent(_, raw / area / entries)
 
                 raw = self.density[cat].GetBinError(_)
-                self.density[cat].SetBinError(_, raw / area)
+                self.density[cat].SetBinError(_, raw / area / entries)
 
         try:
             self.density_canvas
@@ -232,27 +247,42 @@ class Results:
             self.slice[_].SetTitle(title)
             self.slice[_].Reset('ICEM')
 
-        for _ in range(self.sim.particle__):
-            
-            if (obs_level != -1):
-                if (self.sim.particle__ObservationLevel[_] != obs_level):
+        entries = self.sim.fChain.GetEntries()
+        for entry in range(entries):
+            self.sim.GetEntry(entry)
+
+            for _ in range(self.sim.particle__):
+                
+                if (obs_level != -1):
+                    if (self.sim.particle__ObservationLevel[_] != obs_level):
+                        continue
+
+                pid = self.sim.particle__ParticleID[_]
+                x   = self.sim.particle__x[_] / 1e5 # [km] North
+                y   = self.sim.particle__y[_] / 1e5 # [km] West
+
+                if (str(pid) in particle.ID):
+                    catagory = particle.ID[str(pid)]['catagory']
+                elif (str(pid)[-2:] in nuclei.ID):
+                    catagory = nuclei.ID[str(pid)[-2:]]['catagory']
+                else:
+                    print(' [ERROR] Unknown particle ID: {}'.format(pid))
                     continue
 
-            pid = self.sim.particle__ParticleID[_]
-            x   = self.sim.particle__x[_] / 1e5 # [km] North
-            y   = self.sim.particle__y[_] / 1e5 # [km] West
+                # "x" is West-to-East (i.e. -y)
+                # "y" is South-to-North (i.e. x)
+                self.slice[catagory].Fill(-y, x)
 
-            if (str(pid) in particle.ID):
-                catagory = particle.ID[str(pid)]['catagory']
-            elif (str(pid)[-2:] in nuclei.ID):
-                catagory = nuclei.ID[str(pid)[-2:]]['catagory']
-            else:
-                print(' [ERROR] Unknown particle ID: {}'.format(pid))
-                continue
+        xaxis = self.slice[settings.Catagories[0]].GetXaxis()
+        yaxis = self.slice[settings.Catagories[0]].GetYaxis()
+        for xi in range(1, xaxis.GetNbins() + 1):
+            for yi in range(1, yaxis.GetNbins() + 1):
+                for cat in settings.Catagories:
+                    raw = self.slice[cat].GetBinContent(xi, yi)
+                    self.slice[cat].SetBinContent(xi, yi, raw / entries)
+                    raw = self.slice[cat].GetBinError(xi, yi)
+                    self.slice[cat].SetBinError(xi, yi, raw / entries)
 
-            # "x" is West-to-East (i.e. -y)
-            # "y" is South-to-North (i.e. x)
-            self.slice[catagory].Fill(-y, x)
 
         try:
             self.slice_canvases
@@ -320,41 +350,44 @@ class Results:
             self.spectrum[_].SetTitle(title)
             self.spectrum[_].Reset('ICEM')
 
-        for _ in range(self.sim.particle__):
-            
-            if (obs_level != -1):
-                if (self.sim.particle__ObservationLevel[_] != obs_level):
+        entries = self.sim.fChain.GetEntries()
+        for entry in range(entries):
+            self.sim.GetEntry(entry)
+
+            for _ in range(self.sim.particle__):
+                
+                if (obs_level != -1):
+                    if (self.sim.particle__ObservationLevel[_] != obs_level):
+                        continue
+
+                pid = self.sim.particle__ParticleID[_]
+                px  = self.sim.particle__Px[_] # GeV
+                py  = self.sim.particle__Py[_] # GeV
+                pz  = self.sim.particle__Pz[_] # GeV
+
+                if (str(pid) in particle.ID):
+                    catagory = particle.ID[str(pid)]['catagory']
+                    mass     = particle.ID[str(pid)]['mass'] # GeV
+                elif (str(pid)[-2:] in nuclei.ID):
+                    catagory = nuclei.ID[str(pid)[-2:]]['catagory']
+                    mass     = nuclei.ID[str(pid)[-2:]]['mass'] # GeV
+                else:
+                    print(' [ERROR] Unknown particle ID: {}'.format(pid))
                     continue
 
-            pid = self.sim.particle__ParticleID[_]
-            px  = self.sim.particle__Px[_] # GeV
-            py  = self.sim.particle__Py[_] # GeV
-            pz  = self.sim.particle__Pz[_] # GeV
-
-            if (str(pid) in particle.ID):
-                catagory = particle.ID[str(pid)]['catagory']
-                mass     = particle.ID[str(pid)]['mass'] # GeV
-            elif (str(pid)[-2:] in nuclei.ID):
-                catagory = nuclei.ID[str(pid)[-2:]]['catagory']
-                mass     = nuclei.ID[str(pid)[-2:]]['mass'] # GeV
-            else:
-                print(' [ERROR] Unknown particle ID: {}'.format(pid))
-                continue
-
-            energy = np.sqrt(px*px + py*py + pz*pz + mass*mass) * 1e9 # eV
-            self.spectrum[catagory].Fill(energy)
+                energy = np.sqrt(px*px + py*py + pz*pz + mass*mass) * 1e9 # eV
+                self.spectrum[catagory].Fill(energy)
 
         xaxis = self.spectrum[settings.Catagories[0]].GetXaxis()
-        for _ in range(xaxis.GetNbins()):
-            i     = _ + 1
-            width = xaxis.GetBinWidth(i)
-
+        for _ in range(1, xaxis.GetNbins() + 1):
+            width = xaxis.GetBinWidth(_)
+            
             for cat in settings.Catagories:
                 raw = self.spectrum[cat].GetBinContent(_)
-                self.spectrum[cat].SetBinContent(_, raw / width)
+                self.spectrum[cat].SetBinContent(_, raw / width / entries)
 
                 raw = self.spectrum[cat].GetBinError(_)
-                self.spectrum[cat].SetBinError(_, raw / width)
+                self.spectrum[cat].SetBinError(_, raw / width / entries)
 
         try:
             self.spectrum_canvas
@@ -419,25 +452,36 @@ class Results:
         self.content.SetTitle(title)
         self.content.Reset('ICEM')
 
-        for _ in range(self.sim.particle__):
-            
-            if (obs_level != -1):
-                if (self.sim.particle__ObservationLevel[_] != obs_level):
+        entries = self.sim.fChain.GetEntries()
+        for entry in range(entries):
+            self.sim.GetEntry(entry)
+
+            for _ in range(self.sim.particle__):
+                
+                if (obs_level != -1):
+                    if (self.sim.particle__ObservationLevel[_] != obs_level):
+                        continue
+
+                pid = self.sim.particle__ParticleID[_]
+
+                if (str(pid) in particle.ID):
+                    catagory = particle.ID[str(pid)]['catagory']
+                elif (str(pid)[-2:] in nuclei.ID):
+                    catagory = nuclei.ID[str(pid)[-2:]]['catagory']
+                else:
+                    print(' [ERROR] Unknown particle ID: {}'.format(pid))
                     continue
 
-            pid = self.sim.particle__ParticleID[_]
+                center = self.content.GetBinCenter(settings.Content[catagory])
+                self.content.Fill(center)
 
-            if (str(pid) in particle.ID):
-                catagory = particle.ID[str(pid)]['catagory']
-            elif (str(pid)[-2:] in nuclei.ID):
-                catagory = nuclei.ID[str(pid)[-2:]]['catagory']
-            else:
-                print(' [ERROR] Unknown particle ID: {}'.format(pid))
-                continue
-
-            center = self.content.GetBinCenter(settings.Content[catagory])
-            self.content.Fill(center)
-
+        xaxis = self.content.GetXaxis()
+        for _ in range(1, xaxis.GetNbins() + 1):
+            raw = self.content.GetBinContent(_)
+            self.content.SetBinContent(_, raw / entries)
+            raw = self.content.GetBinError(_)
+            self.content.SetBinError(_, raw / entries)
+        
         try:
             self.content_canvas
         except:
@@ -469,10 +513,23 @@ class Results:
         self.impact.SetTitle(title)
         self.impact.Reset('ICEM')
 
-        x = self.sim.shower_FirstTarget
-        y = self.sim.shower_FirstHeight / 1e5 # [km]
-        self.impact.Fill(x, y)
+        entries = self.sim.fChain.GetEntries()
+        for entry in range(entries):
+            self.sim.GetEntry(entry)
 
+            x = self.sim.shower_FirstTarget
+            y = self.sim.shower_FirstHeight / 1e5 # [km]
+            self.impact.Fill(x, y)
+
+        xaxis = self.impact.GetXaxis()
+        yaxis = self.impact.GetYaxis()
+        for xi in range(1, xaxis.GetNbins() + 1):
+            for yi in range(1, yaxis.GetNbins() + 1):
+                raw = self.impact.GetBinContent(xi, yi)
+                self.impact.SetBinContent(xi, yi, raw / entries)
+                raw = self.impact.GetBinError(xi, yi)
+                self.content.SetBinError(xi, yi, raw / entries)
+        
         try:
             self.impact_canvas
         except:
@@ -504,6 +561,8 @@ class Results:
         self.efficiency.Reset('ICEM')
         max_energy = self.sim.shower_Energy # GeV
 
+        entries = self.sim.fChain.GetEntries()
+
         nlevels = self.run.run_ObservationLevel.size()
         for _ in range(nlevels):
             xbin = _ + 1
@@ -512,27 +571,30 @@ class Results:
                 obs_level = 0
 
             energy_GeV = 0.
-            for i in range(self.sim.particle__):
-            
-                if (self.sim.particle__ObservationLevel[i] != obs_level):
-                    continue
+            for entry in range(entries):
+                self.sim.GetEntry(entry)
 
-                pid = self.sim.particle__ParticleID[i]
-                px  = self.sim.particle__Px[i] # GeV
-                py  = self.sim.particle__Py[i] # GeV
-                pz  = self.sim.particle__Pz[i] # GeV
+                for i in range(self.sim.particle__):
+                
+                    if (self.sim.particle__ObservationLevel[i] != obs_level):
+                        continue
 
-                if (str(pid) in particle.ID):
-                    mass     = particle.ID[str(pid)]['mass'] # GeV
-                elif (str(pid)[-2:] in nuclei.ID):
-                    mass     = nuclei.ID[str(pid)[-2:]]['mass'] # GeV
-                else:
-                    print(' [ERROR] Unknown particle ID: {}'.format(pid))
-                    continue
+                    pid = self.sim.particle__ParticleID[i]
+                    px  = self.sim.particle__Px[i] # GeV
+                    py  = self.sim.particle__Py[i] # GeV
+                    pz  = self.sim.particle__Pz[i] # GeV
 
-                energy_GeV += np.sqrt(px*px + py*py + pz*pz + mass*mass) # GeV
+                    if (str(pid) in particle.ID):
+                        mass     = particle.ID[str(pid)]['mass'] # GeV
+                    elif (str(pid)[-2:] in nuclei.ID):
+                        mass     = nuclei.ID[str(pid)[-2:]]['mass'] # GeV
+                    else:
+                        print(' [ERROR] Unknown particle ID: {}'.format(pid))
+                        continue
 
-            efficiency = energy_GeV / max_energy
+                    energy_GeV += np.sqrt(px*px + py*py + pz*pz + mass*mass) # GeV
+
+            efficiency = energy_GeV / max_energy / entries
             self.efficiency.SetBinContent(xbin, efficiency)
 
         try:

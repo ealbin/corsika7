@@ -2,6 +2,7 @@
 *
 !.gitignore
 !__init__.py
+!file.py
 !nuclei.py
 !particle.py
 !results.py
