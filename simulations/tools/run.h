@@ -17,12 +17,10 @@
 #include <TObject.h>
 
 // Fixed size dimensions of array or collections stored in the TTree if any.
-   const Int_t kMaxrun = 1;
 
 class Run {
 public :
    TTree          *fChain;   //!pointer to the analyzed TTree or TChain
-   Int_t           fCurrent; //!current Tree number in a TChain
 
    // Declaration of leaf types
  //crsIO::TRun     *run_;
@@ -211,7 +209,6 @@ void Run::Init(TTree *tree)
    // Set branch addresses and branch pointers
    if (!tree) return;
    fChain = tree;
-   fCurrent = -1;
    fChain->SetMakeClass(1);
 
    fChain->SetBranchAddress("run.TObject.fUniqueID", &run_TObject_fUniqueID, &b_run_TObject_fUniqueID);

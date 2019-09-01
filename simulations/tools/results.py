@@ -46,10 +46,11 @@ def relative_diff_2D(hist1, hist2):
 
 class Results:
     
-    def __init__(self, run=None, sim=None):
+    def __init__(self, run=None, sim=None, prefix=''):
         if (run is None or sim is None):
-            self.__init2__()
+            self.__init2__(prefix=prefix)
             return
+        self.prefix = prefix
         self.run = R.Run(run)
         self.sim = R.Sim(sim)
         self.run.GetEntry(0)
@@ -58,7 +59,8 @@ class Results:
         self.__initialize_histograms__()
 
 
-    def __init2__(self):
+    def __init2__(self, prefix=''):
+        self.prefix = prefix
         filename = R.gDirectory.GetName()
         is_data_file  = filename.endswith('.root')
         has_run_tree  = False
@@ -561,9 +563,9 @@ class Results:
         self.efficiency.Reset('ICEM')
         max_energy = self.sim.shower_Energy # GeV
 
-        entries = self.sim.fChain.GetEntries()
-
         nlevels = self.run.run_ObservationLevel.size()
+        entries = self.sim.GetEntries()
+            
         for _ in range(nlevels):
             xbin = _ + 1
             obs_level = _ + 1
@@ -571,6 +573,7 @@ class Results:
                 obs_level = 0
 
             energy_GeV = 0.
+            
             for entry in range(entries):
                 self.sim.GetEntry(entry)
 
@@ -636,7 +639,7 @@ class Results:
         
         # Longitudinal Density
         #---------------------------------------------------------------------
-        name   = settings.Density['name']
+        name   = '{}_{}'.format(self.prefix, settings.Density['name'])
         title  = settings.Density['title']
         xtitle = settings.Density['xtitle']
         ytitle = settings.Density['ytitle']
@@ -660,7 +663,7 @@ class Results:
 
         # X-Y Slice
         #---------------------------------------------------------------------
-        name   = settings.Slice['name']
+        name   = '{}_{}'.format(self.prefix, settings.Slice['name'])
         title  = settings.Slice['title']
         xtitle = settings.Slice['xtitle']
         ytitle = settings.Slice['ytitle']
@@ -686,7 +689,7 @@ class Results:
 
         # Energy Spectrum
         #---------------------------------------------------------------------
-        name   = settings.Spectrum['name']
+        name   = '{}_{}'.format(self.prefix, settings.Spectrum['name'])
         title  = settings.Spectrum['title']
         xtitle = settings.Spectrum['xtitle']
         ytitle = settings.Spectrum['ytitle']
@@ -710,7 +713,7 @@ class Results:
 
         # Particle Content
         #---------------------------------------------------------------------
-        name   = settings.Content['name']
+        name   = '{}_{}'.format(self.prefix, settings.Content['name'])
         title  = settings.Content['title']
         ytitle = settings.Content['ytitle']
         title  = '{};;{}'.format(title, ytitle)
@@ -732,7 +735,7 @@ class Results:
 
         # First Impact
         #---------------------------------------------------------------------
-        name   = settings.Impact['name']
+        name   = '{}_{}'.format(self.prefix, settings.Impact['name'])
         title  = settings.Impact['title']
         xtitle = settings.Impact['xtitle']
         ytitle = settings.Impact['ytitle']
@@ -759,7 +762,7 @@ class Results:
 
         # Energy Efficiency
         #---------------------------------------------------------------------
-        name   = settings.Efficiency['name']
+        name   = '{}_{}'.format(self.prefix, settings.Efficiency['name'])
         title  = settings.Efficiency['title']
         xtitle = settings.Efficiency['xtitle']
         ytitle = settings.Efficiency['ytitle']

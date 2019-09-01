@@ -19,14 +19,14 @@
 
 // Fixed size dimensions of array or collections stored in the TTree if any.
    const Int_t kMaxshower = 1;
-   const Int_t kMaxparticle_ = 10000000; // 10 million, increase if needed
    const Int_t kMaxlong_ = 1;
    const Int_t kMaxcherenkov_ = 1;
+
+  Int_t kMaxparticle_ = 0; 
 
 class Sim {
 public :
    TTree          *fChain;   //!pointer to the analyzed TTree or TChain
-   Int_t           fCurrent; //!current Tree number in a TChain
 
    // Declaration of leaf types
  //crsIO::TShower  *shower_;
@@ -60,19 +60,19 @@ public :
    Int_t           shower_nPreshower;
    Int_t           shower_CPUtime;
    Int_t           particle__;
-   UInt_t          particle__fUniqueID[kMaxparticle_];   //[particle._]
-   UInt_t          particle__fBits[kMaxparticle_];   //[particle._]
-   Int_t           particle__CorsikaID[kMaxparticle_];   //[particle._]
-   Int_t           particle__ParticleID[kMaxparticle_];   //[particle._]
-   Int_t           particle__ObservationLevel[kMaxparticle_];   //[particle._]
-   Int_t           particle__HadronicGeneration[kMaxparticle_];   //[particle._]
-   Double_t        particle__Px[kMaxparticle_];   //[particle._]
-   Double_t        particle__Py[kMaxparticle_];   //[particle._]
-   Double_t        particle__Pz[kMaxparticle_];   //[particle._]
-   Double_t        particle__x[kMaxparticle_];   //[particle._]
-   Double_t        particle__y[kMaxparticle_];   //[particle._]
-   Double_t        particle__Time[kMaxparticle_];   //[particle._]
-   Double_t        particle__Weight[kMaxparticle_];   //[particle._]
+   UInt_t          *particle__fUniqueID;//[kMaxparticle_];   //[particle._]
+   UInt_t          *particle__fBits;//[kMaxparticle_];   //[particle._]
+   Int_t           *particle__CorsikaID;//[kMaxparticle_];   //[particle._]
+   Int_t           *particle__ParticleID;//[kMaxparticle_];   //[particle._]
+   Int_t           *particle__ObservationLevel;//[kMaxparticle_];   //[particle._]
+   Int_t           *particle__HadronicGeneration;//[kMaxparticle_];   //[particle._]
+   Double_t        *particle__Px;//[kMaxparticle_];   //[particle._]
+   Double_t        *particle__Py;//[kMaxparticle_];   //[particle._]
+   Double_t        *particle__Pz;//[kMaxparticle_];   //[particle._]
+   Double_t        *particle__x;//[kMaxparticle_];   //[particle._]
+   Double_t        *particle__y;//[kMaxparticle_];   //[particle._]
+   Double_t        *particle__Time;//[kMaxparticle_];   //[particle._]
+   Double_t        *particle__Weight;//[kMaxparticle_];   //[particle._]
    Int_t           long__;
    UInt_t          long__fUniqueID[kMaxlong_];   //[long._]
    UInt_t          long__fBits[kMaxlong_];   //[long._]
@@ -168,52 +168,101 @@ public :
    TBranch        *b_cherenkov__Weight;   //!
 
    Sim(TTree *tree=0);
-   virtual ~Sim();
+   virtual Long64_t GetEntries();
    virtual Int_t    GetEntry(Long64_t entry);
-   virtual void     Init(TTree *tree);
+
+private:
+   virtual void     Init();
+   virtual void     Allocate();
+   virtual void     Link();
+
+   virtual         ~Sim();
+   virtual void     Free();
 };
 
 #endif
 
-Sim::Sim(TTree *tree) : fChain(0) 
+Sim::Sim(TTree *tree) : fChain(tree) 
 {
 // if parameter tree is not specified (or zero), die. 
-   if (tree == 0) {
-       std::cout << " [ERROR] No TTree or TChain\n";
-      return;
+   if (fChain == 0) {
+        std::cout << " [ERROR] No TTree or TChain\n";
+        return;
    }
-   Init(tree);
+   if (fChain->GetEntries() == 0) {
+        std::cout << " [ERROR] TTree or TChain has 0 entries\n";
+        return;
+   }
+   
+   Init();
 }
 
-Sim::~Sim()
+Long64_t Sim::GetEntries()
 {
-   if (!fChain) return;
-   delete fChain->GetCurrentFile();
+   return fChain->GetEntries();
 }
 
 Int_t Sim::GetEntry(Long64_t entry)
 {
-// Read contents of entry.
-   if (!fChain) return 0;
-   return fChain->GetEntry(entry);
+    return fChain->GetEntry(entry);
 }
 
-void Sim::Init(TTree *tree)
+
+void Sim::Init()
 {
-   // The Init() function is called when the selector needs to initialize
-   // a new tree or chain. Typically here the branch addresses and branch
-   // pointers of the tree will be set.
-   // It is normally not necessary to make changes to the generated
-   // code, but the routine can be extended by the user if needed.
-   // Init() will be called many times when running on PROOF
-   // (once per file to be processed).
-
-   // Set branch addresses and branch pointers
-   if (!tree) return;
-   fChain = tree;
-   fCurrent = -1;
    fChain->SetMakeClass(1);
+   fChain->SetBranchStatus("*", 0);
+   fChain->SetBranchStatus("particle.", 1);
+   fChain->SetBranchAddress("particle.", &particle__, &b_particle__);
+   Long64_t entries = fChain->GetEntries();
+   
+   for (Long64_t i = 0; i < entries; i++) {
+        fChain->GetEntry(i);
+        if (particle__ > kMaxparticle_)
+            kMaxparticle_ = particle__;
+   }
+   fChain->SetBranchStatus("*", 1);
+   Allocate();
+   Link();
+}
 
+void Sim::Allocate()
+{
+   std::cout << "Allocating for " << kMaxparticle_ << " (maximal) particles\n";
+   particle__fUniqueID          = new UInt_t[kMaxparticle_];
+   particle__fBits              = new UInt_t[kMaxparticle_];
+   particle__CorsikaID          = new Int_t[kMaxparticle_];
+   particle__ParticleID         = new Int_t[kMaxparticle_];
+   particle__ObservationLevel   = new Int_t[kMaxparticle_];
+   particle__HadronicGeneration = new Int_t[kMaxparticle_];
+   particle__Px                 = new Double_t[kMaxparticle_];
+   particle__Py                 = new Double_t[kMaxparticle_];
+   particle__Pz                 = new Double_t[kMaxparticle_];
+   particle__x                  = new Double_t[kMaxparticle_];
+   particle__y                  = new Double_t[kMaxparticle_];
+   particle__Time               = new Double_t[kMaxparticle_];
+   particle__Weight             = new Double_t[kMaxparticle_];
+
+   for (Int_t i = 0; i < kMaxparticle_; i++) {
+       particle__fUniqueID[i]          = 0;
+       particle__fBits[i]              = 0;
+       particle__CorsikaID[i]          = 0;
+       particle__ParticleID[i]         = 0;
+       particle__ObservationLevel[i]   = 0;
+       particle__HadronicGeneration[i] = 0;
+       particle__Px[i]                 = 0.;
+       particle__Py[i]                 = 0.;
+       particle__Pz[i]                 = 0.;
+       particle__x[i]                  = 0.;
+       particle__y[i]                  = 0.;
+       particle__Time[i]               = 0.;
+       particle__Weight[i]             = 0.;
+   }
+}
+
+void Sim::Link()
+{
+   // Set branch addresses and branch pointers
    fChain->SetBranchAddress("shower.TObject.fUniqueID", &shower_TObject_fUniqueID, &b_shower_TObject_fUniqueID);
    fChain->SetBranchAddress("shower.TObject.fBits", &shower_TObject_fBits, &b_shower_TObject_fBits);
    fChain->SetBranchAddress("shower.EventID", &shower_EventID, &b_shower_EventID);
@@ -281,5 +330,43 @@ void Sim::Init(TTree *tree)
    fChain->SetBranchAddress("cherenkov..Time", &cherenkov__Time, &b_cherenkov__Time);
    fChain->SetBranchAddress("cherenkov..ProductionHeight", &cherenkov__ProductionHeight, &b_cherenkov__ProductionHeight);
    fChain->SetBranchAddress("cherenkov..Weight", &cherenkov__Weight, &b_cherenkov__Weight);
+}
+
+Sim::~Sim()
+{
+   if (!fChain) return;
+   Free();
+   delete fChain->GetCurrentFile();
+}
+
+void Sim::Free()
+{
+   if (particle__fUniqueID)          delete[] particle__fUniqueID;
+   if (particle__fBits)              delete[] particle__fBits;
+   if (particle__CorsikaID)          delete[] particle__CorsikaID;
+   if (particle__ParticleID)         delete[] particle__ParticleID;
+   if (particle__ObservationLevel)   delete[] particle__ObservationLevel;
+   if (particle__HadronicGeneration) delete[] particle__HadronicGeneration;
+   if (particle__Px)                 delete[] particle__Px;
+   if (particle__Py)                 delete[] particle__Py;
+   if (particle__Pz)                 delete[] particle__Pz;
+   if (particle__x)                  delete[] particle__x;
+   if (particle__y)                  delete[] particle__y;
+   if (particle__Time)               delete[] particle__Time;
+   if (particle__Weight)             delete[] particle__Weight;
+   
+   particle__fUniqueID          = 0;
+   particle__fBits              = 0;
+   particle__CorsikaID          = 0;
+   particle__ParticleID         = 0;
+   particle__ObservationLevel   = 0;
+   particle__HadronicGeneration = 0;
+   particle__Px                 = 0;
+   particle__Py                 = 0;
+   particle__Pz                 = 0;
+   particle__x                  = 0;
+   particle__y                  = 0;
+   particle__Time               = 0;
+   particle__Weight             = 0;
 }
 
