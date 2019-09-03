@@ -1,9 +1,0 @@
-how to compile merge_corsika:
-To compile you should first compile COAST libraries by selecting the 
-option "d1" in the corsika option list in coconut.
-Then go to coast/CorsikaFileIO
-and compile with :
-g++ -Wall -D_FILE_OFFSET_BITS=64 merge_corsika.cc -o merge_corsika -I../../include -lboost_program_options -L../CorsikaIntern -L. -lCorsikaFileIO -lCorsikaIntern
-
-Then use "./merge_corsika" to know how to use it.
-
