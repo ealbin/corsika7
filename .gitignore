@@ -1,7 +1,7 @@
 
 *
 !.gitignore
-!coast-init.sh
+!.gitattributes
 !fix_nexus.sh
 !README
 !coast/

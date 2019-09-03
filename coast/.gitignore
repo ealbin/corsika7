@@ -2,6 +2,7 @@
 *
 !.gitignore
 !build.sh
+!coast-init.sh
 !README
 !schools/
 !src/

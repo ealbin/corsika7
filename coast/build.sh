@@ -2,8 +2,10 @@
 
 # >>> Edit this if needed <<<
 COAST_VERSION='v4r5'
-# optional feature packages:
+# optional tools you want:
 #export COAST_USER_LIB="$(pwd)/src/coast-interfaces-v4r1p3/Histogram"
+
+#-----------------------------------------------------------------------------
 
 if [ -z $ROOTSYS ]
 then

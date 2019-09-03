@@ -1,53 +1,80 @@
 
 1) Start on master branch:
     
-    $ git checkout master
+    $ git clone https://github.com/ealbin/corsika7.git
 
-2) Compile COAST (see ./coast/README for customizations):
 
-    $ cd coast
+2) Make your own analysis branch:
+
+    $ git checkout -b work
+
+
+3) Source your build of ROOT (version <6)
+
+    see https://github.com/ealbin/root if you need to install ROOT.
+
+
+3a) If you want to work with ROOT file output, I would recogmend compiling
+with the option "ROOTOUT" in coconut despite CORSIKA's recogmendation to use COAST, 
+as COAST's "corsika2root" program struggles to process output larger than a few
+gigabytes.
+
+    Proceed to step 4.
+
+
+3b) If you want to use COAST's specialized tools, briefly check out
+./coast/README.  If you just want corsika2root, you can do:
+
+    $ cd ./coast/
 
     $ ./build.sh
 
-Optional 2a) (only needed if you want to compile COAST with your CORSIKA build
--- i.e. you have some customizations from above) 
+    You'll need to source coast-init.sh any time you want to compile CORSIKA
+    with your tools (beyond corsika2root)
     
-    Source COAST (edit ./coast-init.sh to reflect any customizations above):
+    $ source ./coast-init.sh
 
     $ cd -
 
-    $ source ./coast-init.sh
-
-    Your options should appear when you do step 3) now, but if they don't you
-probably haven't sourced /your/path/to/root/thisroot.sh (version < 6).
-    If you have, you can try to force things as an alternate 3):    
-
-    $ cd corsika-76900
-
-    $ ./coconut --enable-COASTUSERLIB=yes
-
-    or
-
-    $ ./coconut --with-COASTUSERLIB=yes
+    Proceed to step 4.
 
 
-3) Compile CORSIKA:
+(*) A note about COAST: the "coast" that comes with CORSIKA (./v77000/coast)
+actually doesn't work -- it hasn't been compatible with CORSIKA for several
+versions.  The COAST that does work has to be aquired separately (i.e. what is
+in ./coast).
 
-    $ cd corsika-76900
+
+4) Compile CORSIKA:
+
+    $ cd v77000
 
     $ ./coconut
 
-Optional 4) If you try to compile the NEXUS hadronic interaction model, it
+    
+(**) If you are compiling with a COAST tool, or trying to do ROOTOUT, your options 
+should appear when you run coconut provided you have sourced
+./coast/coast-init.sh and/or sourced your "thisroot.sh" for ROOT version <6.
+However, you can try to force things as a last resort:    
+
+    $ ./coconut --enable-COASTUSERLIB=yes  --enable-ROOTOUT=yes
+
+    or
+
+    $ ./coconut --with-COASTUSERLIB=yes --with-root=yes
+
+    or
+
+    edit ./v77000/include/config.h
+
+
+(***) If you try to compile the NEXUS hadronic interaction model, it
 might error on function "sbet".  This function doesn't appear to do anything
 as it isn't called by any other line of code.  To dissable it so NEXUS will
 compile:
 
     $ ./fix-nexus.sh
 
-    ** Caution: only do this once! Repeating this will only clutter 
-       ./corsika-76900/nexus/nexus-uti-3972.f 
-
-Final remark 5) If you're having trouble getting your option to appear with
-./coconut, you can try to force it by editing ./corsika-76900/include/config.h
-
+    NOTE!: only do this once! Repeating this won't ruin anything, but will clutter 
+          ./corsika-76900/nexus/nexus-uti-3972.f needlessly
 
