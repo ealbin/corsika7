@@ -2,8 +2,8 @@
 *
 !.gitignore
 !.gitattributes
-!fix_nexus.sh
 !README
 !coast/
-!v77000/
+!patch/
 !simulations/
+!v77000/
