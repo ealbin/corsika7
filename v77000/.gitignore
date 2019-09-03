@@ -266,7 +266,7 @@
 !coconut
 !conex/Makefile.am
 !conex/Makefile.in
-#!conex/conex-6.4000.tar.gz
+!conex/conex-6.4000.tar.gz
 !config/compile
 !config/config.guess
 !config/config.sub
@@ -342,7 +342,7 @@
 !run/gr3.txt
 !run/mirreff.dat
 !run/parallel-inputs
-#!run/qgsdat-II-04
+!run/qgsdat-II-04
 !run/quanteff.dat
 !run/sectnu-II-04
 !src/Makefile.am
