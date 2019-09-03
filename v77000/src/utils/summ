@@ -1,0 +1,12 @@
+#!/bin/bash
+#
+# usage:   ./summ DAT201
+#          du -k DAT201* | ./summe
+# --------------------------------
+# sum of bytes of files of names beginning with DAT201
+#-----------------------------------------------------------------------
+#          gfortran -fbounds-check summe.f -o summe
+#          ifort -C -check bounds summe.f -o summe
+#-----------------------------------------------------------------------
+#
+du -k $1* | ./summe

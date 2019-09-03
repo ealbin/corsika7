@@ -1,0 +1,6 @@
+If you have a new version of the bernloehr package for IACT and ATMEXT, you 
+can simply unpack it here, but don't forget to rename or delete the original
+"GNUmakefile". Otherwise, it will not work with the automatic installation 
+of CORSIKA.
+
+T.Pierog- IK, FZK - 17.02.2006

@@ -1,0 +1,36 @@
+RUNNR   2                              run number
+NSHOW   1                              number of showers to generate
+PRMPAR  14                             prim. particle (1=gamma, 14=proton, ...)
+ESLOPE  -2.7                           slope of primary energy spectrum
+ERANGE  1.E5  1.E5                     energy range of primary particle (GeV)
+THETAP  0.  0.                         range of zenith angle (degree)
+PHIP    -180.  180.                       range of azimuth angle (degree)
+SEED    1   0   0                      seed for 1. random number sequence
+SEED    2   0   0                      seed for 2. random number sequence
+OBSLEV  0.                             observation level (in cm)
+FIXCHI  0.                             starting altitude (g/cm**2)
+MAGNET  20.0  42.8                     magnetic field centr. Europe
+HADFLG  0  0  0  0  0  2               flags hadr.interact.&fragmentation
+ECUTS   1.  1.  0.001  0.001           energy cuts for particles
+MUADDI  T                              additional info for muons
+MUMULT  T                              muon multiple scattering angle
+ELMFLG  F   F                          em. interaction flags (NKG,EGS)
+STEPFC  1.0                            mult. scattering step length fact.
+RADNKG  200.E2                         outer radius for NKG lat.dens.distr.
+ARRANG  0.                             rotation of array to north
+NEXPAR fname inics ../nexus/nexus.inics !initialization input file for nexus
+NEXPAR fname iniev ../nexus/nexus.iniev !initialization input file for nexus
+NEXPAR fname initl ../nexus/nexus.initl !initialization input file for nexus
+NEXPAR fname inirj ../nexus/nexus.inirj !initialization input file for nexus
+NEXPAR fname check none                !dummy output file for nexus
+NEXPAR fname histo none                !dummy output file for nexus
+NEXPAR fname data  none                !dummy output file for nexus
+NEXPAR fname copy  none                !dummy output file for nexus
+LONGI   T  10.  F  F                   longit.distr. & step size & fit & out
+MAXPRT  0                              max. number of printed events
+DIRECT  ./                             output directory
+DATBAS  F                              write .dbase file
+USER    you                            user 
+PAROUT F F
+DEBUG   F  6  F  1000000               debug flag and log.unit for out
+EXIT                                   terminates input

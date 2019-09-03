@@ -1,0 +1,262 @@
+  
+    @@@@@                                 @     @                 
+   @     @                                      @                 
+   @           @@@     @  @@     @@@@     @     @   @     @@@@    
+   @          @   @    @ @      @         @     @  @     @   @    
+   @          @   @    @@       @@@@@     @     @ @      @   @    
+   @     @    @   @    @            @     @     @@ @     @   @    
+    @@@@@      @@@     @        @@@@      @     @   @     @@@@ 
+
+                                              @      @                @  
+                                              @      @                @  
+         @@@@      @@@@    @  @@     @@@@     @      @       @@@      @  
+         @   @    @   @    @ @      @   @     @      @      @   @     @  
+         @   @    @   @    @@       @   @     @      @      @@@@@     @  
+         @@@@     @   @    @        @   @     @      @      @         @  
+         @         @@@@    @         @@@@     @@     @@      @@@      @@ 
+
+**************************************************************************
+*                                                                        *
+*       #        #                                                       *
+*       #        #                                                       *
+*       #        #                         campus grid userguide         *        
+*       #  oad   #  eveler                    scc opus cluster           *
+*       ##       ##                                                      *
+*                                                                        *
+*           Author: juergen.oehlschlaeger@kit.edu    20 Jun. 2013        *
+**************************************************************************
+
+ Short instruction, how to run parallel CORSIKA on KIT-CN campus-grid 
+ (i.e. opus cluster with Load Leveler system, shortened `LL` or `ll`):
+
+ path: $WORK/corsika.conex/
+ --------------------------
+
+ (1)  run ./coconut to create an executable with parallelization by
+      scripts by selecting `p - PARALLEL treatment of subshowers`
+      and `1 - Special stack for shell script without MPI`
+      i.e. name `corsika72495Linux_QGSII_gheisha`.
+
+ path: $WORK/corsika.conex/run/
+ ------------------------------
+
+ (2)  go to subdirectory run/ and rename the executable in a way to
+      distinguish standard and thinning simulations and to mark the 
+      parallelization by scripts by an additional appendix `_pll`,
+      i.e. name `corsika72495_stnd_QGSII_gheisha_pll`.
+
+ (3)  prepare corsika steering file `parallel-002345` for the parallel
+      simulation containing keyword PARALLEL by copying a formerly used
+      parallel steering file or by applying the fortran code acreinphc3.f 
+      (from the main corsika path $WORK/corsika.conex/src/parallel/), 
+      and here you dont need the hc3 submit script `jobhc3-002345` (no 
+      MPI parallelization); example see appendix (A-3);
+      steps (4) to (6) may be treated also directly before step (8).
+
+ (4)  execute shell script `preprocess-ll.sh` with two arguments, first the
+      name of the parallel corsika steering file and second the name of the
+      corsika executable, i.e.
+      ./preprocess-ll.sh parallel-002345 corsika72499_stnd_QGSII_gheisha_pll
+      which gives ... creating the directory csk002345/ and scripts ...
+                  ... copying all corsika model-dependent tabular files ...
+
+ (5)  run script `postprocess-ll.sh` with the run number as argument,
+      i.e.  ./postprocess-ll.sh 2345 , which writes the script  
+      `postjobscc-002345.sh` to the subdirectory csk002345/ to be 
+      executed after the complete simulation to produce the statistic
+      file `time.txt` and the protocol files Job00...._scc.[err,out].
+  
+ (6)  run script `sumprocessing-ll.sh` with the run number as argument,
+      i.e.  ./sumprocessing-ll.sh 2345 , which writes the scripts 
+      `sumlongifiles.sh002345`, `sumlistnkginfo.sh002345`, 
+      `showanalyscc.sh002345`, and `showanalyrun.sh002345`, all to be
+      executed later in this subdirectory csk002345/ by typing then
+          ./sumlistnkginfo.sh002345 
+          ./sumlongifiles.sh002345
+          llsubmit showanalyrun.sh002345 
+      (other analysis runs should be prepared individually).
+
+ path: $WORK/corsika.conex/run/csk002345/
+ ----------------------------------------
+
+ (7)  switch to the subdirectory by `cd csk002345/` and execute script
+      `jobscc-002345` in the background (see appendix (A-7)) by typing 
+          ./jobscc-002345 &
+      where the inline command is just
+      ./corsika-initial.ll.sh parallel-002345 corsika72495_stnd_...._pll LL 
+
+ (8)  after the complete simulation of `jobscc-002345` execute the
+      following scripts (directly on the login node)
+      (a) ./postjobscc-002345.sh 
+      (b) ./sumlistnkginfo.sh002345 
+              to sum up NKG-average tables (if all DAT*.lst are available) 
+      (c) ./sumlongifiles.sh002345
+              to sum up `.long` files (if all DAT*.lst are available) 
+      (d) llsubmit showanalyrun.sh002345
+              to submit histogram analysis program (see appendix (A-8f))
+      (e) and dont forget to delete successively all protocol files
+          of the load leveler system like `corsika-secondary.[1,2]*.err`
+          and `corsika-secondary.[1,2]*.out and all `*.scratch*` files
+          which surely are no longer of any interest.
+
+ (9)  Output files are the particle data files of type 
+      `DAT002345-.........-......... and the files *.cut, *.long, *.lst;
+      all remaining files *.jobdone, *.inp, *.end .... may be deleted in
+      this simulation path `csk002345/`.
+
+
+**************************************************************************
+
+ (A-3) parallel steering file
+ ============================
+
+RUNNR       2345
+PARALLEL    400.   400000.  1  T
+NSHOW          1
+PRMPAR       703
+EVTNR          1
+SEED        7035         0         0
+SEED        7036         0         0
+SEED        7037         0         0
+SEED        7038         0         0
+SEED        7039         0         0
+SEED        7040         0         0
+ERANGE   7.4132E+07   7.4132E+07
+THETAP       17.00       17.00
+PHIP         26.43       26.43
+OBSLEV   1452.e2        870.000 g/cm^2
+MAGNET     19.71        -14.18     Auger
+MAXPRT         1
+ECTMAP     1.E11
+ECUTS       0.1000   0.1000   2.5e-4   2.5e-4
+RADNKG    200.E2
+HADFLG    0    0    0    0    0    2
+ELMFLG         T         T
+QGSJET         T         0
+QGSSIG         T
+MUADDI         T
+MUMULT         T
+STEPFC        1.
+LONGI          T      5.     T      T
+HILOW       111.11
+DIRECT ./
+HOST   iwr.scc
+USER   you
+EXIT
+
+**************************************************************************
+
+ (A-7) submitting script
+ =======================
+
+#!/bin/bash
+#
+# jobscc-002345
+# =============
+# CORSIKA using parallel scripts at scc opus cluster (load leveler)
+#
+  if [ ! -e csk002345/ ] ; then
+    /bin/mkdir csk002345/
+  else
+    /bin/rm csk002345/*
+  fi
+  ./corsika-initial.ll.sh parallel-002345 corsika72495_stnd_QGSII_gheisha_pll LL
+
+**************************************************************************
+
+ 
+ (A-8a) postjobscc-002345.sh
+ ===========================
+
+#!/bin/bash
+#         copy auxiliary files and write infos (within subdirectory).
+  /bin/cp ../summ* .
+  /bin/cp ../totaltime* .
+  /bin/cp ../jobscc-002345 .
+  /bin/cp ../parallel-002345 .
+# - - - - creating job information files:
+  head -1 job-file > Job002345_scc.out
+  tail -1 job-file >> Job002345_scc.out
+  ./totaltime >> Job002345_scc.out
+  /bin/cat DAT002345-000000000-000000001.inp >> Job002345_scc.out
+  ./summ DAT002345- >> Job002345_scc.out
+  /bin/ls -1 DAT002345* | grep t -v | grep p -v | grep b -v | wc \
+                     | awk '{printf("%7d\n", $1)}' > Job002345_scc.err
+
+
+ (A-8b) time info in Job002345_scc.out
+ =====================================
+
+1335689800 0:05.08 Real-time 0.21 TotalCPUseconds ./DAT002345-000000000-000000001.lst
+1335690136 0:04.26 Real-time 0.23 TotalCPUseconds ./DAT002345-039830684-000000585.lst
+                         585. Files
+                         130.5108 min
+RUNNR       2345 
+PARALLEL  20000.  1000000.  1  T 
+NSHOW          1
+. . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . .
+. . . . . .
+EXIT
+                          48.053822 GBy
+
+
+ (A-8c) time info in Job002345_scc.err
+ =====================================
+     cat Job002345_scc.err
+         `    585`
+
+
+ (A-8d) summation of all NKG averages of *.lst files
+ ===================================================
+
+ #!/bin/bash
+ # 
+ # sum up all NKG averages of all `.lst` files:
+ # --------------------------------------------------------------------
+   ls -1 DAT002345-*.lst > sumlistnkginfo.i002345
+   ./sumlistnkginfo < sumlistnkginfo.i002345 > sumlistnkginfo.out002345
+
+
+ (A-8e) summation of all *.long files
+ ====================================
+
+ #!/bin/bash
+ # 
+ # sum up all `.long` files:
+ # -----------------------------------------------------------------
+   ls -1 DAT002345-*.long > sumlongifiles.i002345
+   ./sumlongifiles < sumlongifiles.i002345 > sumlongifiles.out002345
+
+
+ (A-8f) histogram analysis script showanalyrun.sh002345
+ ======================================================
+
+ #!/bin/bash
+ # @ job_type = serial
+ # @ initialdir = /fzk/cgwork/joe/corsika.conex/run/csk002345/
+ # @ environment = COPY_ALL;TMPDIR=/tmp
+ # @ restart = no
+ # @ requirements = (Arch == "x86_64") && (Feature == "penryn")
+ # @ class = medium
+ # @ wall_clock_limit = 140:00:00
+ # @ output = showanalyrun.$(cluster).out
+ # @ error = showanalyrun.$(cluster).err
+ # @ queue
+ #
+   ./showanalyscc.sh002345
+
+
+#!/bin/bash
+#
+# showanalyscc.sh002345
+# =====================
+# create histograms as ascii tables of all data files. 
+#
+  ls -1 DAT002345* | grep t -v | grep p -v | grep b -v > showanalyscc.i002345
+  ./showanalyscc < showanalyscc.i002345 > showanalyscc.out002345
+  mv fort.9 showanalyscc.fort002345
+
+**************************************************************************

@@ -1,0 +1,428 @@
+# To use this list of registered eventio item types,
+# e.g. with the statio and listio programs,
+# copy it to either EventioRegisteredNames.dat in the working directory
+# or to ~/.EventioRegisteredNames for global use.
+#
+70:History:Command line and configuration parameters
+71:History command line
+72:Configuration line
+100:Histogram:One or many histograms (1-D or 2-D)
+#
+# -------- hconfig binary mode data blocks ----------
+#
+900:HCONFIG_ENVELOPE
+901:HCONFIG_NAME
+902:HCONFIG_TEXT
+903:HCONFIG_INDEX
+904:HCONFIG_NUMBERS
+#
+# -------- CORSIKA IACT output ---------
+#
+1200:CORSIKA run header
+1201:CORSIKA telescope positions
+1202:CORSIKA event header
+1203:CORSIKA telescope offsets
+1204:CORSIKA telescope array
+1205:CORSIKA photons
+1206:CORSIKA layout
+1207:CORSIKA trigger time
+1208:CORSIKA photo-electrons
+1209:CORSIKA event end
+1210:CORSIKA run end
+1211:CORSIKA shower profile
+1212:CORSIKA inputs
+1213:CORSIKA telescope array head
+1214:CORSIKA telescope array end
+1215:CORSIKA extra parameters
+#
+# -------- sim_telarray data blocks ----------
+#
+2000:Run header:Sim_telarray global run header
+2001:MC run header:Sim_telarray MC-specific run header
+2002:Camera settings
+2002:Pixel settings
+2003:Camera organisation
+2004:Pixel settings
+2005:Disabled pixels
+2006:Camera soft settings
+2007:Pointing correction
+2008:Tracking setup
+2009:Central trigger
+2010:Event:Sim_telarray event data for the full array
+2011:Telescope event header
+2012:ADC sums
+2013:ADC samples
+2014:Image parameters
+2015:Reconstructed shower
+2016:Pixel timing
+2017:Calibrated pixel intensities
+2020:MC shower
+2021:MC event
+2022:Telescope monitoring
+2023:Laser calibration
+2024:Run statistics
+2025:MC run statistics
+2026:Photo-electron sums
+2027:Pixel list
+2028:Calibration event
+2029:Digital auxiliary traces
+2030:Analog auxiliary traces
+2032:Pixel trigger w.r.t telescope trigger time
+2090:Trigger-type bitmasks
+#
+# The following tracking and telescope data blocks are normally embedded in a type 2010 block:
+#
+2100:Tracking data:Tracking data for tel. ID 0 (not commonly used)
+2101:Tracking data:Tracking data for tel. ID 1 (typically CT1)
+2102:Tracking data:Tracking data for tel. ID 2 (typically CT2)
+2103:Tracking data:Tracking data for tel. ID 3 (typically CT3)
+2104:Tracking data:Tracking data for tel. ID 4 (typically CT4)
+2105:Tracking data:Tracking data for tel. ID 5 (typically CT5)
+2106:Tracking data:Tracking data for tel. ID 6 (typically CT6)
+2107:Tracking data:Tracking data for tel. ID 7 (typically CT7)
+2108:Tracking data:Tracking data for tel. ID 8 (typically CT8)
+2109:Tracking data:Tracking data for tel. ID 9 (typically CT9)
+2110:Tracking data:Tracking data for tel. ID 10 (typically CT10)
+2111:Tracking data:Tracking data for tel. ID 11 (typically CT11)
+2112:Tracking data:Tracking data for tel. ID 12 (typically CT12)
+2113:Tracking data:Tracking data for tel. ID 13 (typically CT13)
+2114:Tracking data:Tracking data for tel. ID 14 (typically CT14)
+2115:Tracking data:Tracking data for tel. ID 15 (typically CT15)
+2116:Tracking data:Tracking data for tel. ID 16 (typically CT16)
+2117:Tracking data:Tracking data for tel. ID 17 (typically CT17)
+2118:Tracking data:Tracking data for tel. ID 18 (typically CT18)
+2119:Tracking data:Tracking data for tel. ID 19 (typically CT19)
+2120:Tracking data:Tracking data for tel. ID 20 (typically CT20)
+2121:Tracking data:Tracking data for tel. ID 21 (typically CT21)
+2122:Tracking data:Tracking data for tel. ID 22 (typically CT22)
+2123:Tracking data:Tracking data for tel. ID 23 (typically CT23)
+2124:Tracking data:Tracking data for tel. ID 24 (typically CT24)
+2125:Tracking data:Tracking data for tel. ID 25 (typically CT25)
+2126:Tracking data:Tracking data for tel. ID 26 (typically CT26)
+2127:Tracking data:Tracking data for tel. ID 27 (typically CT27)
+2128:Tracking data:Tracking data for tel. ID 28 (typically CT28)
+2129:Tracking data:Tracking data for tel. ID 29 (typically CT29)
+2130:Tracking data
+2131:Tracking data
+2132:Tracking data
+2133:Tracking data
+2134:Tracking data
+2135:Tracking data
+2136:Tracking data
+2137:Tracking data
+2138:Tracking data
+2139:Tracking data
+2140:Tracking data
+2141:Tracking data
+2142:Tracking data
+2143:Tracking data
+2144:Tracking data
+2145:Tracking data
+2146:Tracking data
+2147:Tracking data
+2148:Tracking data
+2149:Tracking data
+2150:Tracking data
+2151:Tracking data
+2152:Tracking data
+2153:Tracking data
+2154:Tracking data
+2155:Tracking data
+2156:Tracking data
+2157:Tracking data
+2158:Tracking data
+2159:Tracking data
+2160:Tracking data
+2161:Tracking data
+2162:Tracking data
+2163:Tracking data
+2164:Tracking data
+2165:Tracking data
+2166:Tracking data
+2167:Tracking data
+2168:Tracking data
+2169:Tracking data
+2170:Tracking data
+2171:Tracking data
+2172:Tracking data
+2173:Tracking data
+2174:Tracking data
+2175:Tracking data
+2176:Tracking data
+2177:Tracking data
+2178:Tracking data
+2179:Tracking data
+2180:Tracking data
+2181:Tracking data
+2182:Tracking data
+2183:Tracking data
+2184:Tracking data
+2185:Tracking data
+2186:Tracking data
+2187:Tracking data
+2188:Tracking data
+2189:Tracking data
+2190:Tracking data
+2191:Tracking data
+2192:Tracking data
+2193:Tracking data
+2194:Tracking data
+2195:Tracking data
+2196:Tracking data
+2197:Tracking data
+2198:Tracking data
+2199:Tracking data:Tracking data for tel. ID 99 (typically CT99)
+3100:Tracking data:Tracking data for tel. ID 100 (typically CT100)
+3101:Tracking data:Tracking data for tel. ID 101 (typically CT101)
+3102:Tracking data:Tracking data for tel. ID 102 (typically CT102)
+3103:Tracking data:Tracking data for tel. ID 103 (typically CT103)
+3104:Tracking data:Tracking data for tel. ID 104 (typically CT104)
+3105:Tracking data:Tracking data for tel. ID 105 (typically CT105)
+3106:Tracking data:Tracking data for tel. ID 106 (typically CT106)
+3107:Tracking data:Tracking data for tel. ID 107 (typically CT107)
+3108:Tracking data:Tracking data for tel. ID 108 (typically CT108)
+3109:Tracking data:Tracking data for tel. ID 109 (typically CT109)
+3110:Tracking data:Tracking data for tel. ID 110 (typically CT110)
+3111:Tracking data:Tracking data for tel. ID 111 (typically CT111)
+3112:Tracking data:Tracking data for tel. ID 112 (typically CT112)
+3113:Tracking data:Tracking data for tel. ID 113 (typically CT113)
+3114:Tracking data:Tracking data for tel. ID 114 (typically CT114)
+3115:Tracking data:Tracking data for tel. ID 115 (typically CT115)
+3116:Tracking data:Tracking data for tel. ID 116 (typically CT116)
+3117:Tracking data:Tracking data for tel. ID 117 (typically CT117)
+3118:Tracking data:Tracking data for tel. ID 118 (typically CT118)
+3119:Tracking data:Tracking data for tel. ID 119 (typically CT119)
+3120:Tracking data:Tracking data for tel. ID 120 (typically CT120)
+3121:Tracking data:Tracking data for tel. ID 120 (typically CT121)
+3122:Tracking data:Tracking data for tel. ID 120 (typically CT122)
+3123:Tracking data:Tracking data for tel. ID 120 (typically CT123)
+3124:Tracking data:Tracking data for tel. ID 120 (typically CT124)
+3125:Tracking data:Tracking data for tel. ID 120 (typically CT125)
+3126:Tracking data:Tracking data for tel. ID 120 (typically CT126)
+# ...
+# 9199:Tracking data:Tracking data for tel. ID 799 (typically CT799)
+# ...
+2200:Telescope data:Telescope event data for tel. ID 0 (not commonly used)
+2201:Telescope data:Telescope event data for tel. ID 1 (typically CT1)
+2202:Telescope data:Telescope event data for tel. ID 2 (typically CT2)
+2203:Telescope data:Telescope event data for tel. ID 3 (typically CT3)
+2204:Telescope data:Telescope event data for tel. ID 4 (typically CT4)
+2205:Telescope data:Telescope event data for tel. ID 5 (typically CT5)
+2206:Telescope data:Telescope event data for tel. ID 6 (typically CT6)
+2207:Telescope data:Telescope event data for tel. ID 7 (typically CT7)
+2208:Telescope data:Telescope event data for tel. ID 8 (typically CT8)
+2209:Telescope data:Telescope event data for tel. ID 9 (typically CT9)
+2210:Telescope data:Telescope event data for tel. ID 10 (typically CT10)
+2211:Telescope data:Telescope event data for tel. ID 11 (typically CT11)
+2212:Telescope data:Telescope event data for tel. ID 12 (typically CT12)
+2213:Telescope data:Telescope event data for tel. ID 13 (typically CT13)
+2214:Telescope data:Telescope event data for tel. ID 14 (typically CT14)
+2215:Telescope data:Telescope event data for tel. ID 15 (typically CT15)
+2216:Telescope data:Telescope event data for tel. ID 16 (typically CT16)
+2217:Telescope data:Telescope event data for tel. ID 17 (typically CT17)
+2218:Telescope data:Telescope event data for tel. ID 18 (typically CT18)
+2219:Telescope data:Telescope event data for tel. ID 19 (typically CT19)
+2220:Telescope data:Telescope event data for tel. ID 20 (typically CT20)
+2221:Telescope data:Telescope event data for tel. ID 21 (typically CT21)
+2222:Telescope data:Telescope event data for tel. ID 22 (typically CT22)
+2223:Telescope data:Telescope event data for tel. ID 23 (typically CT23)
+2224:Telescope data:Telescope event data for tel. ID 24 (typically CT24)
+2225:Telescope data:Telescope event data for tel. ID 25 (typically CT25)
+2226:Telescope data:Telescope event data for tel. ID 26 (typically CT26)
+2227:Telescope data:Telescope event data for tel. ID 27 (typically CT27)
+2228:Telescope data:Telescope event data for tel. ID 28 (typically CT28)
+2229:Telescope data:Telescope event data for tel. ID 29 (typically CT29)
+2230:Telescope data:Telescope event data for tel. ID 30 (typically CT30)
+2231:Telescope data:Telescope event data for tel. ID 31 (typically CT31)
+2232:Telescope data:Telescope event data for tel. ID 32 (typically CT32)
+2233:Telescope data:Telescope event data for tel. ID 33 (typically CT33)
+2234:Telescope data:Telescope event data for tel. ID 34 (typically CT34)
+2235:Telescope data:Telescope event data for tel. ID 35 (typically CT35)
+2236:Telescope data:Telescope event data for tel. ID 36 (typically CT36)
+2237:Telescope data:Telescope event data for tel. ID 37 (typically CT37)
+2238:Telescope data:Telescope event data for tel. ID 38 (typically CT38)
+2239:Telescope data:Telescope event data for tel. ID 39 (typically CT39)
+2240:Telescope data:Telescope event data for tel. ID 40 (typically CT40)
+2241:Telescope data:Telescope event data for tel. ID 41 (typically CT41)
+2242:Telescope data:Telescope event data for tel. ID 42 (typically CT42)
+2243:Telescope data:Telescope event data for tel. ID 43 (typically CT43)
+2244:Telescope data:Telescope event data for tel. ID 44 (typically CT44)
+2245:Telescope data:Telescope event data for tel. ID 45 (typically CT45)
+2246:Telescope data:Telescope event data for tel. ID 46 (typically CT46)
+2247:Telescope data:Telescope event data for tel. ID 47 (typically CT47)
+2248:Telescope data:Telescope event data for tel. ID 48 (typically CT48)
+2249:Telescope data:Telescope event data for tel. ID 49 (typically CT49)
+2250:Telescope data:Telescope event data for tel. ID 50 (typically CT50)
+2251:Telescope data:Telescope event data for tel. ID 51 (typically CT51)
+2252:Telescope data:Telescope event data for tel. ID 52 (typically CT52)
+2253:Telescope data:Telescope event data for tel. ID 53 (typically CT53)
+2254:Telescope data:Telescope event data for tel. ID 54 (typically CT54)
+2255:Telescope data:Telescope event data for tel. ID 55 (typically CT55)
+2256:Telescope data
+2257:Telescope data
+2258:Telescope data
+2259:Telescope data
+2260:Telescope data
+2261:Telescope data
+2262:Telescope data
+2263:Telescope data
+2264:Telescope data
+2265:Telescope data
+2266:Telescope data
+2267:Telescope data
+2268:Telescope data
+2269:Telescope data
+2270:Telescope data
+2271:Telescope data
+2272:Telescope data
+2273:Telescope data
+2274:Telescope data
+2275:Telescope data
+2276:Telescope data
+2277:Telescope data
+2278:Telescope data
+2279:Telescope data
+2280:Telescope data
+2281:Telescope data
+2282:Telescope data
+2283:Telescope data
+2284:Telescope data
+2285:Telescope data
+2286:Telescope data
+2287:Telescope data
+2288:Telescope data
+2289:Telescope data
+2290:Telescope data
+2291:Telescope data
+2292:Telescope data
+2293:Telescope data
+2294:Telescope data
+2295:Telescope data
+2296:Telescope data
+2297:Telescope data
+2298:Telescope data
+2299:Telescope data:Telescope event data for tel. ID 99 (typically CT99)
+3200:Telescope data:Telescope event data for tel. ID 100 (typically CT100)
+3201:Telescope data:Telescope event data for tel. ID 101 (typically CT101)
+3202:Telescope data:Telescope event data for tel. ID 102 (typically CT102)
+3203:Telescope data:Telescope event data for tel. ID 103 (typically CT103)
+3204:Telescope data:Telescope event data for tel. ID 104 (typically CT104)
+3205:Telescope data:Telescope event data for tel. ID 105 (typically CT105)
+3206:Telescope data:Telescope event data for tel. ID 106 (typically CT106)
+3207:Telescope data:Telescope event data for tel. ID 107 (typically CT107)
+3208:Telescope data:Telescope event data for tel. ID 108 (typically CT108)
+3209:Telescope data:Telescope event data for tel. ID 109 (typically CT109)
+3210:Telescope data:Telescope event data for tel. ID 110 (typically CT110)
+3211:Telescope data:Telescope event data for tel. ID 111 (typically CT111)
+3212:Telescope data:Telescope event data for tel. ID 112 (typically CT112)
+3213:Telescope data:Telescope event data for tel. ID 113 (typically CT113)
+3214:Telescope data:Telescope event data for tel. ID 114 (typically CT114)
+3215:Telescope data:Telescope event data for tel. ID 115 (typically CT115)
+3216:Telescope data:Telescope event data for tel. ID 116 (typically CT116)
+3217:Telescope data:Telescope event data for tel. ID 117 (typically CT117)
+3218:Telescope data:Telescope event data for tel. ID 118 (typically CT118)
+3219:Telescope data:Telescope event data for tel. ID 119 (typically CT119)
+3220:Telescope data:Telescope event data for tel. ID 120 (typically CT120)
+3221:Telescope data:Telescope event data for tel. ID 121 (typically CT121)
+3222:Telescope data:Telescope event data for tel. ID 122 (typically CT122)
+3223:Telescope data:Telescope event data for tel. ID 123 (typically CT123)
+3224:Telescope data:Telescope event data for tel. ID 124 (typically CT124)
+3225:Telescope data:Telescope event data for tel. ID 125 (typically CT125)
+3226:Telescope data:Telescope event data for tel. ID 126 (typically CT126)
+# ...
+# 4200:Telescope data:Telescope event data for tel. ID 200 (typically CT200)
+# ...
+# 9299:Telescope data:Telescope event data for tel. ID 799 (typically CT799)
+#
+# ----------- iactio data blocks --------------
+# (Note that there is some overlap with tracking and telescope
+# event data for telescope IDs >= 200 but they would not 
+# appear in the same file and would not be read by the same program.)
+#
+4001:IACT_RUNHEADER
+4002:IACT_TELESCOPERUNHEADER
+4003:IACT_MCRUNHEADER
+4011:IACT_CORSIKARUNHEADER
+4012:IACT_SIMTELRUNHEADER
+4021:IACT_RUNEND
+4022:IACT_TELESCOPERUNEND
+4023:IACT_RUNSTAT
+4024:IACT_MCRUNSTAT
+4070:IACT_HISTORY
+4100:IACT_ARRAYCONFIG
+4101:IACT_ARRAYBASECONFIG
+4102:IACT_TELESCOPECONFIG
+4103:IACT_TELESCOPEBASECONFIG
+4104:IACT_TELESCOPEDAQCONFIG
+4111:IACT_PIXELTYPECONFIG
+4112:IACT_DRAWERTYPECONFIG
+4113:IACT_SECTORTYPECONFIG
+4115:IACT_CHANNELTYPECONFIG
+4120:IACT_CAMERACONFIG
+4121:IACT_PIXELCONFIG
+4122:IACT_DRAWERCONFIG
+4123:IACT_SECTORCONFIG
+4125:IACT_CHANNELCONFIG
+4126:IACT_CHANNELGAINCONFIG
+4131:IACT_TRACKINGCONFIG
+4141:IACT_CENTRALTRIGGERCONFIG
+4147:IACT_LIDLEDCONFIG
+4151:IACT_IMAGECUTS
+4200:IACT_ARRAYSETUP
+4210:IACT_TELESCOPESETUP
+4220:IACT_CAMERASETUP
+4221:IACT_PIXELSETUP
+4222:IACT_DRAWERSETUP
+4223:IACT_SECTORSETUP
+4225:IACT_CHANNELSETUP
+4241:IACT_CENTRALTRIGGERSETUP
+4300:IACT_ARRAYMONITOR
+4310:IACT_TELESCOPEMONITOR
+4320:IACT_CAMERAMONITOR
+4400:IACT_ARRAYSTATUS
+4410:IACT_TELESCOPESTATUS
+4420:IACT_CAMERASTATUS
+4421:IACT_PIXELSTATUS
+4425:IACT_CHANNELSTATUS
+4501:IACT_EVENTDATA
+4502:IACT_EVENTHEADER
+4503:IACT_CENTRALTRIGGER
+4504:IACT_TRACKINGEVENT
+4511:IACT_TELESCOPEEVENTDATA
+4512:IACT_TELESCOPEEVENTHEADER
+4513:IACT_TELESCOPEEVENTADC
+4514:IACT_PIXELADC
+4515:IACT_CHANNELADC
+4516:IACT_PIXELTIMING
+4520:IACT_CALIBRATEDPIXELSET
+4521:IACT_CALIBRATEDPIXEL
+4522:IACT_IMAGEPARAMETERS
+4523:IACT_PULSESHAPEPARAMETERS
+4531:IACT_SHOWERPARAMETERS
+4600:IACT_ARRAYCALIB
+4603:IACT_POINTINGCORRECTIONPAR
+4610:IACT_TELESCOPECALIB
+4612:IACT_LASERLEDCALIB
+4620:IACT_CAMERACALIB
+4621:IACT_PIXELCALIB
+4625:IACT_CHANNELCALIB
+4651:IACT_ATMOSPHERE
+4652:IACT_ATM_TRANSMISSION
+4701:IACT_MCSHOWER
+4702:IACT_MCEVENT
+4711:IACT_SHOWERPROFILE
+4721:IACT_MCPESUM
+4731:IACT_MCPHOTONS
+4732:IACT_MCPHOTONBUNCH
+4900:IACT_MULTIDIMHISTOGRAM
+4901:IACT_POINT
+4902:IACT_DIRECTIONVECTOR
+4903:IACT_LINE
+4904:IACT_PLANE
+4905:IACT_ROTATIONMATRIX
+4911:IACT_RANGE
+4912:IACT_CYCLICRANGE
+4913:IACT_SPHERICALCOORDINATE
+4914:IACT_PARAMERR
+4920:IACT_GEOLOCATION
+4930:IACT_ACTIVELIST

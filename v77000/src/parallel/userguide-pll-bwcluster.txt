@@ -1,0 +1,267 @@
+  
+    @@@@@                                 @     @                 
+   @     @                                      @                 
+   @           @@@     @  @@     @@@@     @     @   @     @@@@    
+   @          @   @    @ @      @         @     @  @     @   @    
+   @          @   @    @@       @@@@@     @     @ @      @   @    
+   @     @    @   @    @            @     @     @@ @     @   @    
+    @@@@@      @@@     @        @@@@      @     @   @     @@@@ 
+  
+                                              @      @                @  
+                                              @      @                @  
+         @@@@      @@@@    @  @@     @@@@     @      @       @@@      @  
+         @   @    @   @    @ @      @   @     @      @      @   @     @  
+         @   @    @   @    @@       @   @     @      @      @@@@@     @  
+         @@@@     @   @    @        @   @     @      @      @         @  
+         @         @@@@    @         @@@@     @@     @@      @@@      @@ 
+
+ *************************************************************************
+ *                                                                       *
+ *     _             _   _       _  ____ _           _                   *
+ *    | |____      _| | | |_ __ (_)/ ___| |_   _ ___| |_ ___ _ __        *
+ *    | '_ \ \ /\ / / | | | '_ \| | |   | | | | / __| __/ _ \ '__|       *
+ *    | |_) \ V  V /| |_| | | | | | |___| | |_| \__ \ ||  __/ |          *
+ *    |_.__/ \_/\_/  \___/|_| |_|_|\____|_|\__,_|___/\__\___|_|          *
+ *                                                                       *
+ *                                                                       *
+ *          Author: juergen.oehlschlaeger@kit.edu     28 Feb. 2018       *
+ *************************************************************************
+
+ Instruction, how to run parallel CORSIKA on the bwunicluster at the KIT
+ with parallelization using the MPI system:
+
+ path: corsika.trunk/ (i.e. main path of a corsika distribution)
+       (same as on the bwc parallel processor system).
+       ===> dont forget before `./coconut`: module load mpi.
+ 
+ (1)  reset all environment optimization flags during compilation and 
+      linking by typing `. src/parallel/unsetoptflags.sh` ( - use command
+      `env | grep FLAG` to display current environment variables - ); 
+      it avoids higher compiler optimization of the MPI system for the 
+      parallel application; then use `./coconut` to create a CORSIKA 
+      executable with parallelization by the MPI system by selecting 
+      `p - PARALLEL treatment of subshowers` and then `2 - Library to be 
+      used with MPI system`; `mpi_corsika75605Linux_QGSII_gheisha_runner`
+      is automatically moved to the subdirectory run/ of the main path of
+      the corsika distribution; then switch to this
+ 
+ path: corsika.trunk/run/ (or also $WORK)
+
+ (2)  rename the executable to `mpi_corsika75605_stnd_QGSII4_gheisha_runner`
+      to distinguish `standard` or `thinning` simulations, high and low
+      energy models, and some more possible options like `atmext`, `coreas`,
+      `history`, `augerhit`, `stackin` and others.
+
+ (3)  prepare the corsika steering file `parallel-001139` for the parallel
+      run with the keyword PARALLEL by using the fortran utility program
+      `acreinpbwc.f`, i.e. `./acreinpbwc`, or modify an existing one;
+      the best ratio for the first parameter of the keyword PARALLEL is
+      1/1000 of the second (name ecutmax), which influences directly the
+      total number of simulated parts of the complete corsika run; each
+      processor should calculate about 15 parts of the run, for energies
+      higher than 10^17 about 20 parts or even more; check tabular printout
+      of utility `pllselectecut.c` for energy-dependent examples.
+      Note: The keyword CUTFILE must not be used and is also invalid in a
+      regular parallel run; example see appendix (A-3).
+
+ (4)  prepare the submit script `jobwcl-001139` with the organization of
+      the (new) subdirectory csk001139/ by using the fortran utility
+      program `acreinpbwc.f`, i.e. `./acreinpbwc`, or modify a copy of an
+      existing one to the new run number; the last line of `jobwcl-001139`
+      is the complete submit command to the bwc job queueing system,
+      see appendix (A-4); submit it by: msub jobwcl-001139 ;
+
+ (5)  after the successful parallel corsika simulation the subdirectory 
+      csk001139/ will contain a file `time.txt` of 80 to 90 bytes length;
+      next switch to this subdirectory and execute the postprocessing
+      script `./postprocessnew.sh` which writes additional infos to the new
+      job protocol files `Job001139_*.[err,out]` and to the new extended
+      file `time.txt001139`; the last line of `Job001139_*.out` now
+      contains the total amount of Gigabytes of all DAT001139-files as
+      formatted number where the next to last line is the word `EXIT`
+      as copy of the steering file `parallel-001139`; see appendix (A-5);
+ 
+ then: switch back to path $WORK
+ 
+ (6)  run script `showparallel.sh` in working path (no argument necessary)
+      to create the new tabular of all available parallel simulations in
+      this directory, see appendix (A-6).    
+  
+ /***********************************************************************/
+
+ (A-3) parallel steering file
+ ============================
+
+ proton, 10^16 eV, see also CORSIKA user guide: 
+
+RUNNR       1103
+PARALLEL      50.     50000.   1   F
+NSHOW          1
+EVTNR          1
+SEED        3310         0         0
+SEED        3311         0         0
+SEED        3312         0         0
+SEED        3313         0         0
+SEED        3314         0         0
+SEED        3315         0         0
+PRMPAR        14
+ERANGE   1.0001E+06   1.0001E+06
+THETAP       10.00       10.00
+PHIP        -14.0362    -14.0362
+OBSLEV     1452.e2        870.000 g/cm^2
+MAGNET       19.47        -14.17     Auger
+MAXPRT         1
+ECTMAP     1.E11
+ECUTS       0.1000   0.0500   2.5e-4   2.5e-4
+RADNKG    200.E2
+HADFLG    0    0    0    0    0    2
+ELMFLG         T         T
+QGSJET         T         0
+QGSSIG         T
+MUMULT         T
+MUADDI         T
+STEPFC        1.
+LONGI          T      5.     T      T
+HILOW       100.00
+OUTFILE csk001103/DAT001103.firstint
+DIRECT csk001103/ 
+HOST   bwcluster
+USER   joe
+EXIT
+
+ proton, 3.8283*10^18 eV: 
+ 
+RUNNR       1139
+PARALLEL   5000.   5000000.    1   F
+NSHOW          1
+EVTNR          1
+SEED       13160         0         0
+SEED       13161         0         0
+SEED       13162         0         0
+SEED       13163         0         0
+SEED       13164         0         0
+SEED       13165         0         0
+PRMPAR        14
+ERANGE   3.8283E+09   3.8283E+09
+THETAP       23.45       23.45
+PHIP         26.56       26.56
+OBSLEV   1452.e2        870.000 g/cm^2
+MAGNET     19.51        -14.18     Auger
+MAXPRT         1
+ECTMAP     1.E11
+ECUTS       0.1000   0.1000   2.5e-4   2.5e-4
+RADNKG    200.E2
+HADFLG    0    0    0    0    0    2
+ELMFLG         T         T
+QGSJET         T         0
+QGSSIG         T
+MUADDI         T
+MUMULT         T
+STEPFC        1.
+* AUGSCT        20     55.   750.    T     T
+HILOW       100.
+DIRECT csk001139/
+HOST   bwunicl
+USER   you
+EXIT
+
+ #!/bin/bash
+ #
+ # acreinpbwc.sh:
+ # ==============
+ # to create steering file and job submit script
+ # ---------------------------------------------
+ #
+ # - - - - compile and link fortran program:
+   ifort -C -O0 -check bounds acreinpbwc.f -o acreinpbwc
+ # - - - - execute fortran program:
+   ./acreinpbwc
+ # - - - - make jobwcl-?????? file executable:
+   chmod +x jobwcl-*
+
+ /***********************************************************************/
+
+ (A-4) job submit script at bwunicluster
+ =======================================
+
+#!/bin/bash
+#
+# jobwcl-001103:
+# ==============
+# bwc `develop` class shower simulation at bwunicluster
+# -----------------------------------------------------
+#MSUB -l nodes=1:ppn=16
+#MSUB -l walltime=00:30:00
+#MSUB -l pmem=2000mb
+#MSUB -q develop
+#        MSUB -l nodes=3:ppn=28      # 84 cores.
+#        MSUB -l walltime=03:50:00
+#        MSUB -q multinode
+#MSUB -e job_uc1_jobwcl-001103_%j.err
+#MSUB -o job_uc1_jobwcl-001103_%j.out
+#MSUB -m n
+#
+module load mpi 2>&1
+cd $PWD
+rm -rf csk001103/
+mkdir csk001103/
+cp jobwcl-001103 csk001103/
+cp parallel-001103 csk001103/
+cp summ* csk001103/
+cp readpart* csk001103/
+cp readcsk2asci* csk001103/
+cp totaltimenew* csk001103/
+cp postprocessnew* csk001103/
+#
+mpirun ./mpi_corsika75601_stnd_QGSII4_gheisha_runner parallel-001103
+
+ Remark: The general submit syntax of a parallel job is
+    [job_submitter]  [mpi_executable]  [input_file_name]  [debug_switch]
+ If the debug switch letter `T` is used as additional argument of the
+ `mpirun` command, a detailed protocol about all steps done by MPI-Runner
+ will then be saved in several text files in the resulting (sub)directory. 
+ 
+ 
+ /***********************************************************************/
+
+ (A-5) time statistic file (created by ./postprocessnew.sh)
+ =========================
+
+     START TIME          STOP TIME       TIME (min)
+1484215708.438943   1484215802.852271      1.573555
+LONGEST JOB: MPIID =   134 and Time =     94.413300
+ Total number of jobs =   134
+Maximum size of group =    96
+TOTAL CPU TIME (days) =     0.014417
+time.txt001103
+
+ /***********************************************************************/
+
+ (A-6) show infos of all parallel simulations
+ ============================================
+
+#!/bin/bash
+# 
+# create the tabular of available parallel corsika simulations:
+# ------------------------------------------------------------------------
+# Primary   lg(E)  theta    phi  runtsk  sizeGBy  procs
+#     T(days)  ecutmax  t(min)  files  RATIO  obslev  Xmagn  Zmagn
+#           _corsika_executable_
+#           < ecutha  ecutmu  ecutel  ecutga  thilev  wmax  lg(thirad) >
+# ------------------------------------------------------------------------
+# usage: ./showparallel.sh
+# ------------------------------------------------------------------------
+#                                       juergen.oehlschlaeger@kit.edu
+# ------------------------------------------------------------------------
+# 
+  ls -1 csk*/Job*.out > showparallel.jobinfos
+# 
+# names of subdirectories csk??????;
+# bwc job protocols Job??????_%jobid.err, Job??????_%jobid.out;
+# gfortran -O0 -fbounds-check showparallel.f -o showparallel
+# ifort -C -O0 -check bounds showparallel.f -o showparallel
+#
+  ./showparallel < showparallel.jobinfos > showparallel.bwc-work-jobinfos
+
+ /***********************************************************************/
+

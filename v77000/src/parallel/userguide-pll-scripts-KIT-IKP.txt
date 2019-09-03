@@ -1,0 +1,217 @@
+  
+    @@@@@                                 @     @                 
+   @     @                                      @                 
+   @           @@@     @  @@     @@@@     @     @   @     @@@@    
+   @          @   @    @ @      @         @     @  @     @   @    
+   @          @   @    @@       @@@@@     @     @ @      @   @    
+   @     @    @   @    @            @     @     @@ @     @   @    
+    @@@@@      @@@     @        @@@@      @     @   @     @@@@ 
+
+                                              @      @                @  
+                                              @      @                @  
+         @@@@      @@@@    @  @@     @@@@     @      @       @@@      @  
+         @   @    @   @    @ @      @   @     @      @      @   @     @  
+         @   @    @   @    @@       @   @     @      @      @@@@@     @  
+         @@@@     @   @    @        @   @     @      @      @         @  
+         @         @@@@    @         @@@@     @@     @@      @@@      @@ 
+
+ **************************************************************************
+ *       by scripts on the IKP computing cluster bldg. 425                *
+ *           Author: juergen.oehlschlaeger@kit.edu    02. Sep. 2019       *
+ **************************************************************************
+
+ How to run a parallel CORSIKA air shower simulation on the KIT Campus North
+ IKP computing cluster in building 425 (also especially denoted by the
+ grammalogue `ik3`) with the submit command `qsub -l q=augx.q corscript.sh`;
+ please check/change this submit syntax for other clusters in all four
+ necessary scripts to perform a successful script parallelization, i.e.
+ `corsika-initial-ik3.sh`, `corsika-initial.ik3.sh`,
+ `corsika-secondary-ik3.sh`, and especially in the submit script of
+ `corsika-secondary.ik3.sh`; please change full paths of lines
+ `#$ -[e,o] <yourpath>` of the script `corsika-secondary.ik3.sh`.
+
+ path: .../corsika.trunk/
+ ------------------------
+
+ (1)  run ./coconut to create an executable with parallelization by
+      scripts by selecting `p - PARALLEL treatment of subshowers`
+      and `1 - Special stack for shell script without MPI`;
+      the name of the corsika executable will then be similar to
+      `corsika77001Linux_QGSII_gheisha_parallel`.
+
+ path: .../corsika.trunk/run/
+ ----------------------------
+
+ (2)  switch to subdirectory run/ and rename the executable in a way to
+      distinguish standard and thinning simulation and to mark the 
+      parallelization by scripts by the shorter appendix `_pll`; then the
+      name will be `corsika77001_stnd_QGSII4_gheisha_pll`.
+
+ (3)  prepare a corsika steering file - for example `parallel-000333` - 
+      by copying the existing file parallel-inputs (which can be found in
+      subdirectory run/)
+      to parallel-000333 (see appendix (A-3)); the keyword PARALLEL must
+      have `T` as forth parameter, whereas `F` is valid for MPI
+      parallelization; another possibility to create a steering file for
+      parallel use is to execute program .../src/parallel/acreinpbwc.f
+      (ignoring the created scripts job...-iiiiii); 
+            sed -i "/PARALLEL/ s/F/T/" parallel-000333
+      Now copy necessary scripts and utilities to the subdirectory run/:
+            cp ../src/parallel/corsika-initial-ik3.sh .
+            cp ../src/parallel/corsika-initial.ik3.sh .
+            cp ../src/parallel/corsika-secondary-ik3.sh .
+            cp ../src/parallel/corsika-secondary.ik3.sh .
+            cp ../src/parallel/preprocess-ik3.sh .
+            cp ../src/parallel/postprocess-ik3.sh .
+            cp ../src/parallel/totaljobfile.f .
+            cp ../src/parallel/totaltimeik3.f .
+            cp ../src/utils/summ* . # summ summe summe.f summe.sh
+            cp ../src/utils/sumlistnkginfo.* .
+            cp ../src/utils/sumlongifiles.* .
+            cp ../src/parallel/showparallel.f .
+            cp ../src/parallel/showparallel.sh .
+
+ (4)  to prepare the start of the shower simulation run the script
+      `preprocess-ik3.sh` with two arguments, the parallel steering file
+      and the corsika executable:
+ ./preprocess-ik3.sh parallel-000333 corsika77001_stnd_QGSII4_gheisha_pll
+      which then displays the following info lines (possibly including 
+      messages of unavailable codes and scripts which are not necessary
+      for the parallel simulation itself):
+           ... creating directory csk000333/ and copy utilities;
+           ... copying all corsika model-dependent tabular files;
+           ... cd csk000333/ 
+      ./corsika-initial-ik3.sh parallel-000333 \
+                               corsika77001_stnd_QGSII4_gheisha_pll ik3
+
+ (5)  do not forget to switch to the new subdirectory, cd csk000333/; 
+      start the simulation (only foreground run without `&`) by typing
+      ./corsika-initial-ik3.sh parallel-000333 \
+                               corsika77001_stnd_QGSII4_gheisha_pll ik3
+      which gives the first message
+           Your job 2497970 ("corsika-initial.ik3.sh") has been submitted
+      and after some time many secondary submits to the cluster follow  
+           Your job 2497971 ("corsika-secondary.ik3.sh") has been submitted
+           . . . . . . .  
+           . . . . . . .  
+      The simulation is finished when the terminal prompt is shown again.
+
+ (6)  stay in this subdirectory csk000333/ and execute the script
+                          ./postprocess-ik3.sh
+      which deletes all simulation tabular files, runs the program
+      ./sumlistnkginfo (summing up NKG averages from `*.lst-files`),
+      runs the program ./totaljobfile (reading text file `job-file` to
+      calculate the total time of this simulation, and runs the program
+      ./totaltimeik3 to finally create the time info file `time.txt000333`
+      which is necessary to get a tabular of all parallel simulations;
+      the remaining output files are now all particle data files of type
+      `DAT000333-.........-........., few files `DAT000333-*.lst`, the
+      long file `DAT000333.999989999.long`, the original file `job-file`,
+      new job files `Job000333_ik3.[err,out]`, `time.txt000333` (see A-6);
+
+ (7)  Now go back to the directory run/ (of the corsika application) and
+      update/create tabular of existing parallel simulations by executing
+           gfortran -O0 -fbounds-check showparallel.f -o showparallel
+           ./showparallel.sh
+      files `showparallel.sh` and `showparallel.f` should exist in this path.      
+
+
+ **************************************************************************
+
+
+ (A-3) parallel steering file
+ ============================
+
+RUNNR        333
+PARALLEL    300.   300000.    1    T    !!! this T is necessary.
+NSHOW          1
+PRMPAR        14
+EVTNR          1
+SEED        7035         0         0
+SEED        7036         0         0
+SEED        7037         0         0
+SEED        7038         0         0
+SEED        7039         0         0
+SEED        7040         0         0
+ERANGE   7.4132E+07   7.4132E+07
+THETAP       17.00       17.00
+PHIP         26.43       26.43
+OBSLEV   1452.e2        870.000 g/cm^2
+MAGNET     19.71        -14.18     Auger
+MAXPRT         1
+ECTMAP     1.E11
+ECUTS       0.1000   0.1000   2.5e-4   2.5e-4
+RADNKG    200.E2
+HADFLG    0    0    0    0    0    2
+ELMFLG         T         T
+MUADDI         T
+MUMULT         T
+STEPFC        1.
+LONGI          T      2.     T      T
+HILOW       100.00
+DIRECT ./             !!! path ./ is necessary. 
+HOST   iklx289
+USER   you
+EXIT
+
+ **************************************************************************
+
+
+ (A-4) file `jobik3-000333` as info to job submission
+ ====================================================
+
+#!/bin/bash
+#
+# jobik3-000333
+# =============
+# CORSIKA simulation using parallel scripts at IKP cluster;
+# parallel-000333 and jobik3-000333 must exist.
+# ---------------------------------------------------------
+#
+# (a) corsika.trunk/run/
+# ./preprocess-ik3.sh parallel-000333 corsika77001_stnd_QGSII4_gheisha_pll
+#
+# (b) corsika.trunk/run/csk000333/
+ ./corsika-initial-ik3.sh parallel-000333 \
+                          corsika77001_stnd_QGSII4_gheisha_pll ik3
+
+
+
+ **************************************************************************
+
+
+ (A-6) `./postprocess-ik3.sh` writes infos to text files
+ =======================================================
+
+ (a) New job protocol file `Job000333_ik3.out`:
+
+1565410347 1:08.12 Real-time 0.44 TotalCPUseconds ./DAT000333-000000000-000000001.lst
+1565411565 19:24.06 Real-time 0.58 TotalCPUseconds ./DAT000333-000007449-000000020.lst
+       171 Files 
+     12870 sec 
+ .................
+RUNNR        333
+PARALLEL    300.   300000.    1    T    !!! this T is necessary.
+NSHOW          1
+EVTNR          1
+PRMPAR        14
+SEED     .......     0     0
+.......
+DIRECT ./             !!! path ./ is necessary, also possible './'. 
+HOST   iklx289
+USER   you
+EXIT
+                           2.511521 GBy      !!! last line.
+ 
+ (b) The new file `time.txt000333` will look like:
+
+     START TIME          STOP TIME       TIME (min)
+1565410279.000333   1565411565.000333     21.450000
+LONGEST JOB: MPIID =   171 and Time =   1164.100000
+ Total number of jobs =  171
+Maximum size of group =   17
+TOTAL CPU TIME (days) =    0.827588
+time.txt000333
+
+
+ **************************************************************************

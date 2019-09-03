@@ -1,0 +1,31 @@
+RUNNR        333
+PARALLEL      20.     20000.   1   F
+NSHOW          1
+EVTNR          1
+SEED        3330         0         0
+SEED        3331         0         0
+SEED        3332         0         0
+SEED        3333         0         0
+SEED        3334         0         0
+SEED        3335         0         0
+PRMPAR        14
+ERANGE   1.0001E+06   1.0001E+06
+THETAP       20.00       20.00
+PHIP        -26.565     -26.565
+OBSLEV   1452.e2        870.000    g/cm^2
+MAGNET     19.71        -14.18     Auger
+MAXPRT         1
+ECTMAP     1.E11
+ECUTS       0.3000   0.300   2.5e-4   2.5e-4
+RADNKG    200.E2
+HADFLG    0    0    0    0    0    2
+ELMFLG         T         T
+MUMULT         T
+MUADDI         T
+STEPFC        1.
+LONGI          T      5.     T      T
+HILOW       100.00
+DIRECT csk000333/         Be careful not to use quote for this path
+HOST   bwunicl
+USER   joe
+EXIT
