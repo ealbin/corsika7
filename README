@@ -1,4 +1,7 @@
 
+0) CORSIKA documentation can be found in v77000/doc
+
+
 1) Start on master branch:
     
     $ git clone https://github.com/ealbin/corsika7.git

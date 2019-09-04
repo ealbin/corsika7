@@ -52,6 +52,16 @@ MAGNET      21.82   45.51                   local magnetic field value [uT] for 
 c                                                 Lat: 39d 17m 49s N, Lon: 112d 54m 31s, Alt: 1400m, Sept 20 2019, Model: IGRF/WMM/EMM average         
 c                                                 (reference: https://www.ngdc.noaa.gov/geomag/)
 c
+c ** comment out if not using THIN
+THIN        1.E-4   1.E30   0.E0            useful/essential for primary energies > 10^16 [eV], multiplying output particles by their thinning "weight" 
+c                                           has been found to produce excellent reproductions of spectra comprable to non-thinned simulations
+c                                           1st value = thinning level, all particles with energy below (primary * this) are "thinned" i.e. only one
+c                                                       of the particles in an interaction are followed (and weighted)
+c                                           2nd value = weight threshold, any thinned particles that would have a weight above this threshold are cut
+c                                           3rd value = distance from core threshold, any particles within this distance from the shower core are
+c                                                       further thinned by selecting at random with a probability proportional to (r / this)^4, and
+c                                                       are weighted by the inverse of that probability
+c
 c ** uncomment for cluster (parallel) computing **
 c PARALLEL    1000.   100000.     1   F     only works if compiled with the PARALLEL option, comment this out otherwise
 c                                           1st value = particles with energies above this [GeV] get drawn from the 6th seed
