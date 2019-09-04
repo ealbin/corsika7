@@ -837,6 +837,7 @@ class Results:
 
     ##########################################################################
 
+    @staticmethod
     def __1D_canvas__(name, title='', width=800, height=800):
         left   = settings.Margins['left']
         right  = settings.Margins['right']
@@ -850,6 +851,7 @@ class Results:
 
     ##########################################################################
 
+    @staticmethod
     def __2D_canvas__(name, title='', width=800, height=800):
         left   = settings.Margins['left']
         right  = settings.Margins['right2D']
@@ -863,6 +865,7 @@ class Results:
 
     ##########################################################################
 
+    @staticmethod
     def __1D_legend__():
         x1 = .6
         x2 = .94
@@ -876,6 +879,7 @@ class Results:
 
     ##########################################################################
 
+    @staticmethod
     def __2D_legend__():
         x1 = .6
         x2 = .8
