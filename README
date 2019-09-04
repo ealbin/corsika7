@@ -1,5 +1,13 @@
 
-0) CORSIKA documentation can be found in v77000/doc
+0) This git repository has two large files that have to be checked out
+separately with git lfs: https://git-lfs.github.com/
+
+Install git lfs: https://github.com/git-lfs/git-lfs/wiki/Installation
+
+Then, from this project directory,
+
+    $ git lfs pull
+
 
 
 1) Start on master branch:
@@ -90,4 +98,8 @@ condition on line 30446 -- to resolve this:
 
     NOTE!: only do this once! Repeating this won't ruin anything, but will
     clutter ./v77000/src/corsika.F needlessly
+
+
+
+(Lastly) CORSIKA documentation can be found in v77000/doc
 
