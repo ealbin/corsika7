@@ -122,7 +122,7 @@ class Results:
 
     ##########################################################################
 
-    def plot_density(self, obs_level=-1):
+    def plot_density(self, obs_level=-1, save=False):
         if (not self.all_good):
             self.__print_std_err__()
             return
@@ -168,7 +168,7 @@ class Results:
                     continue
 
                 r = np.sqrt(x*x + y*y)
-                self.density[catagory].Fill(r)
+                self.density[catagory].Fill(r, self.sim.particle__Weight[_])
 
         xaxis = self.density[settings.Catagories[0]].GetXaxis()
         for _ in range(1, xaxis.GetNbins() + 1):
@@ -211,6 +211,13 @@ class Results:
             self.density[_].SetMinimum(np.power(10., settings.Density['ymin']))
             self.density[_].SetMaximum(np.power(10., settings.Density['ymax']))
             self.density[_].Draw('hist pe same')
+            if (save):
+                name = self.density[_].GetName()
+                level = obs_level
+                if (level == -1):
+                    level = 'all'
+                savename = '{}_{}'.format(name, level)
+                self.density[_].Write(savename, R.TObject.kOverwrite)
 
         self.legend = Results.__1D_legend__()
         self.legend.AddEntry(self.density['photon'],   '#gamma',      'pe')
@@ -226,7 +233,7 @@ class Results:
 
     ##########################################################################
 
-    def plot_slice(self, obs_level=-1):
+    def plot_slice(self, obs_level=-1, save=False):
         if (not self.all_good):
             self.__print_std_err__()
             return
@@ -273,7 +280,7 @@ class Results:
 
                 # "x" is West-to-East (i.e. -y)
                 # "y" is South-to-North (i.e. x)
-                self.slice[catagory].Fill(-y, x)
+                self.slice[catagory].Fill(-y, x, self.sim.particle__Weight[_])
 
         xaxis = self.slice[settings.Catagories[0]].GetXaxis()
         yaxis = self.slice[settings.Catagories[0]].GetYaxis()
@@ -320,7 +327,14 @@ class Results:
             self.slice[_].SetMinimum(np.power(10., settings.Slice['zmin']))
             self.slice[_].SetMaximum(np.power(10., settings.Slice['zmax']))
             self.slice[_].Draw('colz')
-            
+            if (save):
+                name = self.slice[_].GetName()
+                level = obs_level
+                if (level == -1):
+                    level = 'all'
+                savename = '{}_{}'.format(name, level)
+                self.slice[_].Write(savename, R.TObject.kOverwrite)
+
             legend = Results.__2D_legend__()
             legend.AddEntry(self.slice[_], settings.Symbols[_], '')
             legend.Draw()
@@ -329,7 +343,7 @@ class Results:
 
     ##########################################################################
 
-    def plot_spectrum(self, obs_level=-1):
+    def plot_spectrum(self, obs_level=-1, save=False):
         if (not self.all_good):
             self.__print_std_err__()
             return
@@ -378,7 +392,7 @@ class Results:
                     continue
 
                 energy = np.sqrt(px*px + py*py + pz*pz + mass*mass) * 1e9 # eV
-                self.spectrum[catagory].Fill(energy)
+                self.spectrum[catagory].Fill(energy, self.sim.particle__Weight[_])
 
         xaxis = self.spectrum[settings.Catagories[0]].GetXaxis()
         for _ in range(1, xaxis.GetNbins() + 1):
@@ -417,6 +431,13 @@ class Results:
             self.spectrum[_].SetMinimum(np.power(10., settings.Spectrum['ymin']))
             self.spectrum[_].SetMaximum(np.power(10., settings.Spectrum['ymax']))
             self.spectrum[_].Draw('hist pe same')
+            if (save):
+                name = self.spectrum[_].GetName()
+                level = obs_level
+                if (level == -1):
+                    level = 'all'
+                savename = '{}_{}'.format(name, level)
+                self.spectrum[_].Write(savename, R.TObject.kOverwrite)
 
         self.legend = Results.__1D_legend__()
         self.legend.AddEntry(self.density['photon'],   '#gamma',      'pe')
@@ -432,7 +453,7 @@ class Results:
 
     ##########################################################################
 
-    def plot_content(self, obs_level=-1):
+    def plot_content(self, obs_level=-1, save=False):
         if (not self.all_good):
             self.__print_std_err__()
             return
@@ -475,7 +496,7 @@ class Results:
                     continue
 
                 center = self.content.GetBinCenter(settings.Content[catagory])
-                self.content.Fill(center)
+                self.content.Fill(center, self.sim.particle__Weight[_])
 
         xaxis = self.content.GetXaxis()
         for _ in range(1, xaxis.GetNbins() + 1):
@@ -501,12 +522,19 @@ class Results:
         self.content.SetMinimum(np.power(10., settings.Content['ymin']))
         self.content.SetMaximum(np.power(10., settings.Content['ymax']))
         self.content.Draw('hist pe same')
+        if (save):
+            name = self.content.GetName()
+            level = obs_level
+            if (level == -1):
+                level = 'all'
+            savename = '{}_{}'.format(name, level)
+            self.content.Write(savename, R.TObject.kOverwrite)
         
         self.content_canvas.Update()
 
     ##########################################################################
 
-    def plot_impact(self):
+    def plot_impact(self, save=False):
         if (not self.all_good):
             self.__print_std_err__()
             return
@@ -528,6 +556,8 @@ class Results:
         for xi in range(1, xaxis.GetNbins() + 1):
             for yi in range(1, yaxis.GetNbins() + 1):
                 raw = self.impact.GetBinContent(xi, yi)
+                if (raw == 0):
+                    continue
                 self.impact.SetBinContent(xi, yi, raw / entries)
                 raw = self.impact.GetBinError(xi, yi)
                 self.content.SetBinError(xi, yi, raw / entries)
@@ -550,12 +580,15 @@ class Results:
         self.impact.SetMinimum(np.power(10., settings.Impact['zmin']))
         self.impact.SetMaximum(np.power(10., settings.Impact['zmax']))
         self.impact.Draw('colz')
+        if (save):
+            savename = self.impact.GetName()
+            self.impact.Write(savename, R.TObject.kOverwrite) 
         
         self.impact_canvas.Update()
 
     ##########################################################################
 
-    def plot_efficiency(self):
+    def plot_efficiency(self, save=False):
         if (not self.all_good):
             self.__print_std_err__()
             return
@@ -613,9 +646,12 @@ class Results:
         self.efficiency_canvas = Results.__1D_canvas__(
                 name, title='Energy Efficiency', width=width, height=height)
 
-#        self.efficiency.SetMinimum(settings.Efficiency['ymin'])
-#        self.efficiency.SetMaximum(settings.Efficiency['ymax'])
+        self.efficiency.SetMinimum(settings.Efficiency['ymin'])
+        self.efficiency.SetMaximum(settings.Efficiency['ymax'])
         self.efficiency.Draw('hist pl')
+        if (save):
+            savename = self.efficiency.GetName()
+            self.efficiency.Write(savename, R.TObject.kOverwrite)
         
         self.efficiency_canvas.Update()
 
