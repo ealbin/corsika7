@@ -11,19 +11,34 @@
 
 here=$(pwd)
 infile=$here/input.txt                  # <-- Edit this if you need to (!! don't forget to uncomment PARALLEL in input.txt !!)
-outfile=$here/parallel_output.txt                       # <-- Edit this if you want
-executable="corsika76900Linux_QGSJET_gheisha_parallel"  # <-- !!! Definitely Edit This !!!
-
-cd /your/path/to/corsika-76900/run                      # <-- Edit this
-
-/usr/bin/time -v -a -o $outfile srun ./$executable < $infile > $outfile 
+outfile=$here/output.txt                # <-- Edit this if you want
+executable="corsika77000Linux_OPTIONS_parallel"  # <-- !!! Definitely Edit This !!!
+dir="your/path/to/v77000/run"                    # <-- !!! Definitely Edit This !!!
 
 # submit this to slurm with:
 # $ sbatch parallel.sh
 
 # Optional, when you're done, if you've compiled corsika2root (see ../../coast/README)
-# Do this from the command line:
-# $ ../../coast/v4r5/bin/coast2root DATxxxxxxxx  <-- whatever your DAT file is
+# and didn't "coconut" ROOTOUT, do this from the command line:
+# $ ../your/path/coast/v4r5/bin/coast2root ./DATxxxxxxx  <-- whatever your DAT file is
 # (note: be sure to have sourced your/path/to/root/thisroot.sh version < 6 before-hand)
 #
 # Check out some PyROOT tools in ../tools
+
+#-----------------------------------------------------------------------------
+
+errfile=$here/.err
+perfile=$here/.per
+uname -a > $outfile
+echo >> $outfile
+date >> $outfile
+cd $dir
+/usr/bin/time -v -o $perfile srun ./$executable < $infile >> $outfile 2> $errfile
+printf '\n\nErrors (if any):\n' >> $outfile
+printf '================\n\n'   >> $outfile
+cat $errfile >> $outfile
+printf '\n\nPerformance:\n' >> $outfile
+printf '============\n\n'   >> $outfile
+cat $perfile >> $outfile
+rm $errfile $perfile
+
