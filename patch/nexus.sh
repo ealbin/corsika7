@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-file=../v77000/nexus/nexus-uti-3972.f 
+file=./v77000/nexus/nexus-uti-3972.f 
 
 if [ ! -d patch ] 
 then
