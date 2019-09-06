@@ -619,6 +619,7 @@ class Results:
                     px  = self.sim.particle__Px[i] # GeV
                     py  = self.sim.particle__Py[i] # GeV
                     pz  = self.sim.particle__Pz[i] # GeV
+                    w   = self.sim.particle__Weight[i]
 
                     if (str(pid) in particle.ID):
                         mass     = particle.ID[str(pid)]['mass'] # GeV
@@ -628,7 +629,7 @@ class Results:
                         print(' [ERROR] Unknown particle ID: {}'.format(pid))
                         continue
 
-                    energy_GeV += np.sqrt(px*px + py*py + pz*pz + mass*mass) # GeV
+                    energy_GeV += w * np.sqrt(px*px + py*py + pz*pz + mass*mass) # GeV
 
             efficiency = energy_GeV / max_energy / entries
             self.efficiency.SetBinContent(xbin, efficiency)
