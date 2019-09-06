@@ -122,7 +122,7 @@ def thin():
             cefficiency.cd()
             lefficiency.Draw()
             cefficiency.Update()
-            cefficiency.SaveAs('{}/efficiency.png')
+            cefficiency.SaveAs('{}/efficiency.png'.format(savedir))
         
         
         for level in __levels__:
