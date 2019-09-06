@@ -91,7 +91,7 @@ def thin():
             elif (thinning == '1'):
                 index  = 3
                 marker = R.kOpenCircle
-                thinning == '1E-0'
+                thinning = '1E-0'
             
             tfiles[index] = [tfile, marker, thinning]
 
