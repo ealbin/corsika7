@@ -5,6 +5,8 @@
 !file.py
 !nuclei.py
 !particle.py
+!plot.py
+!pypath.sh
 !results.py
 !run.h
 !settings.py
