@@ -104,8 +104,11 @@ def thin(resume=None):
     if (resume is not None):
         skip = True
     for dirname in dirs:
-        if (skip == True and dirname != resume):
-            continue
+        if (skip == True):
+            if (dirname == resume):
+                skip = False
+            else:
+                continue
 
         savedir = os.path.join(dirname, subfolder)
         if (not os.path.isdir(savedir)):
