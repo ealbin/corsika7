@@ -46,9 +46,40 @@ def make1Dlegend():
     legend.SetBorderSize(0)
     return legend
 
+def has_key(tfile, key):
+    n_keys = tfile.GetNkeys()
+    keys   = tfile.GetListOfKeys()
+    for _ in range(n_keys):
+        key_name = keys.At(_).GetName()
+        if (key_name == key):
+            return True
+    return False
 
-def thin():
+
+def min_max(hist):
+    min_  = None
+    max_  = None
+    xaxis = hist.GetXaxis()
+    for bin_ in range(1, xaxis.GetNbins() + 1):
+        v = hist.GetBinContent(bin_)
+        if (v > 0):
+            if (min_ is None or max_ is None):
+                min_ = v
+                max_ = v
+            else:
+                if (v < min_):
+                    min_ = v
+                if (v > max_):
+                    max_ = v
+    return (min_, max_)
+
+
+def thin(resume=None):
     subfolder = 'thin_plots'
+
+    if (resume is not None):
+        if (os.path.basename(resume) == subfolder):
+            resume = os.path.dirname(resume)
 
     dirs = {}
     for f in glob.glob('**/*.root', recursive=True):
@@ -69,7 +100,13 @@ def thin():
     cspectrum.SetLogy()
     ccontent.SetLogy()
     
+    skip = False
+    if (resume is not None):
+        skip = True
     for dirname in dirs:
+        if (skip == True and dirname != resume):
+            continue
+
         savedir = os.path.join(dirname, subfolder)
         if (not os.path.isdir(savedir)):
             os.mkdir(savedir)
@@ -107,16 +144,17 @@ def thin():
             tfile[0].cd()
 
             cefficiency.cd()
-            h = tfile[0].Get('_efficiency')
-            h.SetMarkerStyle(tfile[1])
-            lefficiency.AddEntry(h, 'thin {}'.format(tfile[2]), 'pl')
-            h.SetMinimum(0.)
-            h.SetMaximum(1.05)
-            if (efficiency_count == 0):
-                h.Draw('hist pl')
-            else:
-                h.Draw('hist pl same')
-            efficiency_count += 1
+            if (has_key(tfile[0], '_efficiency')):
+                h = tfile[0].Get('_efficiency')
+                h.SetMarkerStyle(tfile[1])
+                lefficiency.AddEntry(h, 'thin {}'.format(tfile[2]), 'pl')
+                h.SetMinimum(0.)
+                h.SetMaximum(1.05)
+                if (efficiency_count == 0):
+                    h.Draw('hist pl')
+                else:
+                    h.Draw('hist pl same')
+                efficiency_count += 1
 
         if (efficiency_count > 0):
             cefficiency.cd()
@@ -138,31 +176,20 @@ def thin():
                 tfile[0].cd()
 
                 ccontent.cd()
-                h = tfile[0].Get('_content_{}'.format(level))
-                h.SetMarkerStyle(tfile[1])
-                lcontent.AddEntry(h, 'thin {}'.format(tfile[2]), 'p')
-                if (content_count == 0):
-                    min_  = None
-                    max_  = None
-                    xaxis = h.GetXaxis()
-                    for bin_ in range(1, xaxis.GetNbins() + 1):
-                        v = h.GetBinContent(bin_)
-                        if (v > 0):
-                            if (min_ is None or max_ is None):
-                                min_ = v
-                                max_ = v
-                            else:
-                                if (v < min_):
-                                    min_ = v
-                                if (v > max_):
-                                    max_ = v
-                    if (min_ is not None and max_ is not None):
-                        h.SetMaximum(max_ * 100.)
+                if (has_key(tfile[0], '_content_{}'.format(level))):
+                    h = tfile[0].Get('_content_{}'.format(level))
+                    h.SetMarkerStyle(tfile[1])
+                    lcontent.AddEntry(h, 'thin {}'.format(tfile[2]), 'p')
+                    if (content_count == 0):
                         h.SetMinimum(0.1)
-                        h.Draw('hist p')
-                else:
-                    h.Draw('hist p same')
-                content_count += 1
+                        min_, max_ = min_max(h)
+                        if (max_ is not None):
+                            h.SetMaximum(max_ * 100.)
+                            h.Draw('hist p')
+                            content_count = 1
+                    else:
+                        h.Draw('hist p same')
+                        content_count += 1
             
             if (content_count > 0):
                 ccontent.cd()
@@ -191,59 +218,37 @@ def thin():
          
                     # DENSITY
                     cdensity.cd()
-                    h = tfile[0].Get('_density_{}_{}'.format(catagory, level))
-                    h.SetMarkerStyle(tfile[1])
-                    ldensity.AddEntry(h, '{} thin {}'.format(symbol, tfile[2]), 'p')
-                    if (density_count == 0):
-                        min_  = None
-                        max_  = None
-                        xaxis = h.GetXaxis()
-                        for bin_ in range(1, xaxis.GetNbins() + 1):
-                            v = h.GetBinContent(bin_)
-                            if (v > 0):
-                                if (min_ is None or max_ is None):
-                                    min_ = v
-                                    max_ = v
-                                else:
-                                    if (v < min_):
-                                        min_ = v
-                                    if (v > max_):
-                                        max_ = v
-                        if (min_ is None or max_ is None):
-                            continue
-                        h.SetMaximum(max_ * 100.)
-                        h.SetMinimum(min_ / 100.)
-                        h.Draw('hist p')
-                    else:
-                        h.Draw('hist p same')
-                    density_count += 1
+                    if (has_key(tfile[0], '_density_{}_{}'.format(catagory, level))):
+                        h = tfile[0].Get('_density_{}_{}'.format(catagory, level))
+                        h.SetMarkerStyle(tfile[1])
+                        ldensity.AddEntry(h, '{} thin {}'.format(symbol, tfile[2]), 'p')
+                        if (density_count == 0):
+                            min_, max_ = min_max(h)
+                            if (min_ is not None and max_ is not None):
+                                h.SetMaximum(max_ * 100.)
+                                h.SetMinimum(min_ / 100.)
+                                h.Draw('hist p')
+                                density_count = 1
+                        else:
+                            h.Draw('hist p same')
+                            density_count += 1
 
                     # SPECTRUM
                     cspectrum.cd()
-                    h = tfile[0].Get('_spectrum_{}_{}'.format(catagory, level))
-                    h.SetMarkerStyle(tfile[1])
-                    lspectrum.AddEntry(h, '{} thin {}'.format(symbol, tfile[2]), 'p')
-                    if (spectrum_count == 0):
-                        min_  = None
-                        max_  = None
-                        xaxis = h.GetXaxis()
-                        for bin_ in range(1, xaxis.GetNbins() + 1):
-                            v = h.GetBinContent(bin_)
-                            if (v > 0):
-                                if (min_ is None or max_ is None):
-                                    min_ = v
-                                    max_ = v
-                                else:
-                                    if (v < min_):
-                                        min_ = v
-                                    if (v > max_):
-                                        max_ = v
-                        h.SetMaximum(max_ * 100.)
-                        h.SetMinimum(min_ / 100.)
-                        h.Draw('hist p')
-                    else:
-                        h.Draw('hist p same')
-                    spectrum_count += 1
+                    if (has_key(tfile[0], '_spectrum_{}_{}'.format(catagory, level))):
+                        h = tfile[0].Get('_spectrum_{}_{}'.format(catagory, level))
+                        h.SetMarkerStyle(tfile[1])
+                        lspectrum.AddEntry(h, '{} thin {}'.format(symbol, tfile[2]), 'p')
+                        if (spectrum_count == 0):
+                            min_, max_ = min_max(h)
+                            if (min_ is not None and max_ is not None):
+                                h.SetMaximum(max_ * 100.)
+                                h.SetMinimum(min_ / 100.)
+                                h.Draw('hist p')
+                                spectrum_count = 1
+                        else:
+                            h.Draw('hist p same')
+                            spectrum_count += 1
 
                 if (density_count > 0):
                     cdensity.cd()
