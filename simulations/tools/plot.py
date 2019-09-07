@@ -74,7 +74,7 @@ def min_max(hist):
     return (min_, max_)
 
 
-def thin(resume=None, batchmode=False):
+def thin(resume=None):
     subfolder = 'thin_plots'
 
     if (resume is not None):
@@ -87,9 +87,6 @@ def thin(resume=None, batchmode=False):
         if (dirname not in dirs):
             dirs[dirname] = []
         dirs[dirname].append(os.path.basename(f))
-
-    if (batchmode == True):
-        R.gROOT.SetBatch(R.kTRUE)
 
     cdensity    = make1Dcanvas('density')
     cspectrum   = make1Dcanvas('spectrum')
