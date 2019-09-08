@@ -72,14 +72,14 @@ class Results:
             for _ in range(n_keys):
                 key_name = keys.At(_).GetName()
 
-                if (key_name == 'run'):
+                if (key_name == 'run' and not has_run_tree):
                     self.run = R.Run(R.gDirectory.Get('run'))
                     self.run.GetEntry(0)
                     has_run_tree = True
                     print(" [info] found run tree")
                     continue
 
-                if (key_name == 'sim'):
+                if (key_name == 'sim' and not has_sim_tree):
                     self.sim = R.Sim(R.gDirectory.Get('sim'))
                     self.sim.GetEntry(0)
                     has_sim_tree = True
