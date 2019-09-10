@@ -25,7 +25,7 @@
 
   UInt64_t kMaxparticle_ = 0; 
 
-  Bool_t kOutOfMem = false;
+  Bool_t kOutOfMemory = false;
 
 class Sim {
 public :
@@ -232,7 +232,7 @@ void Sim::Init()
    }
    fChain->SetBranchStatus("*", 1);
    Allocate();
-   if (!kOutOfMem)
+   if (!kOutOfMemory)
        Link();
 }
 
@@ -255,7 +255,7 @@ void Sim::Allocate()
 
    if (particle__Weight == NULL) {
        std::cout << " [ERROR] unable to allocate memory\n";
-       kOutOfMem = true;
+       kOutOfMemory = true;
        if (!fChain) return;
        Free();
        delete fChain->GetCurrentFile();
