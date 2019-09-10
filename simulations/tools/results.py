@@ -53,10 +53,13 @@ class Results:
         self.prefix = prefix
         self.run = R.Run(run)
         self.sim = R.Sim(sim)
-        self.run.GetEntry(0)
-        self.sim.GetEntry(0)
-        self.all_good = True
-        self.__initialize_histograms__()
+        if (self.sim.IsOk()):
+            self.run.GetEntry(0)
+            self.sim.GetEntry(0)
+            self.all_good = True
+            self.__initialize_histograms__()
+        else:
+            self.all_good = False
 
 
     def __init2__(self, prefix=''):
@@ -81,10 +84,15 @@ class Results:
 
                 if (key_name == 'sim' and not has_sim_tree):
                     self.sim = R.Sim(R.gDirectory.Get('sim'))
-                    self.sim.GetEntry(0)
-                    has_sim_tree = True
-                    print(" [info] found sim tree")
-                    continue
+                    if (self.sim.IsOk()):
+                        self.sim.GetEntry(0)
+                        has_sim_tree = True
+                        print(" [info] found sim tree")
+                        continue
+                    else:
+                        self.all_good = False
+                        print(" [ERROR] snot goodman")
+                        return
 
         self.all_good = has_run_tree and has_sim_tree
         if (self.all_good):

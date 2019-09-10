@@ -10,6 +10,7 @@
 #define sim_h
 
 #include <iostream>
+#include <new>
 
 #include <TROOT.h>
 #include <TChain.h>
@@ -22,7 +23,9 @@
    const Int_t kMaxlong_ = 1;
    const Int_t kMaxcherenkov_ = 1;
 
-  Int_t kMaxparticle_ = 0; 
+  UInt64_t kMaxparticle_ = 0; 
+
+  Bool_t kOutOfMem = false;
 
 class Sim {
 public :
@@ -170,6 +173,7 @@ public :
    Sim(TTree *tree=0);
    virtual Long64_t GetEntries();
    virtual Int_t    GetEntry(Long64_t entry);
+   virtual Bool_t   IsOk();
 
 private:
    virtual void     Init();
@@ -207,6 +211,11 @@ Int_t Sim::GetEntry(Long64_t entry)
     return fChain->GetEntry(entry);
 }
 
+Bool_t Sim::IsOk()
+{
+    return !kOutOfMemory;
+}
+
 
 void Sim::Init()
 {
@@ -223,25 +232,35 @@ void Sim::Init()
    }
    fChain->SetBranchStatus("*", 1);
    Allocate();
-   Link();
+   if (!kOutOfMem)
+       Link();
 }
 
 void Sim::Allocate()
 {
    std::cout << "Allocating for " << kMaxparticle_ << " (maximal) particles\n";
-   particle__fUniqueID          = new UInt_t[kMaxparticle_];
-   particle__fBits              = new UInt_t[kMaxparticle_];
-   particle__CorsikaID          = new Int_t[kMaxparticle_];
-   particle__ParticleID         = new Int_t[kMaxparticle_];
-   particle__ObservationLevel   = new Int_t[kMaxparticle_];
-   particle__HadronicGeneration = new Int_t[kMaxparticle_];
-   particle__Px                 = new Double_t[kMaxparticle_];
-   particle__Py                 = new Double_t[kMaxparticle_];
-   particle__Pz                 = new Double_t[kMaxparticle_];
-   particle__x                  = new Double_t[kMaxparticle_];
-   particle__y                  = new Double_t[kMaxparticle_];
-   particle__Time               = new Double_t[kMaxparticle_];
-   particle__Weight             = new Double_t[kMaxparticle_];
+   particle__fUniqueID          = new (std::nothrow) UInt_t[kMaxparticle_];
+   particle__fBits              = new (std::nothrow) UInt_t[kMaxparticle_];
+   particle__CorsikaID          = new (std::nothrow) Int_t[kMaxparticle_];
+   particle__ParticleID         = new (std::nothrow) Int_t[kMaxparticle_];
+   particle__ObservationLevel   = new (std::nothrow) Int_t[kMaxparticle_];
+   particle__HadronicGeneration = new (std::nothrow) Int_t[kMaxparticle_];
+   particle__Px                 = new (std::nothrow) Double_t[kMaxparticle_];
+   particle__Py                 = new (std::nothrow) Double_t[kMaxparticle_];
+   particle__Pz                 = new (std::nothrow) Double_t[kMaxparticle_];
+   particle__x                  = new (std::nothrow) Double_t[kMaxparticle_];
+   particle__y                  = new (std::nothrow) Double_t[kMaxparticle_];
+   particle__Time               = new (std::nothrow) Double_t[kMaxparticle_];
+   particle__Weight             = new (std::nothrow) Double_t[kMaxparticle_];
+
+   if (particle__Weight == NULL) {
+       std::cout << " [ERROR] unable to allocate memory\n";
+       kOutOfMem = true;
+       if (!fChain) return;
+       Free();
+       delete fChain->GetCurrentFile();
+       return;
+   }
 
    for (Int_t i = 0; i < kMaxparticle_; i++) {
        particle__fUniqueID[i]          = 0;
