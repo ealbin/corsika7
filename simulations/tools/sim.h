@@ -227,7 +227,7 @@ void Sim::Init()
    
    for (Long64_t i = 0; i < entries; i++) {
         fChain->GetEntry(i);
-        if (particle__ > kMaxparticle_)
+        if ((ULong_t) particle__ > kMaxparticle_)
             kMaxparticle_ = particle__;
    }
    fChain->SetBranchStatus("*", 1);
@@ -262,7 +262,7 @@ void Sim::Allocate()
        return;
    }
 
-   for (Int_t i = 0; i < kMaxparticle_; i++) {
+   for (ULong_t i = 0; i < kMaxparticle_; i++) {
        particle__fUniqueID[i]          = 0;
        particle__fBits[i]              = 0;
        particle__CorsikaID[i]          = 0;
