@@ -23,7 +23,7 @@
    const Int_t kMaxlong_ = 1;
    const Int_t kMaxcherenkov_ = 1;
 
-  UInt64_t kMaxparticle_ = 0; 
+  ULong_t kMaxparticle_ = 0; 
 
   Bool_t kOutOfMemory = false;
 
