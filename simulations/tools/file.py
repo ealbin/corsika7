@@ -38,27 +38,46 @@ def batch(file):
     f.Close()
 
 
-def collect_histograms(filename, filelist):
+def collect_histograms(filename, filelist, verbose=False):
+
+    def mkdir(name):
+        if (R.gDirectory.GetDirectory(name) == None):
+            if (verbose):
+                print(' [info] making subdir: {}'.format(name))
+            R.gDirectory.mkdir(name)
+        else:    
+            if (verbose):
+                print(' [info] subdir exists: {}'.format(name))
+        subdir = R.gDirectory.GetDirectory(name)
+        R.gDirectory.cd(name)
+        return subdir
 
     search_keys = ['density', 'spectrum', 'efficiency', 'content']
 
     out = R.TFile(filename, 'recreate')
 
-    for f in filelist:
-        print(' [info] working on file: {}'.format(f), flush=True)
+    nfiles = len(filelist)
+    for i, f in enumerate(filelist):
+        print(' [info] working on file {} of {}: {}'.format(i+1, nfiles, f))
+        tag     = ( '_'.join(os.path.basename(f).split('_')[1:]) ).strip('.root')
         dirname = os.path.dirname(f).lstrip('./')
         subdirs = dirname.split('/')
-        subdir  = out.mkdir(subdirs[0])
+        out.cd()
+        subdir  = mkdir(subdirs[0])
         for _ in subdirs[1:]:
-            subdir = subdir.mkdir(_)
+            subdir = mkdir(_)
         data = R.TFile(f)
         subdir.cd()
+        if (verbose):
+            print(' [info] writing in directory:')
+            R.gDirectory.pwd()
         for key in data.GetListOfKeys():
             if any(_ in key.GetName() for _ in search_keys):
                 hist = data.Get(key.GetName())
                 hist.SetDirectory(subdir)
-                hist.Write('', R.TObject.kOverwrite)
-                print(' [info]   - wrote {}'.format(hist.GetName()))
+                hist.Write(tag + key.GetName(), R.TObject.kOverwrite)
+                if (verbose):
+                    print(' [info]   - wrote {} as {} with title: {}'.format(hist.GetName(), tag + key.GetName(), hist.GetTitle()))
         data.Close()
 
     out.Close()
