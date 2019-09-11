@@ -45,7 +45,7 @@ def collect_histograms(filename, filelist):
     out = R.TFile(filename, 'recreate')
 
     for f in filelist:
-        print(' [info] working on file: {}'.format(f))
+        print(' [info] working on file: {}'.format(f), flush=True)
         dirname = os.path.dirname(f).lstrip('./')
         subdirs = dirname.split('/')
         subdir  = out.mkdir(subdirs[0])
@@ -58,6 +58,7 @@ def collect_histograms(filename, filelist):
                 hist = data.Get(key.GetName())
                 hist.SetDirectory(subdir)
                 hist.Write('', R.TObject.kOverwrite)
+                print(' [info]   - wrote {}'.format(hist.GetName()))
         data.Close()
 
     out.Close()
