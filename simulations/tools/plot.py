@@ -264,8 +264,6 @@ def thin(infile, outfolder='thin_plots', batchmode=True):
                 
                 # DENSITY
                 hfiles = get_histlist('density', level=level, catagory=catagory)
-                for _ in hfiles:
-                    print(_)
                 cdensity.Clear()
                 ldensity = make1Dlegend()
                 density_count  = 0
