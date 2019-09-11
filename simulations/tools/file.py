@@ -47,8 +47,12 @@ def collect_histograms(filename, filelist):
     for f in filelist:
         print(' [info] working on file: {}'.format(f))
         dirname = os.path.dirname(f).lstrip('./')
-        subdir  = out.mkdir(dirname)
-        data    = R.TFile(f)
+        subdirs = dirname.split('/')
+        subdir  = out.mkdir(subdirs[0])
+        for _ in subdirs[1:]:
+            subdir = subdir.mkdir(_)
+        data = R.TFile(f)
+        subdir.cd()
         for key in data.GetListOfKeys():
             if any(_ in key.GetName() for _ in search_keys):
                 hist = data.Get(key.GetName())
