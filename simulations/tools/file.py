@@ -53,7 +53,7 @@ def collect_histograms(filename, filelist):
             if any(_ in key.GetName() for _ in search_keys):
                 hist = data.Get(key.GetName())
                 hist.SetDirectory(subdir)
-                hist.Write('', R.TObject.kOverwrite())
+                hist.Write('', R.TObject.kOverwrite)
         data.Close()
 
     out.Close()
