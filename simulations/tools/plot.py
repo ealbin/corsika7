@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
-import ROOT as R
-
-import glob
 import os
+import ROOT as R
 
 __catagories__ = ['photon',
                   'electron',
@@ -25,7 +23,7 @@ __symbols__['nuclei']   = 'nuclei'
 
 __levels__ = ['all', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 
-def make1Dcanvas(name, title='', width=400, height=400):
+def make1Dcanvas(name, title='', width=600, height=600):
     left   = 0.12
     right  = 0.05
     bottom = 0.12
@@ -74,22 +72,30 @@ def min_max(hist):
     return (min_, max_)
 
 
-def thin(resume=None, batchmode=False):
-    subfolder = 'thin_plots'
+def glob_files(root, startswith='*'):
+    filelist = []
+    root.cd()
+    path = root.GetPath()
+    for key in root.GetListOfKeys():
+        if (key.IsFolder()):
+            filelist = filelist + glob_files(root.GetDirectory(key.GetName()))
+        elif (startswith == '*'):
+            filelist.append(path + '/' + key.GetName())
+        elif (key.GetName().startswith(startswith)):
+            filelist.append(path + '/' + key.GetName())
+    return filelist
 
-    if (resume is not None):
-        if (os.path.basename(resume) == subfolder):
-            resume = os.path.dirname(resume)
 
-    dirs = {}
-    for f in glob.glob('**/*.root', recursive=True):
-        dirname = os.path.dirname(f)
-        if (dirname not in dirs):
-            dirs[dirname] = []
-        dirs[dirname].append(os.path.basename(f))
+def thin(infile, outfolder='thin_plots', batchmode=True):
 
     if (batchmode == True):
         R.gROOT.SetBatch(R.kTRUE)
+
+    thin8_linestyle = 2
+    thin8_linewidth = 1
+
+    other_linestyle = 1
+    other_linewidth = 1
 
     cdensity    = make1Dcanvas('density')
     cspectrum   = make1Dcanvas('spectrum')
@@ -103,74 +109,105 @@ def thin(resume=None, batchmode=False):
     cspectrum.SetLogy()
     ccontent.SetLogy()
     
-    skip = False
-    if (resume is not None):
-        skip = True
-    for dirname in dirs:
-        if (skip == True):
-            if (dirname == resume):
-                skip = False
-            else:
-                continue
+    f = R.TFile(infile)
+    filelist = glob_files(f, startswith='THIN_')
+    filemap = {}
+    for _ in filelist:
+        dirname  = os.path.dirname(_)
+        basename = os.path.basename(_)
+        if (dirname not in filemap):
+            filemap[dirname] = []
+        filemap[dirname].append(basename)
 
-        savedir = os.path.join(dirname, subfolder)
+    for dirname in filemap.keys():
+
+        subfolder = dirname.split(':')[-1]
+        if (subfolder[0] == '/'):
+            subfolder = subfolder[1:]
+        savedir = os.path.join(outfolder, subfolder)
         if (not os.path.isdir(savedir)):
-            os.mkdir(savedir)
+            os.makedirs(savedir, exist_ok=True)
+        
+        def get_histlist(kind, level=None, catagory=None):
+            histlist = [[] for _ in range(5)]
+            for histkey in filemap[dirname]:
+                tokens = histkey.split('_')
 
-        tfiles = [[] for _ in range(4)]
-        for basename in dirs[dirname]:
-            tfile = R.TFile(os.path.join(dirname, basename))
+                if (len(tokens) < 4):
+                    continue
 
-            thinning = tfile.GetName().split('_')[-1].split('.')[0]
-            if (thinning == '1E-8'):
-                index  = 0
-                marker = None
-            elif (thinning == '1E-6'):
-                index  = 1
-                marker = R.kFullDotMedium #R.kFullCircle
-            elif (thinning == '1E-4'):
-                index  = 2
-                marker = R.kFullCross
-            elif (thinning == '1E-2'):
-                index  = 3
-                marker = R.kOpenCrossX
-            elif (thinning == '1'):
-                index  = 4
-                marker = R.kOpenCircle
-                thinning = '1E-0'
-            
-            tfiles[index] = [tfile, marker, thinning]
+                if (tokens[3] != kind):
+                    continue
+                
+                if (tokens[0] != 'THIN'):
+                    continue
 
-   
+                if (tokens[2] != '1'):
+                    continue
+
+                if (level is None and catagory is None):
+                    pass
+                elif (level is not None and catagory is None):
+                    if (tokens[4] != level):
+                        continue
+                elif (level is not None and catagory is not None):
+                    if (tokens[4] != catagory or tokens[5] != level):
+                        continue
+                else:
+                    if (tokens[4] != catagory):
+                        continue
+
+                thinning = tokens[1]
+                if (thinning == '1E-8'):
+                    index  = 0
+                    marker = None
+                elif (thinning == '1E-6'):
+                    index  = 1
+                    marker = R.kFullDotMedium
+                elif (thinning == '1E-4'):
+                    index  = 2
+                    marker = R.kFullCross
+                elif (thinning == '1E-2'):
+                    index  = 3
+                    marker = R.kOpenCrossX
+                elif (thinning == '1E-0'):
+                    index  = 4
+                    marker = R.kOpenCircle
+                else:
+                    continue
+
+                histlist[index] = [os.path.join(dirname, histkey), marker, thinning]
+            return histlist
+
         # EFFICIENCY
+        hfiles = get_histlist('efficiency')
         cefficiency.Clear()
         lefficiency = make1Dlegend()
         efficiency_count = 0
-        for tfile in tfiles:
-            if (tfile == []):
+        for hfile in hfiles:
+            if (hfile == []):
                 continue
-
-            tfile[0].cd()
-
+            h = f.Get(hfile[0])
+            
             cefficiency.cd()
-            if (has_key(tfile[0], '_efficiency')):
-                h = tfile[0].Get('_efficiency')
-                if (tfile[1] is not None):
-                    h.SetMarkerStyle(tfile[1])
-                    h.SetLineStyle(7)
-                    h.SetLineWidth(1)
-                else:
-                    h.SetMarkerStyle(R.kFullDotSmall)
-                    h.SetLineStyle(1)
-                    h.SetLineWidth(3)
-                lefficiency.AddEntry(h, 'thin {}'.format(tfile[2]), 'pl')
-                h.SetMinimum(0.)
-                h.SetMaximum(1.05)
-                if (efficiency_count == 0):
-                    h.Draw('hist pl')
-                else:
-                    h.Draw('hist pl same')
-                efficiency_count += 1
+            if (hfile[1] is not None):
+                h.SetMarkerStyle(hfile[1])
+                h.SetLineStyle(other_linestyle)
+                h.SetLineWidth(other_linewidth)
+                plot_opt = 'p'
+            else:
+                h.SetMarkerStyle(R.kFullDotSmall)
+                h.SetLineStyle(thin8_linestyle)
+                h.SetLineWidth(thin8_linewidth)
+                plot_opt = 'l'
+            lefficiency.AddEntry(h, 'thin {}'.format(hfile[2]), plot_opt)
+            h.SetMinimum(0.)
+            h.SetMaximum(1.05)
+            if (efficiency_count == 0):
+                h.Draw('hist ' + plot_opt)
+            else:
+                h.Draw('hist ' + plot_opt + ' same')
+            efficiency_count += 1
 
         if (efficiency_count > 0):
             cefficiency.cd()
@@ -182,39 +219,37 @@ def thin(resume=None, batchmode=False):
         for level in __levels__:
 
             # CONTENT
+            hfiles = get_histlist('content', level=level)
             ccontent.Clear()
             lcontent = make1Dlegend()
             content_count = 0
-            for tfile in tfiles:
-                if (tfile == []):
+            for hfile in hfiles:
+                if (hfile == []):
                     continue
-
-                tfile[0].cd()
+                h = f.Get(hfile[0])
 
                 ccontent.cd()
-                if (has_key(tfile[0], '_content_{}'.format(level))):
-                    h = tfile[0].Get('_content_{}'.format(level))
-                    if (tfile[1] is not None):
-                        h.SetMarkerStyle(tfile[1])
-                        h.SetLineStyle(7)
-                        h.SetLineWidth(1)
-                        plot_opt = 'p'
-                    else:
-                        h.SetMarkerStyle(R.kFullDotSmall)
-                        h.SetLineStyle(1)
-                        h.SetLineWidth(3)
-                        plot_opt = 'pl'
-                    lcontent.AddEntry(h, 'thin {}'.format(tfile[2]), plot_opt)
-                    if (content_count == 0):
-                        h.SetMinimum(0.1)
-                        min_, max_ = min_max(h)
-                        if (max_ is not None):
-                            h.SetMaximum(max_ * 100.)
-                            h.Draw('hist ' + plot_opt)
-                            content_count = 1
-                    else:
-                        h.Draw('hist ' + plot_opt + ' same')
-                        content_count += 1
+                if (hfile[1] is not None):
+                    h.SetMarkerStyle(hfile[1])
+                    h.SetLineStyle(other_linestyle)
+                    h.SetLineWidth(other_linewidth)
+                    plot_opt = 'p'
+                else:
+                    h.SetMarkerStyle(R.kFullDotSmall)
+                    h.SetLineStyle(thin8_linestyle)
+                    h.SetLineWidth(thin8_linewidth)
+                    plot_opt = 'l'
+                lcontent.AddEntry(h, 'thin {}'.format(hfile[2]), plot_opt)
+                if (content_count == 0):
+                    h.SetMinimum(0.1)
+                    min_, max_ = min_max(h)
+                    if (max_ is not None):
+                        h.SetMaximum(max_ * 100.)
+                        h.Draw('hist ' + plot_opt)
+                        content_count = 1
+                else:
+                    h.Draw('hist ' + plot_opt + ' same')
+                    content_count += 1
             
             if (content_count > 0):
                 ccontent.cd()
@@ -224,85 +259,86 @@ def thin(resume=None, batchmode=False):
 
 
             for catagory in __catagories__:
-                cdensity.Clear()
-                cspectrum.Clear()
-                
-                ldensity  = make1Dlegend()
-                lspectrum = make1Dlegend()
 
                 symbol = __symbols__[catagory]
-
+                
+                # DENSITY
+                hfiles = get_histlist('density', level=level, catagory=catagory)
+                for _ in hfiles:
+                    print(_)
+                cdensity.Clear()
+                ldensity = make1Dlegend()
                 density_count  = 0
-                spectrum_count = 0
-
-                for tfile in tfiles:
-                    if (tfile == []):
+                for hfile in hfiles:
+                    if (hfile == []):
                         continue
-
-                    tfile[0].cd()
-         
-                    # DENSITY
+                    h = f.Get(hfile[0])
+                    
                     cdensity.cd()
-                    if (has_key(tfile[0], '_density_{}_{}'.format(catagory, level))):
-                        h = tfile[0].Get('_density_{}_{}'.format(catagory, level))
-                        if (tfile[1] is not None):
-                            h.SetMarkerStyle(tfile[1])
-                            h.SetLineStyle(7)
-                            h.SetLineWidth(1)
-                            plot_opt = 'p'
-                        else:
-                            h.SetMarkerStyle(R.kFullDotSmall)
-                            h.SetLineStyle(1)
-                            h.SetLineWidth(3)
-                            plot_opt = 'pl'
-                        ldensity.AddEntry(h, '{} thin {}'.format(symbol, tfile[2]), plot_opt)
-                        if (density_count == 0):
-                            min_, max_ = min_max(h)
-                            if (min_ is not None and max_ is not None):
-                                h.SetMaximum(max_ * 100.)
-                                h.SetMinimum(min_ / 100.)
-                                h.Draw('hist ' + plot_opt)
-                                density_count = 1
-                        else:
-                            h.Draw('hist ' + plot_opt + ' same')
-                            density_count += 1
-
-                    # SPECTRUM
-                    cspectrum.cd()
-                    if (has_key(tfile[0], '_spectrum_{}_{}'.format(catagory, level))):
-                        h = tfile[0].Get('_spectrum_{}_{}'.format(catagory, level))
-                        if (tfile[1] is not None):
-                            h.SetMarkerStyle(tfile[1])
-                            h.SetLineStyle(7)
-                            h.SetLineWidth(1)
-                            plot_opt = 'p'
-                        else:
-                            h.SetMarkerStyle(R.kFullDotSmall)
-                            h.SetLineStyle(1)
-                            h.SetLineWidth(3)
-                            plot_opt = 'pl'
-                        lspectrum.AddEntry(h, '{} thin {}'.format(symbol, tfile[2]), plot_opt)
-                        if (spectrum_count == 0):
-                            min_, max_ = min_max(h)
-                            if (min_ is not None and max_ is not None):
-                                h.SetMaximum(max_ * 100.)
-                                h.SetMinimum(min_ / 100.)
-                                h.Draw('hist ' + plot_opt)
-                                spectrum_count = 1
-                        else:
-                            h.Draw('hist ' + plot_opt + ' same')
-                            spectrum_count += 1
+                    if (hfile[1] is not None):
+                        h.SetMarkerStyle(hfile[1])
+                        h.SetLineStyle(other_linestyle)
+                        h.SetLineWidth(other_linewidth)
+                        plot_opt = 'p'
+                    else:
+                        h.SetMarkerStyle(R.kFullDotSmall)
+                        h.SetLineStyle(thin8_linestyle)
+                        h.SetLineWidth(thin8_linewidth)
+                        plot_opt = 'l'
+                    ldensity.AddEntry(h, '{} thin {}'.format(symbol, hfile[2]), plot_opt)
+                    if (density_count == 0):
+                        min_, max_ = min_max(h)
+                        if (min_ is not None and max_ is not None):
+                            h.SetMaximum(max_ * 100.)
+                            h.SetMinimum(min_ / 100.)
+                            h.Draw('hist ' + plot_opt)
+                            density_count = 1
+                    else:
+                        h.Draw('hist ' + plot_opt + ' same')
+                        density_count += 1
 
                 if (density_count > 0):
                     cdensity.cd()
                     ldensity.Draw()
                     cdensity.Update()
                     cdensity.SaveAs('{}/density_{}_{}.png'.format(savedir, catagory, level))
+                
+                
+                # SPECTRUM
+                hfiles = get_histlist('spectrum', level=level, catagory=catagory)
+                cspectrum.Clear()
+                lspectrum = make1Dlegend()
+                spectrum_count = 0
+                for hfile in hfiles: 
+                    if (hfile == []):
+                        continue
+                    h = f.Get(hfile[0])
+
+                    cspectrum.cd()
+                    if (hfile[1] is not None):
+                        h.SetMarkerStyle(hfile[1])
+                        h.SetLineStyle(other_linestyle)
+                        h.SetLineWidth(other_linewidth)
+                        plot_opt = 'p'
+                    else:
+                        h.SetMarkerStyle(R.kFullDotSmall)
+                        h.SetLineStyle(thin8_linestyle)
+                        h.SetLineWidth(thin8_linewidth)
+                        plot_opt = 'l'
+                    lspectrum.AddEntry(h, '{} thin {}'.format(symbol, hfile[2]), plot_opt)
+                    if (spectrum_count == 0):
+                        min_, max_ = min_max(h)
+                        if (min_ is not None and max_ is not None):
+                            h.SetMaximum(max_ * 100.)
+                            h.SetMinimum(min_ / 100.)
+                            h.Draw('hist ' + plot_opt)
+                            spectrum_count = 1
+                    else:
+                        h.Draw('hist ' + plot_opt + ' same')
+                        spectrum_count += 1
 
                 if (spectrum_count > 0):
                     cspectrum.cd()
                     lspectrum.Draw()
                     cspectrum.Update()
                     cspectrum.SaveAs('{}/spectrum_{}_{}.png'.format(savedir, catagory, level))
-
-

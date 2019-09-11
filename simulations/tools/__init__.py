@@ -5,6 +5,7 @@ import ROOT as R
 from . import file
 from . import nuclei
 from . import particle
+from . import plot
 from . import results
 from . import settings
 
