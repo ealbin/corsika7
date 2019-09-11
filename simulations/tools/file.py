@@ -36,3 +36,23 @@ def batch(file):
     print('Finished')
     f.Close()
 
+
+def collect_histograms(filename, filelist):
+
+    out = R.TFile(filename, 'recreate')
+
+    for f in filelist:
+        print(' [info] working on file: {}'.format(f))
+        dirname = os.path.dirname(f).lstrip('./')
+        subdir  = out.mkdir(dirname)
+        data    = R.TFile(f)
+        for key in data.GetListOfKeys():
+            if (key.GetName().startswith('_')):
+                hist = data.Get(key.GetName())
+                hist.SetDirectory(subdir)
+                hist.Write('', R.TObject.kOverwrite())
+        data.Close()
+
+    out.Close()
+    print('finished!')
+
