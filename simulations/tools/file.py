@@ -40,6 +40,8 @@ def batch(file):
 
 def collect_histograms(filename, filelist):
 
+    search_keys = ['density', 'spectrum', 'efficiency', 'content']
+
     out = R.TFile(filename, 'recreate')
 
     for f in filelist:
@@ -48,7 +50,7 @@ def collect_histograms(filename, filelist):
         subdir  = out.mkdir(dirname)
         data    = R.TFile(f)
         for key in data.GetListOfKeys():
-            if (key.GetName().startswith('_')):
+            if any(_ in key.GetName() for _ in search_keys):
                 hist = data.Get(key.GetName())
                 hist.SetDirectory(subdir)
                 hist.Write('', R.TObject.kOverwrite())
