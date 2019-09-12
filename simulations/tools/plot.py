@@ -86,7 +86,478 @@ def glob_files(root, startswith='*'):
     return filelist
 
 
-def thin(infile, outfolder='thin_plots', batchmode=True):
+def compare_models(infile, outfolder='compare_models', batchmode=True):
+
+    if (batchmode == True):
+        R.gROOT.SetBatch(R.kTRUE)
+
+    DPMJET_color = R.kBlack
+    QGSJET_color = R.kBlue
+    QGSII_color  = R.kCyan
+    SIBYLL_color = R.kGreen
+    VENUS_color  = R.kRed
+    
+    DPMJET_style = 1
+    QGSJET_style = 1
+    QGSII_style  = 1
+    SIBYLL_style = 1
+    VENUS_style  = 1
+    
+    DPMJET_width = 1
+    QGSJET_width = 1
+    QGSII_width  = 1
+    SIBYLL_width = 1
+    VENUS_width  = 1
+
+    cdensity    = make1Dcanvas('density')
+    cspectrum   = make1Dcanvas('spectrum')
+    ccontent    = make1Dcanvas('content')
+    cefficiency = make1Dcanvas('efficiency')
+
+    cdensity.SetLogx()
+    cspectrum.SetLogx()
+
+    cdensity.SetLogy()
+    cspectrum.SetLogy()
+    ccontent.SetLogy()
+
+    f = R.TFile(infile)
+    filelist = glob_files(f, startswith='THIN_')
+    filemap = {}
+    for _ in filelist:
+        dirname = os.path.dirname(_).split('/')
+        dirname.pop(2)
+        dirname = '/'.join(dirname)
+        if (dirname not in filemap):
+            filemap[dirname] = []
+        filemap[dirname].append(_)
+    
+    for dirname in filemap.keys():
+
+        subfolder = dirname.split(':')[-1]
+        if (subfolder[0] == '/'):
+            subfolder = subfolder[1:]
+        savedir = os.path.join(outfolder, subfolder)
+        if (not os.path.isdir(savedir)):
+            os.makedirs(savedir, exist_ok=True)
+        
+
+        def get_hist(model, name):
+            for histkey in filemap[dirname]:
+                if (histkey.split('/')[2] != model):
+                    continue
+                if (os.path.basename(histkey) != name):
+                    continue
+                return histkey
+            return None
+
+
+        def draw(dpmjet, qgsjet, qgsii, sibyll, venus, legend, set_min_max, prefix=''):
+
+            same = ''
+
+            if (dpmjet is not None):
+                dpmjet = f.Get(dpmjet)
+                dpmjet.SetLineColor(DPMJET_color)
+                dpmjet.SetLineStyle(DPMJET_style)
+                dpmjet.SetLineWidth(DPMJET_width)
+                legend.AddEntry(dpmjet, prefix + 'DPMJET, N=100, thin=1E-6', 'l')
+                set_min_max(dpmjet)
+                dpmjet.Draw('hist l ' + same)
+                same = 'same'
+
+            if (qgsjet is not None):
+                qgsjet = f.Get(qgsjet)
+                qgsjet.SetLineColor(QGSJET_color)
+                qgsjet.SetLineStyle(QGSJET_style)
+                qgsjet.SetLineWidth(QGSJET_width)
+                legend.AddEntry(qgsjet, prefix + 'QGSJET, N=100, thin=1E-6', 'l')
+                set_min_max(qgsjet)
+                qgsjet.Draw('hist l ' + same)
+                same = 'same'
+
+            if (qgsii is not None):
+                qgsii = f.Get(qgsii)
+                qgsii.SetLineColor(QGSII_color)
+                qgsii.SetLineStyle(QGSII_style)
+                qgsii.SetLineWidth(QGSII_width)
+                legend.AddEntry(qgsii, prefix + 'QGSII, N=100, thin=1E-6', 'l')
+                set_min_max(qgsii)
+                qgsii.Draw('hist l ' + same)
+                same = 'same'
+
+            if (sibyll is not None):
+                sibyll = f.Get(sibyll)
+                sibyll.SetLineColor(SIBYLL_color)
+                sibyll.SetLineStyle(SIBYLL_style)
+                sibyll.SetLineWidth(SIBYLL_width)
+                legend.AddEntry(sibyll, prefix + 'SIBYLL, N=100, thin=1E-6', 'l')
+                set_min_max(sibyll)
+                sibyll.Draw('hist l ' + same)
+                same = 'same'
+
+            if (venus is not None):
+                venus = f.Get(venus)
+                venus.SetLineColor(VENUS_color)
+                venus.SetLineStyle(VENUS_style)
+                venus.SetLineWidth(VENUS_width)
+                legend.AddEntry(venus, prefix + 'VENUS, N=100, thin=1E-6', 'l')
+                set_min_max(venus)
+                venus.Draw('hist l ' + same)
+
+            return same
+
+        # EFFICIENCY
+        name = 'THIN_1E-6_100_efficiency'
+        dpmjet = get_hist('DPMJET', name)
+        qgsjet = get_hist('QGSJET', name)
+        qgsii  = get_hist('QGSII',  name)
+        sibyll = get_hist('SIBYLL', name)
+        venus  = get_hist('VENUS',  name)
+        
+        cefficiency.Clear()
+        cefficiency.cd()
+        lefficiency = make1Dlegend()
+
+        def set_min_max(h):
+            h.SetMinimum(0.)
+            h.SetMaximum(1.05)
+    
+        same = draw(dpmjet, qgsjet, qgsii, sibyll, venus, lefficiency, set_min_max)
+        
+        if (same == 'same'):
+            cefficiency.cd()
+            lefficiency.Draw()
+            cefficiency.Update()
+            cefficiency.SaveAs('{}/efficiency.png'.format(savedir))
+        
+        for level in __levels__:
+
+            # CONTENT
+            name = 'THIN_1E-6_100_content_{}'.format(level)
+            dpmjet = get_hist('DPMJET', name)
+            qgsjet = get_hist('QGSJET', name)
+            qgsii  = get_hist('QGSII',  name)
+            sibyll = get_hist('SIBYLL', name)
+            venus  = get_hist('VENUS',  name)
+        
+            ccontent.Clear()
+            ccontent.cd()
+            lcontent = make1Dlegend()
+
+            def set_min_max(h):
+                h.SetMinimum(0.1)
+                min_, max_ = min_max(h)
+                if (max_ is not None):
+                    h.SetMaximum(max_ * 100.)
+
+            same = draw(dpmjet, qgsjet, qgsii, sibyll, venus, lcontent, set_min_max)
+            
+            if (same == 'same'):
+                ccontent.cd()
+                lcontent.Draw()
+                ccontent.Update()
+                ccontent.SaveAs('{}/content_{}.png'.format(savedir, level))
+
+            for catagory in __catagories__:
+
+                symbol = __symbols__[catagory]
+                
+                # DENSITY
+                name = 'THIN_1E-6_100_density_{}_{}'.format(catagory, level)
+                dpmjet = get_hist('DPMJET', name)
+                qgsjet = get_hist('QGSJET', name)
+                qgsii  = get_hist('QGSII',  name)
+                sibyll = get_hist('SIBYLL', name)
+                venus  = get_hist('VENUS',  name)
+    
+                cdensity.Clear()
+                cdensity.cd()
+                ldensity = make1Dlegend()
+               
+                def set_min_max(h):
+                    min_, max_ = min_max(h)
+                    if (min_ is not None and max_ is not None):
+                        h.SetMaximum(max_ * 100.)
+                        h.SetMinimum(min_ / 100.)
+               
+                same = draw(dpmjet, qgsjet, qgsii, sibyll, venus, ldensity, set_min_max, prefix='{}: '.format(symbol))
+
+                if (same == 'same'):
+                    cdensity.cd()
+                    ldensity.Draw()
+                    cdensity.Update()
+                    cdensity.SaveAs('{}/density_{}_{}.png'.format(savedir, catagory, level))
+                
+                # SPECTRUM
+                name = 'THIN_1E-6_100_spectrum_{}_{}'.format(catagory, level)
+                dpmjet = get_hist('DPMJET', name)
+                qgsjet = get_hist('QGSJET', name)
+                qgsii  = get_hist('QGSII',  name)
+                sibyll = get_hist('SIBYLL', name)
+                venus  = get_hist('VENUS',  name)
+                
+                cspectrum.Clear()
+                cspectrum.cd()
+                lspectrum = make1Dlegend()
+                
+                def set_min_max(h):
+                    min_, max_ = min_max(h)
+                    if (min_ is not None and max_ is not None):
+                        h.SetMaximum(max_ * 100.)
+                        h.SetMinimum(min_ / 100.)
+               
+                same = draw(dpmjet, qgsjet, qgsii, sibyll, venus, lspectrum, set_min_max, prefix='{}: '.format(symbol))
+                
+                if (same == 'same'):
+                    cspectrum.cd()
+                    lspectrum.Draw()
+                    cspectrum.Update()
+                    cspectrum.SaveAs('{}/spectrum_{}_{}.png'.format(savedir, catagory, level))
+
+
+def compare_two(infile, one='THIN_1E-6_1_', two='THIN_1E-6_100_',
+            onetitle='N=1, thin=1E-6', twotitle='N=100, thin=1E-6',
+            outfolder='compare_two', batchmode=True):
+
+    if (batchmode == True):
+        R.gROOT.SetBatch(R.kTRUE)
+
+    one_linestyle = 2
+    one_linewidth = 1
+    one_marker    = R.kOpenCircle
+
+    two_linestyle = 1
+    two_linewidth = 1
+    two_marker    = R.kOpenCrossX
+
+    cdensity    = make1Dcanvas('density')
+    cspectrum   = make1Dcanvas('spectrum')
+    ccontent    = make1Dcanvas('content')
+    cefficiency = make1Dcanvas('efficiency')
+
+    cdensity.SetLogx()
+    cspectrum.SetLogx()
+
+    cdensity.SetLogy()
+    cspectrum.SetLogy()
+    ccontent.SetLogy()
+    
+    f = R.TFile(infile)
+    filelist = glob_files(f, startswith='THIN_')
+    filemap = {}
+    for _ in filelist:
+        dirname  = os.path.dirname(_)
+        basename = os.path.basename(_)
+        if (dirname not in filemap):
+            filemap[dirname] = []
+        filemap[dirname].append(basename)
+    
+    for dirname in filemap.keys():
+
+        subfolder = dirname.split(':')[-1]
+        if (subfolder[0] == '/'):
+            subfolder = subfolder[1:]
+        savedir = os.path.join(outfolder, subfolder)
+        if (not os.path.isdir(savedir)):
+            os.makedirs(savedir, exist_ok=True)
+        
+        def get_histlist(kind, level=None, catagory=None):
+            histlist = [None for _ in range(2)]
+            for histkey in filemap[dirname]:
+
+                if (histkey.startswith(one)):
+                    index = 0
+                elif (histkey.startswith(two)):
+                    index = 1
+                else:
+                    continue
+                
+                tokens = histkey.split('_')
+                if (tokens[3] != kind):
+                    continue
+
+                if (level is None and catagory is None):
+                    pass
+                elif (level is not None and catagory is None):
+                    if (tokens[4] != level):
+                        continue
+                elif (level is not None and catagory is not None):
+                    if (tokens[4] != catagory or tokens[5] != level):
+                        continue
+                else:
+                    if (tokens[4] != catagory):
+                        continue
+
+                thinning = tokens[1]
+                histlist[index] = os.path.join(dirname, histkey)
+            return histlist
+
+        # EFFICIENCY
+        hfiles = get_histlist('efficiency')
+        cefficiency.Clear()
+        lefficiency = make1Dlegend()
+        efficiency_count = 0
+        for index, hfile in enumerate(hfiles):
+            if (hfile is None):
+                continue
+            h = f.Get(hfile)
+            
+            cefficiency.cd()
+            if (index == 0):
+                h.SetMarkerStyle(one_marker)
+                h.SetLineStyle(one_linestyle)
+                h.SetLineWidth(one_linewidth)
+                label = onetitle
+            else:
+                h.SetMarkerStyle(two_marker)
+                h.SetLineStyle(two_linestyle)
+                h.SetLineWidth(two_linewidth)
+                label = twotitle
+            
+            lefficiency.AddEntry(h, label, 'pl')
+            h.SetMinimum(0.)
+            h.SetMaximum(1.05)
+            if (index == 0):
+                h.Draw('hist pl')
+            else:
+                h.Draw('hist pl same')
+            efficiency_count += 1
+
+        if (efficiency_count > 0):
+            cefficiency.cd()
+            lefficiency.Draw()
+            cefficiency.Update()
+            cefficiency.SaveAs('{}/efficiency.png'.format(savedir))
+        
+        
+        for level in __levels__:
+
+            # CONTENT
+            hfiles = get_histlist('content', level=level)
+            ccontent.Clear()
+            lcontent = make1Dlegend()
+            content_count = 0
+            for index, hfile in enumerate(hfiles):
+                if (hfile is None):
+                    continue
+                h = f.Get(hfile)
+
+                ccontent.cd()
+                if (index == 0):
+                    h.SetMarkerStyle(one_marker)
+                    h.SetLineStyle(one_linestyle)
+                    h.SetLineWidth(one_linewidth)
+                    label = onetitle
+                else:
+                    h.SetMarkerStyle(two_marker)
+                    h.SetLineStyle(two_linestyle)
+                    h.SetLineWidth(two_linewidth)
+                    label = twotitle
+                lcontent.AddEntry(h, label, 'pl')
+                if (content_count == 0):
+                    h.SetMinimum(0.1)
+                    min_, max_ = min_max(h)
+                    if (max_ is not None):
+                        h.SetMaximum(max_ * 100.)
+                        h.Draw('hist pl')
+                        content_count = 1
+                else:
+                    h.Draw('hist pl same')
+                    content_count += 1
+            
+            if (content_count > 0):
+                ccontent.cd()
+                lcontent.Draw()
+                ccontent.Update()
+                ccontent.SaveAs('{}/content_{}.png'.format(savedir, level))
+
+
+            for catagory in __catagories__:
+
+                symbol = __symbols__[catagory]
+                
+                # DENSITY
+                hfiles = get_histlist('density', level=level, catagory=catagory)
+                cdensity.Clear()
+                ldensity = make1Dlegend()
+                density_count  = 0
+                for index, hfile in enumerate(hfiles):
+                    if (hfile is None):
+                        continue
+                    h = f.Get(hfile)
+                    
+                    cdensity.cd()
+                    if (index == 0):
+                        h.SetMarkerStyle(one_marker)
+                        h.SetLineStyle(one_linestyle)
+                        h.SetLineWidth(one_linewidth)
+                        label = '{}: {}'.format(symbol, onetitle)
+                    else:
+                        h.SetMarkerStyle(two_marker)
+                        h.SetLineStyle(two_linestyle)
+                        h.SetLineWidth(two_linewidth)
+                        label = '{}: {}'.format(symbol, twotitle)
+                    ldensity.AddEntry(h, label, 'pl')
+                    if (density_count == 0):
+                        min_, max_ = min_max(h)
+                        if (min_ is not None and max_ is not None):
+                            h.SetMaximum(max_ * 100.)
+                            h.SetMinimum(min_ / 100.)
+                            h.Draw('hist pl')
+                            density_count = 1
+                    else:
+                        h.Draw('hist pl same')
+                        density_count += 1
+
+                if (density_count > 0):
+                    cdensity.cd()
+                    ldensity.Draw()
+                    cdensity.Update()
+                    cdensity.SaveAs('{}/density_{}_{}.png'.format(savedir, catagory, level))
+                
+                
+                # SPECTRUM
+                hfiles = get_histlist('spectrum', level=level, catagory=catagory)
+                cspectrum.Clear()
+                lspectrum = make1Dlegend()
+                spectrum_count = 0
+                for index, hfile in enumerate(hfiles): 
+                    if (hfile is None):
+                        continue
+                    h = f.Get(hfile)
+
+                    cspectrum.cd()
+                    if (index == 0):
+                        h.SetMarkerStyle(one_marker)
+                        h.SetLineStyle(one_linestyle)
+                        h.SetLineWidth(one_linewidth)
+                        label = '{}: {}'.format(symbol, onetitle)
+                    else:
+                        h.SetMarkerStyle(two_marker)
+                        h.SetLineStyle(two_linestyle)
+                        h.SetLineWidth(two_linewidth)
+                        label = '{}: {}'.format(symbol, twotitle)
+                    lspectrum.AddEntry(h, label, 'pl')
+                    if (spectrum_count == 0):
+                        min_, max_ = min_max(h)
+                        if (min_ is not None and max_ is not None):
+                            h.SetMaximum(max_ * 100.)
+                            h.SetMinimum(min_ / 100.)
+                            h.Draw('hist pl')
+                            spectrum_count = 1
+                    else:
+                        h.Draw('hist pl same')
+                        spectrum_count += 1
+
+                if (spectrum_count > 0):
+                    cspectrum.cd()
+                    lspectrum.Draw()
+                    cspectrum.Update()
+                    cspectrum.SaveAs('{}/spectrum_{}_{}.png'.format(savedir, catagory, level))
+
+
+def thin(infile, outfolder='thin', batchmode=True):
 
     if (batchmode == True):
         R.gROOT.SetBatch(R.kTRUE)
@@ -283,7 +754,7 @@ def thin(infile, outfolder='thin_plots', batchmode=True):
                         h.SetLineStyle(thin8_linestyle)
                         h.SetLineWidth(thin8_linewidth)
                         plot_opt = 'l'
-                    ldensity.AddEntry(h, '{} thin {}'.format(symbol, hfile[2]), plot_opt)
+                    ldensity.AddEntry(h, '{}: thin {}'.format(symbol, hfile[2]), plot_opt)
                     if (density_count == 0):
                         min_, max_ = min_max(h)
                         if (min_ is not None and max_ is not None):
@@ -323,7 +794,7 @@ def thin(infile, outfolder='thin_plots', batchmode=True):
                         h.SetLineStyle(thin8_linestyle)
                         h.SetLineWidth(thin8_linewidth)
                         plot_opt = 'l'
-                    lspectrum.AddEntry(h, '{} thin {}'.format(symbol, hfile[2]), plot_opt)
+                    lspectrum.AddEntry(h, '{}: thin {}'.format(symbol, hfile[2]), plot_opt)
                     if (spectrum_count == 0):
                         min_, max_ = min_max(h)
                         if (min_ is not None and max_ is not None):
