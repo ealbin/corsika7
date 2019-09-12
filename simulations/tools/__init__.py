@@ -3,6 +3,7 @@ import os
 import ROOT as R
 
 from . import file
+from . import fit
 from . import nuclei
 from . import particle
 from . import plot

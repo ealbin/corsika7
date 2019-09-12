@@ -3,6 +3,7 @@
 !.gitignore
 !__init__.py
 !file.py
+!fit.py
 !nuclei.py
 !particle.py
 !plot.py
