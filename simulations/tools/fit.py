@@ -124,12 +124,12 @@ class Density:
         self.canvas.Update()
 
 
-    def plot_detection(self, phone_density_km2, phone_area_cm2=0.2, photon_eff=1e-4, muon_eff=.5):
+    def plot_detection(self, phone_density_km2, phone_area_cm2=0.2, photon_eff=1e-4, muon_eff=.5, ymin=1e-10, ymax=1e10):
         nbins = self.h_detection.GetXaxis().GetNbins()
         bins = np.logspace(np.log10(__XMIN__), np.log10(__XMAX__), nbins)
         self.h_detection.GetXaxis().Set(nbins - 1, bins)
         for i, bin in enumerate(bins):
-            if (i == nbins - 2):
+            if (i == nbins - 1):
                 break
             
             center_km    = np.sqrt(bin * bins[i+1])
@@ -147,8 +147,20 @@ class Density:
 
         self.canvas.Clear()
         self.h_detection.Draw('hist pl')
+        self.h_detection.SetMinimum(ymin)
+        self.h_detection.SetMaximum(ymax)
         self.canvas.Update()   
-
+        
+        fsum = 0.
+        msum = 0.
+        xaxis = self.h_detection.GetXaxis()
+        for bin in range(nbins + 1):
+            val = self.h_detection.GetBinContent(bin + 1)
+            msum += val
+            if (val > 1.):
+                fsum += np.floor(val)
+        print('Floor detections = {:.2e}'.format(fsum))
+        print('Max detections = {:.2e}'.format(msum))
 
 def likelihood_ratio(infile, indir, model0=NKG, model1=Albin, channel='muon'):
     model0_coeff = pd.read_csv(os.path.join(indir, '{}_{}_model.txt'.format(model0.name, channel)), delim_whitespace=True)
