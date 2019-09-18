@@ -5,26 +5,28 @@ import pandas as pd
 from scipy.special import gamma
 import ROOT as R
 from . import plot
+from . import settings
 
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 
 def A_func(A):
-    return np.log(A)
+    return np.log(A + 1.)
 
 def E_func(E):
-    return np.log10(E)
+    return np.log(E / 1e15) / 3.
 
 def H_func(H):
-    return H
+    return H / 4.
 
 class NKG:
     name     = 'NKG'
-    fitfunc  = '10^[0] * x^(-[1]) * (1. + x/[2])^(-[3])'
-    equation = '10^{a_{0}} x^{-a_{1}} (1 + x / a_{2})^{-a_{3}}'
+    fitfunc  = 'exp([0]) * x^(-[1]) * (1. + x/[2])^(-[3])'
+    equation = 'exp(a_{0}) x^{-a_{1}} (1 + x / a_{2})^{-a_{3}}'
 
-    a0_val =  -5.
-    a0_low = -10.
-    a0_hi  =  10.
+    a0_val = -10.
+    a0_low = -30.
+    a0_hi  =  30.
 
     a1_val =   1.
     a1_low =  -1.
@@ -61,44 +63,91 @@ class Albin:
     a3_hi  =  5.
 
 __XMIN__ = 1e-6
-__XMAX__ = 1e3
+__XMAX__ = 1e4
 
 class Density:
 
-    def __init__(self):
-        pass
 
-    def plot_density(self, indir, mass_number, energy, altitude, channel='muon'):
-        nkg = pd.read_csv(os.path.join(indir, '{}_{}_model.txt'.format(NKG.name, channel)), delim_whitespace=True)
-        albin = pd.read_csv(os.path.join(indir, '{}_{}_model.txt'.format(Albin.name, channel)), delim_whitespace=True)
-
-        fnkg = R.TF1('NKG',   NKG.fitfunc,   __XMIN__, __XMAX__)
-        falb = R.TF1('Albin', Albin.fitfunc, __XMIN__, __XMAX__)
-
-        A = A_func(mass_number)
-        E = E_func(energy)
-        H = H_func(altitude)
-
-        X = np.asarray([1., A, E, H, A*A, A*E, A*H, E*E, E*H, H*H])
-        for i in range(4):
-            fnkg.SetParameter(i, np.dot(X, nkg.iloc[i,1:]))
-            falb.SetParameter(i, np.dot(X, albin.iloc[i,1:]))
-
+    def __init__(self, indir):
         self.canvas = plot.make1Dcanvas('canvas')
         self.canvas.SetLogx()
         self.canvas.SetLogy()
 
-        legend = plot.make1Dlegend()
-        fnkg.SetLineColor(R.kRed)
-        falb.SetLineColor(R.kBlue)
-        legend.AddEntry(fnkg, 'NKG', 'l')
-        legend.AddEntry(falb, 'Albin', 'l')
+        self.h_detection = R.TH1D('detection', ';Distance from Shower Core [km];Detected Particles', 100, 0., 1.)
+        self.h_detection.SetStats(False)
+        self.h_detection.GetXaxis().SetTitleOffset(settings.TitleOffset['x'])
+        self.h_detection.GetYaxis().SetTitleOffset(settings.TitleOffset['y'])
+        self.h_detection.SetMarkerStyle(R.kFullCircle)
+        self.h_detection.SetMarkerColor(R.kBlack)
+        self.h_detection.SetLineColor(R.kBlack)
+        self.h_detection.SetLineWidth(1)
+        self.h_detection.SetLineStyle(1)
+        
+        self.nkg_model   = {}
+        self.albin_model = {}
+        self.nkg_model['muon']     = pd.read_csv(os.path.join(indir, 'NKG_muon_model.txt'),     delim_whitespace=True)
+        self.nkg_model['photon']   = pd.read_csv(os.path.join(indir, 'NKG_photon_model.txt'),   delim_whitespace=True)
+        self.albin_model['muon']   = pd.read_csv(os.path.join(indir, 'Albin_muon_model.txt'),   delim_whitespace=True)
+        self.albin_model['photon'] = pd.read_csv(os.path.join(indir, 'Albin_photon_model.txt'), delim_whitespace=True)
+        
+        self.nkg   = {}
+        self.albin = {}
+        self.nkg['muon']     = R.TF1('NKG_muon',     NKG.fitfunc,   __XMIN__, __XMAX__)
+        self.nkg['photon']   = R.TF1('NKG_photon',   NKG.fitfunc,   __XMIN__, __XMAX__)
+        self.albin['muon']   = R.TF1('Albin_muon',   Albin.fitfunc, __XMIN__, __XMAX__)
+        self.albin['photon'] = R.TF1('Albin_photon', Albin.fitfunc, __XMIN__, __XMAX__)
 
-        #fnkg.Draw()
-        #falb.Draw('same')
-        falb.Draw()
+
+    def shower(self, mass_number, energy_eV, altitude_km):
+        A = A_func(mass_number)
+        E = E_func(energy_eV)
+        H = H_func(altitude_km)
+
+        X = np.asarray([1., A, E, H, A*A, A*E, A*H, E*E, E*H, H*H])
+        for key in ['muon', 'photon']:
+            for i in range(4):
+                self.nkg[key].SetParameter(i, np.dot(X, self.nkg_model[key].iloc[i,1:]))
+                self.albin[key].SetParameter(i, np.dot(X, self.albin_model[key].iloc[i,1:]))
+
+
+    def plot_channel(self, channel):
+        legend = plot.make1Dlegend()
+        self.nkg[channel].SetLineColor(R.kRed)
+        self.albin[channel].SetLineColor(R.kBlue)
+        legend.AddEntry(self.nkg[channel],   'NKG',   'l')
+        legend.AddEntry(self.albin[channel], 'Albin', 'l')
+
+        self.canvas.Clear()
+        self.nkg[channel].Draw()
+        self.albin[channel].Draw('same')
         legend.Draw()
         self.canvas.Update()
+
+
+    def plot_detection(self, phone_density_km2, phone_area_cm2=0.2, photon_eff=1e-4, muon_eff=.5):
+        nbins = self.h_detection.GetXaxis().GetNbins()
+        bins = np.logspace(np.log10(__XMIN__), np.log10(__XMAX__), nbins)
+        self.h_detection.GetXaxis().Set(nbins - 1, bins)
+        for i, bin in enumerate(bins):
+            if (i == nbins - 2):
+                break
+            
+            center_km    = np.sqrt(bin * bins[i+1])
+            bin_area_km2 = np.pi * (bins[i+1]*bins[i+1] - bin*bin)
+            sensor_area_cm2 = phone_area_cm2 * (phone_density_km2 * bin_area_km2)
+
+            nkg_muons     = self.nkg['muon'].Eval(center_km)
+            nkg_photons   = self.nkg['photon'].Eval(center_km)
+            albin_muons   = self.albin['muon'].Eval(center_km)
+            albin_photons = self.albin['photon'].Eval(center_km)
+
+            nkg   = (nkg_muons   * muon_eff) + (nkg_photons   * photon_eff)
+            albin = (albin_muons * muon_eff) + (albin_photons * photon_eff)
+            self.h_detection.SetBinContent(i + 1, sensor_area_cm2 * np.sqrt(nkg * albin) )
+
+        self.canvas.Clear()
+        self.h_detection.Draw('hist pl')
+        self.canvas.Update()   
 
 
 def likelihood_ratio(infile, indir, model0=NKG, model1=Albin, channel='muon'):
@@ -190,55 +239,63 @@ def density_coeff(indir, model=Albin, channel='muon'):
 def quick_check(indir, model=Albin, channel='muon'):
     df = pd.read_csv(os.path.join(indir, '{}_coeff_data_{}.txt'.format(model.name, channel)), delim_whitespace=True)
 
-    # no const
-    A9 = df.iloc[:,:9].to_numpy()
-    B9 = np.linalg.pinv(A9)
-    
-    # with const
-    df.insert(0, 'C', 1)
-    A10 = df.iloc[:,:10].to_numpy()
-    B10 = np.linalg.pinv(A10)
+    uniq_A = df.A.unique()
+    uniq_E = df.E.unique()
+    uniq_H = df.H.unique()
 
-    a   = []
-    c9  = []
-    c10 = []
-    t9  = []
-    t10 = []
+    color_arr = ['m', 'b', 'r', 'g', 'c', 'k', 'y']
+    colors = {}
+    for i, _ in enumerate(uniq_A):
+        colors[str(_)] = color_arr[i]
+
+    size_low = 50
+    size_hi  = 100
+    size_step = (size_hi - size_low) / len(uniq_E)
+    sizes = {}
+    for i, _ in enumerate(uniq_E):
+        sizes[str(_)] = size_low + (i * size_step)
+
+    angle_low = 0.
+    angle_hi  = 180.
+    angle_step = (angle_hi - angle_low) / len(uniq_H)
+    angles = {}
+    for i, _ in enumerate(uniq_H):
+        angles[str(_)] = -i * angle_step
+
+    m = mpl.markers.MarkerStyle(marker='2')
+
+    df.insert(0, 'C', 1)
+    A = df.iloc[:,:10].to_numpy()
+    B = np.linalg.pinv(A)
+
+    a = []
+    c = []
+    t = []
     for i in range(4):
         a.append(df.loc[:, 'a{}'.format(i)].to_numpy())
-        c9.append(np.dot(B9, a[i]))
-        c10.append(np.dot(B10, a[i]))
-
-        t9.append(np.dot(A9, c9[i]))
-        t10.append(np.dot(A10, c10[i]))
-
-    a   = np.asarray(a)
-    c9  = np.asarray(c9)
-    c10 = np.asarray(c10)
-    t9  = np.asarray(t9)
-    t10 = np.asarray(t10)
+        c.append(np.dot(B, a[i]))
+        t.append(np.dot(A, c[i]))
 
     plt.figure(figsize=[15, 15])
     for i in range(4):
-        low = np.min([a[i], t9[i], t10[i]])
-        hi  = np.max([a[i], t9[i], t10[i]])
+        low = np.min([a[i], t[i]])
+        hi  = np.max([a[i], t[i]])
         plt.subplot(2, 2, i+1)
-        plt.scatter(a[i], t9[i],  color='b', label='no const')
-        plt.scatter(a[i], t10[i], color='orange', label='with const')
+        for j, (aij, tij) in enumerate(zip(a[i], t[i])):
+            m._transform = m.get_transform().rotate_deg(angles[str(df.loc[j, 'H'])])
+            plt.scatter(aij, tij, 
+                    color=colors[str(df.loc[j, 'A'])],
+                    marker=m,
+                    s=sizes[str(df.loc[j, 'E'])])
+                    #facecolors='none')
+
         plt.plot([low,hi], [low,hi])
         plt.title('a{}'.format(i))
-        plt.legend()
-
-        d9  =  t9[i] - a[i]
-        d10 = t10[i] - a[i]
-        print('a{}, no const mean: {:7.3f} vs const mean: {:7.3f}'.format(i, d9.mean(), d10.mean()))
-        print('a{}, no const std:  {:7.3f} vs const std:  {:7.3f}'.format(i, d9.std(), d10.std()))
-        print()
 
     plt.gcf().suptitle('{} {}'.format(model.name, channel))
 
 
-def density_check(infile, indir, model=Albin, savedir='fit_check', batchmode=True):
+def density_check(infile, indir, savedir='fit_check', batchmode=True):
 
     if (batchmode == True):
         R.gROOT.SetBatch(R.kTRUE)
@@ -255,21 +312,27 @@ def density_check(infile, indir, model=Albin, savedir='fit_check', batchmode=Tru
     energies  = ['1e14', '1e15', '1e16', '1e17', '1e18', '1e19', '1e20', '1e21']
     altitudes = ['3', '4', '5', '6', '7', '8', '9', '0']
     models    = ['DPMJET', 'QGSJET', 'QGSII', 'SIBYLL', 'VENUS']
-    
+    markercolors = [R.kBlack, R.kBlue, R.kCyan, R.kGreen, R.kViolet]
+
+
     f = R.TFile(infile)
     canvas = plot.make1Dcanvas('check_canvas')
     canvas.SetLogy()
     canvas.SetLogx()
     
+    fnkg   = R.TF1(NKG.name,   NKG.fitfunc,   __XMIN__, __XMAX__)
+    falbin = R.TF1(Albin.name, Albin.fitfunc, __XMIN__, __XMAX__)
+   
+    fnkg.SetLineColor(R.kOrange - 3)
+    fnkg.SetLineWidth(2)
+    fnkg.SetLineStyle(1)
+    falbin.SetLineColor(R.kGreen + 2)
+    falbin.SetLineWidth(2)
+    falbin.SetLineStyle(1)
+
     for channel in ['muon', 'photon']:
-        df = pd.read_csv(os.path.join(indir, '{}_coeff_data_{}.txt'.format(model.name, channel)), delim_whitespace=True)
-        df.insert(0, 'C', 1.)
-        A = df.iloc[:,:10].to_numpy()
-        B = np.linalg.pinv(A)
-        c = []
-        for i in range(4):
-            a = df.loc[:,'a{}'.format(i)].to_numpy()
-            c.append(np.dot(B, a))
+        albin_coeff = pd.read_csv(os.path.join(indir, 'Albin_{}_model.txt'.format(channel)), delim_whitespace=True)
+        nkg_coeff = pd.read_csv(os.path.join(indir, 'NKG_{}_model.txt'.format(channel)), delim_whitespace=True)
 
         for primary in primaries:
             for energy in energies:
@@ -283,39 +346,31 @@ def density_check(infile, indir, model=Albin, savedir='fit_check', batchmode=Tru
                     venus  = f.Get('{}/{}/{}/{}'.format(energy, 'VENUS',  primary, name))
 
                     hists = []
-                    wrong_lim = []
-                    for h in [dpmjet, qgsjet, qgsii, sibyll, venus]:
+                    names = []
+                    min_ = None
+                    max_ = None
+                    for h, c, m in zip([dpmjet, qgsjet, qgsii, sibyll, venus], markercolors, models):
                         if (h != None):
-                            if (h.GetXaxis().GetXmin() > __XMIN__):
-                                wrong_lim.append(h)
-                            else:
-                                hists.append(h)
+                            h.SetMarkerColor(c)
+                            h.SetMarkerStyle(R.kOpenCircle)
+                            mn_, mx_ = plot.min_max(h)
+                            if (min_ is None or mn_ < min_):
+                                min_ = mn_
+                            if (max_ is None or mx_ > max_):
+                                max_ = mx_
+                            hists.append(h)
+                            names.append(m)
 
-                    if (len(wrong_lim) > len(hists)):
-                        hists = wrong_lim
+                    for i, h in enumerate(hists):
+                        if (h.GetXaxis().GetXmin() > __XMIN__):
+                            hists.append(hists.pop(i))
+                            names.append(names.pop(i))
 
                     if (len(hists) > 0):
-                        hsum = hists[0]
-                        for h in hists[1:]:
-                            hsum.Add(h)
-                        hsum.Scale(1./float(len(hists)))
-
-                        min_, max_ = plot.min_max(hsum)
                         if (min_ is not None and max_ is not None):
-                            hsum.SetMaximum(max_ * 100.)
-                            hsum.SetMinimum(min_ / 100.)
-                        hsum.SetMarkerColor(R.kBlack)
-                        hsum.SetMarkerStyle(R.kFullCircle)
-
-                        xaxis = hsum.GetXaxis()
-                        for stop_bin in range(xaxis.GetNbins(), 0, -1):
-                            val = hsum.GetBinContent(stop_bin)
-                            if (val > 0.):
-                                break
-                        limit = xaxis.GetBinCenter(stop_bin)
-
-                        fitfunc = model.fitfunc
-                        f1 = R.TF1('fitfunc', fitfunc, __XMIN__, limit)
+                            hists[0].SetMaximum(max_ * 100.)
+                            hists[0].SetMinimum(min_ / 100.)
+                            hists[0].GetXaxis().SetRangeUser(__XMIN__, __XMAX__)
 
                         A = A_func(MassNumber[primary])
                         E = E_func(float(energy))
@@ -323,24 +378,26 @@ def density_check(infile, indir, model=Albin, savedir='fit_check', batchmode=Tru
                 
                         V = np.asarray([1., A, E, H, A*A, A*E, A*H, E*E, E*H, H*H])
                         for i in range(4):
-                            f1.SetParameter(i, np.dot(V, c[i]))
-
-                        f1.SetLineColor(R.kBlue)
-                        f1.SetLineStyle(1)
-                        f1.SetLineWidth(1)
+                            fnkg.SetParameter(i, np.dot(V, nkg_coeff.iloc[i,1:].to_numpy()))
+                            falbin.SetParameter(i, np.dot(V, albin_coeff.iloc[i,1:].to_numpy()))
 
                         legend = plot.make1Dlegend()
-                        legend.AddEntry(hsum, '{}: n={}, thin={}, model ave'.format(plot.__symbols__[channel], N, thin), 'p')
-                        legend.AddEntry(f1, model.equation, 'l')
+                        legend.AddEntry(fnkg, NKG.name, 'l')
+                        legend.AddEntry(falbin, Albin.name, 'l')
+                        for h, n in zip(hists, names):
+                            legend.AddEntry(h, n, 'p')
 
                         canvas.cd()
                         canvas.Clear()
-                        hsum.GetXaxis().SetRangeUser(__XMIN__, 1e3)
-                        hsum.Draw('hist p')
-                        f1.Draw('same')
+                        hists[0].GetXaxis().SetRangeUser(__XMIN__, __XMAX__)
+                        hists[0].Draw('hist p')
+                        for h in hists[1:]:
+                            h.Draw('hist p same')
+                        fnkg.Draw('same')
+                        falbin.Draw('same')
                         legend.Draw()
                         canvas.Update()
-                        canvas.SaveAs('{}/check_{}_{}_{}_{}_{}.png'.format(savedir, model.name, channel, primary, energy, altitude))
+                        canvas.SaveAs('{}/check_{}_{}_{}_{}.png'.format(savedir, channel, primary, energy, altitude))
 
 
 def supervised_density(infile, savedir='fit_density', model=Albin):
@@ -483,6 +540,7 @@ def supervised_density(infile, savedir='fit_density', model=Albin):
                             while (True):
                                 print()
                                 print('fitting {} of {} for: {}_{}_{}_{}_{}'.format(fit_count, total_fits, model.name, channel, primary, energy, altitude))
+                                print('current chi2 = {:.1f}'.format(f1.GetChisquare()))
                                 action = input('>>> (r)etry, (s)ave, (a)bandon: ')
                                 if (action == 'r'):
                                     return 'r'
@@ -504,7 +562,11 @@ def supervised_density(infile, savedir='fit_density', model=Albin):
                         trys = 0
                         while (True):
                             fitstatus = int(hsum.Fit('fitfunc', 'RE Q'))
-                            if (fitstatus != 0 or f1.GetChisquare() > 1000 and trys < 100):
+                            if (fitstatus != 0 and trys < 100):
+                                trys += 1
+                                rolldice(f1)
+                                continue
+                            elif (f1.GetChisquare() > 1e5 and trys < 200):
                                 trys += 1
                                 rolldice(f1)
                                 continue
