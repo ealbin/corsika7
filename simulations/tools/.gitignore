@@ -2,6 +2,7 @@
 *
 !.gitignore
 !__init__.py
+!bwplot.py
 !file.py
 !fit.py
 !nuclei.py
@@ -12,3 +13,4 @@
 !run.h
 !settings.py
 !sim.h
+!smartphones.py

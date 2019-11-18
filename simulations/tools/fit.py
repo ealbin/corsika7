@@ -24,6 +24,53 @@ def generate(maxA=None, maxE=None, maxH=None):
             for channel in ['muon', 'photon']:
                 Coefficients.make('fit_density/{}_coeff_data_{}.txt'.format(model, channel), 'fit_models/{}_{}_{}_model.txt'.format(model, channel, key), orders=models[key], maxA=maxA, maxE=maxE, maxH=maxH)  
 
+def detection(nkg=True):
+    D = Density('fit_density/', 
+            {'muon':'fit_models/NKG_muon_pol3_model.txt', 
+             'photon':'fit_models/NKG_photon_pol3_model.txt'}, 
+            {'muon':'fit_models/Alt_muon_pol3_model.txt', 
+             'photon':'fit_models/Alt_photon_pol3_model.txt'})
+    
+    D.shower(1, 1e15, 1.4)
+    d15_500  = D.get_detection(500)
+    d15_5000 = D.get_detection(5000)
+
+    D.shower(1, 1e18, 1.4)
+    d18_500  = D.get_detection(500)
+    d18_5000 = D.get_detection(5000)
+
+    D.shower(1, 1e21, 1.4)
+    d21_500  = D.get_detection(500)
+    d21_5000 = D.get_detection(5000)
+
+    plt.figure(figsize=[6,6])
+    plt.rcParams.update({'font.size':14})
+    plt.yscale('log')
+    #plt.xscale('log')
+    plt.ylim([1e-6, 1e2])
+    plt.xlim([0, 2])
+    plt.xlabel('Distance from Shower Core [km]')
+    plt.ylabel('Average Counts / 20 m')
+
+    if (nkg):
+        index = 1 
+    else:
+        index = 2
+
+    plt.plot(d15_500[0],  d15_500[index],  'r',   label=r'$10^{15}$ eV, 500 ph/km$^2$')
+    plt.plot(d15_5000[0], d15_5000[index], 'r--', label=r'$10^{15}$ eV, 5000 ph/km$^2%')
+
+    plt.plot(d18_500[0],  d18_500[index],  'g',   label=r'$10^{18}$ eV, 500 ph/km$^2$')
+    plt.plot(d18_5000[0], d18_5000[index], 'g--', label=r'$10^{18}$ eV, 5000 ph/km$^2%')
+
+    plt.plot(d21_500[0],  d21_500[index],  'b',   label=r'$10^{21}$ eV, 500 ph/km$^2$')
+    plt.plot(d21_5000[0], d21_5000[index], 'b--', label=r'$10^{21}$ eV, 5000 ph/km$^2%')
+
+    plt.plot([0, 2], [1,1], 'k:')
+
+    #plt.legend()
+
+
 class Coefficients:
 
     orders = []
@@ -200,13 +247,12 @@ class Transform:
     def E(E):
         return np.log10(E / 1e18)
     def Einv(e):
-        return np.power(10., e) * 1e21
+        return np.power(10., e) * 1e18
 
     def H(H):
-        return np.log(H + 20.)
+        return 100. * (1. - np.log10(10. - H/10.)) 
     def Hinv(h):
-        return np.exp(h) - 20.
-
+        return 10.*(10. - np.power(10., 1. - h/100.)) 
 
 class NKG:
     name      = 'NKG'
@@ -271,6 +317,40 @@ class Density:
         self.alt.Draw('same')
         legend.Draw()
         self.canvas.Update()
+
+
+    def get_detection(self, phone_density_km2, phone_area_cm2=0.2, photon_eff=1e-4, muon_eff=.5, ymin=1e-10, ymax=1e10):
+        out_centers = []
+        out_nkg = []
+        out_alt = []
+
+        nbins = 101 
+        bins = np.linspace(0, 2, nbins)
+        width = bins[1] - bins[0]
+        for i, bin in enumerate(bins):
+            center_km    = bin + width/2.
+            bin_area_km2 = np.pi * ((bin+width)*(bin+width) - bin*bin)
+            sensor_area_cm2 = phone_area_cm2 * (phone_density_km2 * bin_area_km2)
+
+            for j in range(4):
+                self.nkg.SetParameter(j, Coefficients.get(j, self.nkg_models['muon'], self.A, self.E, self.H))
+                self.alt.SetParameter(j, Coefficients.get(j, self.alt_models['muon'], self.A, self.E, self.H))
+            nkg_muons = self.nkg.Eval(center_km)
+            alt_muons = self.alt.Eval(center_km)
+
+            for j in range(4):
+                self.nkg.SetParameter(j, Coefficients.get(j, self.nkg_models['photon'], self.A, self.E, self.H))
+                self.alt.SetParameter(j, Coefficients.get(j, self.alt_models['photon'], self.A, self.E, self.H))
+            nkg_photons = self.nkg.Eval(center_km)
+            alt_photons = self.alt.Eval(center_km)
+
+            nkg = (nkg_muons * muon_eff) + (nkg_photons * photon_eff)
+            alt = (alt_muons * muon_eff) + (alt_photons * photon_eff)
+            out_centers.append(center_km)
+            out_nkg.append(sensor_area_cm2 * nkg)
+            out_alt.append(sensor_area_cm2 * alt)
+
+        return np.asarray(out_centers), np.asarray(out_nkg), np.asarray(out_alt)
 
 
     def plot_detection(self, phone_density_km2, phone_area_cm2=0.2, photon_eff=1e-4, muon_eff=.5, ymin=1e-10, ymax=1e10):
@@ -549,6 +629,112 @@ def density_check(infile, nkg_models, alt_models, savedir='fit_check', batchmode
                             falt.SetParameter(i, Coefficients.get(i, alt_models[channel], A, E, H))
 
                         legend = plot.make1Dlegend()
+                        legend.AddEntry(fnkg, NKG.name, 'l')
+                        legend.AddEntry(falt, Alt.name, 'l')
+                        for h, n in zip(hists, names):
+                            legend.AddEntry(h, n, 'p')
+
+                        canvas.cd()
+                        canvas.Clear()
+                        hists[0].GetXaxis().SetRangeUser(__XMIN__, __XMAX__)
+                        hists[0].Draw('hist pe')
+                        for h in hists[1:]:
+                            h.Draw('hist pe same')
+                        fnkg.Draw('same')
+                        falt.Draw('same')
+                        legend.Draw()
+                        canvas.Update()
+                        canvas.SaveAs('{}/check_{}_{}_{}_{}.png'.format(savedir, channel, primary, energy, altitude))
+
+
+def density_check_bw(infile, nkg_models, alt_models, savedir='fit_check_bw', batchmode=True):
+    __XMIN__ = 1e-6
+    __XMAX__ = 1e3
+
+    if (batchmode == True):
+        R.gROOT.SetBatch(R.kTRUE)
+
+    if (not os.path.isdir(savedir)):
+        os.makedirs(savedir, exist_ok=True)
+    
+    alt_km = [0., 100., 50., 20., 10., 5., 2., 1.4, 1.0, .5]
+    MassNumber = {'He':4, 'O':16, 'Fe':56}
+
+    thin      = '1E-6'
+    N         = '100'
+    primaries = ['He', 'O', 'Fe']
+    energies  = ['1e14', '1e15', '1e16', '1e17', '1e18', '1e19', '1e20', '1e21']
+    altitudes = ['3', '4', '5', '6', '7', '8', '9', '0']
+    models    = ['DPMJET-III 2017.1', 'QGSJET 01C', 'QGSJETII-04', 'SIBYLL 2.3c', 'VENUS 4.12']
+    markerstyles = [24, 25, 26, 27, 28]
+
+
+    f = R.TFile(infile)
+    canvas = plot.make1Dcanvas('check_canvas')
+    canvas.SetLogy()
+    canvas.SetLogx()
+    
+    fnkg = R.TF1(NKG.name, NKG.fitexpr, __XMIN__, __XMAX__)
+    falt = R.TF1(Alt.name, Alt.fitexpr, __XMIN__, __XMAX__)
+   
+    fnkg.SetLineColor(R.kBlack)
+    fnkg.SetLineWidth(2)
+    fnkg.SetLineStyle(2)
+    falt.SetLineColor(R.kBlack)
+    falt.SetLineWidth(2)
+    falt.SetLineStyle(1)
+
+    for channel in ['muon', 'photon']:
+        for primary in primaries:
+            for energy in energies:
+                for altitude in altitudes:
+
+                    name = 'THIN_{}_{}_density_{}_{}'.format(thin, N, channel, altitude)
+                    dpmjet = f.Get('{}/{}/{}/{}'.format(energy, 'DPMJET', primary, name))
+                    qgsjet = f.Get('{}/{}/{}/{}'.format(energy, 'QGSJET', primary, name))
+                    qgsii  = f.Get('{}/{}/{}/{}'.format(energy, 'QGSII',  primary, name))
+                    sibyll = f.Get('{}/{}/{}/{}'.format(energy, 'SIBYLL', primary, name))
+                    venus  = f.Get('{}/{}/{}/{}'.format(energy, 'VENUS',  primary, name))
+
+                    hists = []
+                    names = []
+                    min_ = None
+                    max_ = None
+                    for h, s, m in zip([dpmjet, qgsjet, qgsii, sibyll, venus], markerstyles, models):
+                        if (h != None):
+                            h.SetMarkerStyle(s)
+                            h.SetMarkerColor(R.kGray + 2)
+                            h.SetLineColor(R.kGray + 2)
+                            mn_, mx_ = plot.min_max(h)
+                            if (min_ is None or mn_ < min_):
+                                min_ = mn_
+                            if (max_ is None or mx_ > max_):
+                                max_ = mx_
+                            hists.append(h)
+                            names.append(m)
+
+                    for i, h in enumerate(hists):
+                        if (h.GetXaxis().GetXmin() > __XMIN__):
+                            hists.append(hists.pop(i))
+                            names.append(names.pop(i))
+
+                    if (len(hists) > 0):
+                        if (min_ is not None and max_ is not None):
+                            hists[0].SetMaximum(max_ * 100.)
+                            hists[0].SetMinimum(min_ / 100.)
+                            hists[0].GetXaxis().SetRangeUser(__XMIN__, __XMAX__)
+
+                        A = MassNumber[primary]
+                        E = float(energy)
+                        H = alt_km[int(altitude)]
+                
+                        for i in range(4):
+                            fnkg.SetParameter(i, Coefficients.get(i, nkg_models[channel], A, E, H))
+                            falt.SetParameter(i, Coefficients.get(i, alt_models[channel], A, E, H))
+
+                        legend = R.TLegend(.65, .6, .94, .89)
+                        legend.SetFillStyle(4000)
+                        legend.SetBorderSize(0)
                         legend.AddEntry(fnkg, NKG.name, 'l')
                         legend.AddEntry(falt, Alt.name, 'l')
                         for h, n in zip(hists, names):
