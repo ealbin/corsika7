@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 from scipy.special import gamma
 from scipy.sparse import dok_matrix
-from scipy.interpolate import CubicSpline
+from scipy.interpolate import CubicSpline, make_interp_spline
 
 import ROOT as R
 
@@ -73,7 +73,6 @@ class Alt:
 
 class Density:
 
-    indir = 'fit_density/'
     alt_models = {'photon':'fit_models/Alt_photon_pol3_model.txt',
                   'muon':'fit_models/Alt_muon_pol3_model.txt'}
 
@@ -104,10 +103,10 @@ class Density:
             y2[i] = x[i] * y1[i]
         y2 = 2.*np.pi * 1e10 * y2
         self.photon  = CubicSpline(x, y1)
-        photon2 = CubicSpline(x, y2)
+        self.photon2 = CubicSpline(x, y2)
         y3 = np.zeros(x.size)
         for i in range(x.size):
-            y3[i] = photon2.integrate(0., x[i])
+            y3[i] = self.photon2.integrate(0., x[i])
         self.N_photons = y3[-1]
         y3 = y3 / y3[-1]
         cut = -1
@@ -126,10 +125,10 @@ class Density:
             y2[i] = x[i] * y1[i]
         y2 = 2.*np.pi * 1e10 * y2
         self.muon  = CubicSpline(x, y1)
-        muon2 = CubicSpline(x, y2) 
+        self.muon2 = CubicSpline(x, y2) 
         y3 = np.zeros(x.size)
         for i in range(x.size):
-            y3[i] = muon2.integrate(0., x[i])
+            y3[i] = self.muon2.integrate(0., x[i])
         self.N_muons = y3[-1]
         y3 = y3 / y3[-1]
         cut = -1
@@ -189,7 +188,7 @@ class Detection:
         N_muons = self.density.N_muons
 
         def get_keys(cdf, size):
-            r = cdf(np.random.random(size))
+            fr = cdf(np.random.random(size))
             theta = 2.*np.pi * np.random.random(size)
             x = r * np.cos(theta)
             y = r * np.sin(theta)
@@ -337,4 +336,224 @@ class ShowerContent:
         plt.show()
         if (save is not None):
             plt.savefig(save)
+
+
+def plot_detection(filename, path=None):
+    with open(filename) as f:
+        A = int( f.readline().split('=')[-1] )
+        E = float( f.readline().split('=')[-1] )
+        H = float( f.readline().split('=')[-1] )
+        for _ in range(4):
+            f.readline()
+        Aratio = float( f.readline().split('=')[-1] )
+        eff_ph = float( f.readline().split('=')[-1] )
+        eff_mu = float( f.readline().split('=')[-1] )
+
+
+    d = Density()
+    d.set_shower(A, E, H)
+    
+    df = pd.read_csv(filename, delim_whitespace=True, comment='#')
+    lim = 10
+    bins = np.linspace(-lim, lim, 20*lim + 1)
+
+    # bins equate to 100m x 100m in size
+    # white means >=100 events in bin,
+    # therefore hit density is >= 100 / (100x100), or 1/10 by 1/10
+    # aka, at least one event inside a 10m x 10m box
+
+    plt.rc('font', size=16)
+    plt.figure(figsize=[14,5], tight_layout=True)
+    plt.subplot(1, 2, 2)
+
+    plt.hist2d(df.x, df.y, bins=(bins, bins), norm=mpl.colors.LogNorm(vmin=1e0, vmax=1e2), cmap='Greys_r')
+    plt.colorbar()
+    plt.xlim(bins[0], bins[-1])
+    plt.ylim(bins[0], bins[-1])
+    plt.xlabel('Kilometers')
+    plt.ylabel('Kilometers')
+    plt.xticks(np.arange(bins[0], bins[-1] + 1, 2))
+    plt.yticks(np.arange(bins[0], bins[-1] + 1, 2))
+    plt.grid()
+
+
+    plt.subplot(1, 2, 1)
+    photons = df[df.particle == 'photon']
+    muons   = df[df.particle == 'muon']
+
+    r_photon = np.sqrt(photons.x**2 + photons.y**2)
+    r_muon   = np.sqrt(muons.x**2   + muons.y**2)
+
+    plt.hist(r_muon, bins=bins[bins >= 0], histtype='step', linewidth=2, edgecolor='k', weights=np.ones(r_muon.size)/100.)
+    plt.hist(r_muon, bins=bins[bins >= 0], histtype='stepfilled', facecolor='0.8', hatch='***', weights=np.ones(r_muon.size)/100., label=r'$\mu^{\pm}$')
+
+    plt.hist(r_photon, bins=bins[bins >= 0], histtype='step', linewidth=2, edgecolor='w', weights=np.ones(r_photon.size)/100.)
+    plt.hist(r_photon, bins=bins[bins >= 0], histtype='stepfilled', facecolor='0.3', hatch='---', weights=np.ones(r_photon.size)/100., label=r'$\gamma$')
+
+    plt.hist(np.r_[r_muon, r_photon], bins=bins[bins >= 0], histtype='step', linewidth=2, edgecolor='k', weights=np.ones(r_muon.size + r_photon.size)/100.)
+
+    x = bins[bins > 0]
+    plt.plot(x, Aratio * (eff_mu * d.muon2(x) + eff_ph * d.photon2(x)) / 1000., linewidth=2.5, c='k', label='Model')
+
+    plt.yscale('log')
+    plt.xlabel('Kilometers from Core')
+    plt.ylabel('Counts / 100 m')
+    plt.xlim(0, bins[-1])
+    plt.ylim(1e-3, 1e3)
+    plt.legend(frameon=False)
+    plt.show()
+
+    if (path is not None):
+        plt.savefig(os.path.join(path, os.path.basename(filename).rstrip('.txt') + '.png'))
+
+
+def get_sensitivity(filelist, trials=100, path='./'):
+    
+    threshold = 5
+    radius = 10.
+    Area = np.pi * radius**2
+
+    d = Detection()
+
+    test_densities = np.logspace(0, 3, 20) #np.logspace(0, 8, 9) # smartphones / km^2
+
+    with open(os.path.join(path, 'sensitivity.txt'), 'w') as out:
+        out.write('{:^12s}{:^12s}{:^12s}{:^12s}{:^12s}{:^12s}\n'.format('A', 'E', 'H', 'density', 'count', 'prob'))
+        
+        for i, filename in enumerate(filelist):
+            print('working on {} of {}: {}'.format(i+1, len(filelist), filename), flush=True)
+
+            with open(filename) as f:
+                A = int( f.readline().split('=')[-1] )
+                E = float( f.readline().split('=')[-1] )
+                H = float( f.readline().split('=')[-1] )
+                R = float( f.readline().split('=')[-1] )
+                f.readline()
+                swidth  = float( f.readline().split('=')[-1] )
+                sheight = float( f.readline().split('=')[-1] )
+                Aratio  = float( f.readline().split('=')[-1] )
+                eff_ph  = float( f.readline().split('=')[-1] )
+                eff_mu  = float( f.readline().split('=')[-1] )
+                f.readline()
+                N_photons = float( f.readline().split('=')[-1] )
+                N_muons   = float( f.readline().split('=')[-1] )
+                f.readline()
+                xoffset = int( f.readline().split('=')[-1] )
+                yoffset = int( f.readline().split('=')[-1] )
+
+            d.swidth  = swidth
+            d.sheight = sheight
+            d.Aratio  = Aratio
+            d.eff_muon   = eff_mu
+            d.eff_photon = eff_ph
+            d.R = R
+            d.xoffset = xoffset
+            d.yoffset = yoffset
+            
+            df = pd.read_csv(filename, delim_whitespace=True, comment='#')
+            for density in test_densities:
+
+                counts = []
+                probs  = []
+                for _ in range(trials):
+
+                    N_phones = int( np.rint(Area * density) )
+                    r = radius * np.random.random(N_phones)
+                    theta = 2.*np.pi * np.random.random(N_phones)
+                    
+                    x = r * np.cos(theta)
+                    y = r * np.sin(theta)
+
+                    ix, iy = d.index2key( d.xy2index(x, y) )
+                    selection = df[( df.loc[:, 'ix'].isin(ix) ) & ( df.loc[:, 'iy'].isin(iy) )]
+                    counts.append( len(selection.drop_duplicates(subset=['ix', 'iy'])) )
+                    if (counts[-1] >= 5):
+                        probs.append(1)
+                    else:
+                        probs.append(0)
+                
+                out.write('{:>12d}{:>12.3e}{:>12.3e}{:>12.3e}{:>12.3e}{:>12.3e}\n'.format(A, E, H, density, np.mean(counts), np.mean(probs)))
+                out.flush()
+
+
+def plot_sensitivity(filename):
+    df = pd.read_csv(filename, delim_whitespace=True)
+
+    x = df[(df.A == 0) & (df.E == 1e15)].density
+    ix = np.linspace(x.min(), x.max(), 500)
+
+    y0_15c = df[(df.A == 0) & (df.E == 1e15)].loc[:,'count']
+    y0_15p = df[(df.A == 0) & (df.E == 1e15)].loc[:,'prob']
+
+    y0_17c = df[(df.A == 0) & (df.E == 1e17)].loc[:,'count']
+    y0_17p = df[(df.A == 0) & (df.E == 1e17)].loc[:,'prob']
+
+    y0_19c = df[(df.A == 0) & (df.E == 1e19)].loc[:,'count']
+    y0_19p = df[(df.A == 0) & (df.E == 1e19)].loc[:,'prob']
+    
+    kp = 1
+
+    iy0_15c = make_interp_spline(x, y0_15c)(ix)
+    iy0_15p = make_interp_spline(x, y0_15p, k=kp)(ix)
+    iy0_17c = make_interp_spline(x, y0_17c)(ix)
+    iy0_17p = make_interp_spline(x, y0_17p, k=kp)(ix)
+    iy0_19c = make_interp_spline(x, y0_19c)(ix)
+    iy0_19p = make_interp_spline(x, y0_19p, k=kp)(ix)
+
+    y238_15c = df[(df.A == 238) & (df.E == 1e15)].loc[:,'count']
+    y238_15p = df[(df.A == 238) & (df.E == 1e15)].loc[:,'prob']
+
+    y238_17c = df[(df.A == 238) & (df.E == 1e17)].loc[:,'count']
+    y238_17p = df[(df.A == 238) & (df.E == 1e17)].loc[:,'prob']
+
+    y238_19c = df[(df.A == 238) & (df.E == 1e19)].loc[:,'count']
+    y238_19p = df[(df.A == 238) & (df.E == 1e19)].loc[:,'prob']
+
+    iy238_15c = make_interp_spline(x, y238_15c)(ix)
+    iy238_15p = make_interp_spline(x, y238_15p, k=kp)(ix)
+    iy238_17c = make_interp_spline(x, y238_17c)(ix)
+    iy238_17p = make_interp_spline(x, y238_17p, k=kp)(ix)
+    iy238_19c = make_interp_spline(x, y238_19c)(ix)
+    iy238_19p = make_interp_spline(x, y238_19p, k=kp)(ix)
+
+    plt.rc('font', size=16)
+    plt.figure(figsize=[14,5], tight_layout=True)
+
+    ax = plt.subplot(1, 2, 1)
+    
+    ax.add_patch( mpl.patches.Rectangle((170, 1), 10, 1e6, edgecolor=None, facecolor='gray') )
+    plt.plot(ix, iy0_15c, 'k-')
+    plt.plot(ix, iy0_17c, 'k-')
+    plt.plot(ix, iy0_19c, 'k-')
+    plt.plot(ix, iy238_15c, 'k--')
+    plt.plot(ix, iy238_17c, 'k--')
+    plt.plot(ix, iy238_19c, 'k--')
+    plt.yscale('log')
+    plt.xlim(0, x.max())
+    plt.ylim(1, 1e6)
+    plt.xlabel('Smartphone Density [#/km$^2$]')
+    plt.ylabel('Average Phones Hit')
+    plt.text(400, 2e1, r'$10^{15}$')
+    plt.text(600, 2e3, r'$10^{17}$')
+    plt.text(800, 2e5, r'$10^{19}$')
+    plt.text(200, 2e5, 'LA 1%')
+
+
+    plt.subplot(1, 2, 2)
+    plt.plot(ix, iy0_15p, 'k-')
+    plt.plot(ix, iy0_17p, 'k-')
+    plt.plot(ix, iy0_19p, 'k-')
+    plt.plot(ix, iy238_15p, 'k--')
+    plt.plot(ix, iy238_17p, 'k--')
+    plt.plot(ix, iy238_19p, 'k--')
+    plt.xscale('log')
+    plt.xlim(1, x.max())
+    plt.ylim(0, 1.1)
+    plt.xlabel('Smartphone Density [#/km$^2$]')
+    plt.ylabel('Probability of >5 Phones Hit')
+    plt.text(2, .4, r'$10^{19}$')
+    plt.text(20, .6, r'$10^{17}$')
+    plt.text(500, .8, r'$10^{15}$')
+
+    plt.show()
 
