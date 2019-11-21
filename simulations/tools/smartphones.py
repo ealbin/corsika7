@@ -484,9 +484,15 @@ def plot_sensitivity(filename):
 
     y0_15c = df[(df.A == 0) & (df.E == 1e15)].loc[:,'count']
     y0_15p = df[(df.A == 0) & (df.E == 1e15)].loc[:,'prob']
+    
+    y0_16c = df[(df.A == 0) & (df.E == 1e16)].loc[:,'count']
+    y0_16p = df[(df.A == 0) & (df.E == 1e16)].loc[:,'prob']
 
     y0_17c = df[(df.A == 0) & (df.E == 1e17)].loc[:,'count']
     y0_17p = df[(df.A == 0) & (df.E == 1e17)].loc[:,'prob']
+    
+    y0_18c = df[(df.A == 0) & (df.E == 1e18)].loc[:,'count']
+    y0_18p = df[(df.A == 0) & (df.E == 1e18)].loc[:,'prob']
 
     y0_19c = df[(df.A == 0) & (df.E == 1e19)].loc[:,'count']
     y0_19p = df[(df.A == 0) & (df.E == 1e19)].loc[:,'prob']
@@ -495,33 +501,49 @@ def plot_sensitivity(filename):
 
     iy0_15c = make_interp_spline(x, y0_15c)(ix)
     iy0_15p = make_interp_spline(x, y0_15p, k=kp)(ix)
+    iy0_16c = make_interp_spline(x, y0_16c)(ix)
+    iy0_16p = make_interp_spline(x, y0_16p, k=kp)(ix)
     iy0_17c = make_interp_spline(x, y0_17c)(ix)
     iy0_17p = make_interp_spline(x, y0_17p, k=kp)(ix)
+    iy0_18c = make_interp_spline(x, y0_18c)(ix)
+    iy0_18p = make_interp_spline(x, y0_18p, k=kp)(ix)
     iy0_19c = make_interp_spline(x, y0_19c)(ix)
     iy0_19p = make_interp_spline(x, y0_19p, k=kp)(ix)
 
     y238_15c = df[(df.A == 238) & (df.E == 1e15)].loc[:,'count']
     y238_15p = df[(df.A == 238) & (df.E == 1e15)].loc[:,'prob']
 
+    y238_16c = df[(df.A == 238) & (df.E == 1e16)].loc[:,'count']
+    y238_16p = df[(df.A == 238) & (df.E == 1e16)].loc[:,'prob']
+    
     y238_17c = df[(df.A == 238) & (df.E == 1e17)].loc[:,'count']
     y238_17p = df[(df.A == 238) & (df.E == 1e17)].loc[:,'prob']
 
+    y238_18c = df[(df.A == 238) & (df.E == 1e18)].loc[:,'count']
+    y238_18p = df[(df.A == 238) & (df.E == 1e18)].loc[:,'prob']
+    
     y238_19c = df[(df.A == 238) & (df.E == 1e19)].loc[:,'count']
     y238_19p = df[(df.A == 238) & (df.E == 1e19)].loc[:,'prob']
 
     iy238_15c = make_interp_spline(x, y238_15c)(ix)
     iy238_15p = make_interp_spline(x, y238_15p, k=kp)(ix)
+    iy238_16c = make_interp_spline(x, y238_16c)(ix)
+    iy238_16p = make_interp_spline(x, y238_16p, k=kp)(ix)
     iy238_17c = make_interp_spline(x, y238_17c)(ix)
     iy238_17p = make_interp_spline(x, y238_17p, k=kp)(ix)
+    iy238_18c = make_interp_spline(x, y238_18c)(ix)
+    iy238_18p = make_interp_spline(x, y238_18p, k=kp)(ix)
     iy238_19c = make_interp_spline(x, y238_19c)(ix)
     iy238_19p = make_interp_spline(x, y238_19p, k=kp)(ix)
 
     plt.rc('font', size=16)
-    plt.figure(figsize=[14,5], tight_layout=True)
+    #plt.figure(figsize=[14,5], tight_layout=True)
+    plt.figure(figsize=[14,7], tight_layout=True)
 
-    ax = plt.subplot(1, 2, 1)
-    
-    ax.add_patch( mpl.patches.Rectangle((170, 1), 10, 1e6, edgecolor=None, facecolor='gray') )
+    #ax = plt.subplot(1, 2, 1)
+    ax = plt.subplot(1, 1, 1)
+
+    ax.add_patch( mpl.patches.Rectangle((170, 1), 10, 1e6, edgecolor=None, facecolor='.8') )
     plt.plot(ix, iy0_15c, 'k-')
     plt.plot(ix, iy0_17c, 'k-')
     plt.plot(ix, iy0_19c, 'k-')
@@ -536,24 +558,38 @@ def plot_sensitivity(filename):
     plt.text(400, 2e1, r'$10^{15}$')
     plt.text(600, 2e3, r'$10^{17}$')
     plt.text(800, 2e5, r'$10^{19}$')
-    plt.text(200, 2e5, 'LA 1%')
+    plt.text(185, 2e5, 'LA 1%')
 
+    plt.show()
+    plt.figure(figsize=[14,7], tight_layout=True)
+    ax = plt.subplot(1, 1, 1)
 
-    plt.subplot(1, 2, 2)
+    #plt.subplot(1, 2, 2)
+    ax.add_patch( mpl.patches.Rectangle((10, 0), 40, 1, edgecolor=None, facecolor='.8'))
     plt.plot(ix, iy0_15p, 'k-')
+    plt.plot(ix, iy0_16p, 'k-')
     plt.plot(ix, iy0_17p, 'k-')
+    plt.plot(ix, iy0_18p, 'k-')
     plt.plot(ix, iy0_19p, 'k-')
     plt.plot(ix, iy238_15p, 'k--')
+    plt.plot(ix, iy238_16p, 'k--')
     plt.plot(ix, iy238_17p, 'k--')
+    plt.plot(ix, iy238_18p, 'k--')
     plt.plot(ix, iy238_19p, 'k--')
     plt.xscale('log')
     plt.xlim(1, x.max())
     plt.ylim(0, 1.1)
     plt.xlabel('Smartphone Density [#/km$^2$]')
     plt.ylabel('Probability of >5 Phones Hit')
-    plt.text(2, .4, r'$10^{19}$')
-    plt.text(20, .6, r'$10^{17}$')
-    plt.text(500, .8, r'$10^{15}$')
+    #plt.text(2, .4, r'$10^{19}$')
+    #plt.text(20, .6, r'$10^{17}$')
+    #plt.text(500, .8, r'$10^{15}$')
+    plt.text(2, .5, r'$10^{19}$')
+    plt.text(6, .5, r'$10^{18}$')
+    plt.text(18, .5, r'$10^{17}$')
+    plt.text(50, .5, r'$10^{16}$')
+    plt.text(300, .5, r'$10^{15}$')
+    plt.text(17, 1.01, 'Homes 1%')
 
     plt.show()
 
