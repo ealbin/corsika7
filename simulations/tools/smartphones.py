@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 from scipy.special import gamma
 from scipy.sparse import dok_matrix
 from scipy.interpolate import CubicSpline, make_interp_spline
+from scipy.interpolate import Akima1DInterpolator as Akima
 
 import ROOT as R
 
@@ -385,10 +386,10 @@ def plot_detection(filename, path=None):
     r_muon   = np.sqrt(muons.x**2   + muons.y**2)
 
     plt.hist(r_muon, bins=bins[bins >= 0], histtype='step', linewidth=2, edgecolor='k', weights=np.ones(r_muon.size)/100.)
-    plt.hist(r_muon, bins=bins[bins >= 0], histtype='stepfilled', facecolor='0.8', hatch='***', weights=np.ones(r_muon.size)/100., label=r'$\mu^{\pm}$')
+    plt.hist(r_muon, bins=bins[bins >= 0], histtype='stepfilled', facecolor='0.9', hatch='***', weights=np.ones(r_muon.size)/100., label=r'$\mu^{\pm}$')
 
     plt.hist(r_photon, bins=bins[bins >= 0], histtype='step', linewidth=2, edgecolor='w', weights=np.ones(r_photon.size)/100.)
-    plt.hist(r_photon, bins=bins[bins >= 0], histtype='stepfilled', facecolor='0.3', hatch='---', weights=np.ones(r_photon.size)/100., label=r'$\gamma$')
+    plt.hist(r_photon, bins=bins[bins >= 0], histtype='stepfilled', facecolor='0.2', hatch='---', weights=np.ones(r_photon.size)/100., label=r'$\gamma$')
 
     plt.hist(np.r_[r_muon, r_photon], bins=bins[bins >= 0], histtype='step', linewidth=2, edgecolor='k', weights=np.ones(r_muon.size + r_photon.size)/100.)
 
@@ -499,6 +500,17 @@ def plot_sensitivity(filename):
     
     kp = 1
 
+    #iy0_15c = Akima(x, y0_15c)(ix)
+    #iy0_15p = Akima(x, y0_15p)(ix)
+    #iy0_16c = Akima(x, y0_16c)(ix)
+    #iy0_16p = Akima(x, y0_16p)(ix)
+    #iy0_17c = Akima(x, y0_17c)(ix)
+    #iy0_17p = Akima(x, y0_17p)(ix)
+    #iy0_18c = Akima(x, y0_18c)(ix)
+    #iy0_18p = Akima(x, y0_18p)(ix)
+    #iy0_19c = Akima(x, y0_19c)(ix)
+    #iy0_19p = Akima(x, y0_19p)(ix)
+
     iy0_15c = make_interp_spline(x, y0_15c)(ix)
     iy0_15p = make_interp_spline(x, y0_15p, k=kp)(ix)
     iy0_16c = make_interp_spline(x, y0_16c)(ix)
@@ -509,7 +521,7 @@ def plot_sensitivity(filename):
     iy0_18p = make_interp_spline(x, y0_18p, k=kp)(ix)
     iy0_19c = make_interp_spline(x, y0_19c)(ix)
     iy0_19p = make_interp_spline(x, y0_19p, k=kp)(ix)
-
+    
     y238_15c = df[(df.A == 238) & (df.E == 1e15)].loc[:,'count']
     y238_15p = df[(df.A == 238) & (df.E == 1e15)].loc[:,'prob']
 
@@ -525,6 +537,17 @@ def plot_sensitivity(filename):
     y238_19c = df[(df.A == 238) & (df.E == 1e19)].loc[:,'count']
     y238_19p = df[(df.A == 238) & (df.E == 1e19)].loc[:,'prob']
 
+    #iy238_15c = Akima(x, y238_15c)(ix)
+    #iy238_15p = Akima(x, y238_15p)(ix)
+    #iy238_16c = Akima(x, y238_16c)(ix)
+    #iy238_16p = Akima(x, y238_16p)(ix)
+    #iy238_17c = Akima(x, y238_17c)(ix)
+    #iy238_17p = Akima(x, y238_17p)(ix)
+    #iy238_18c = Akima(x, y238_18c)(ix)
+    #iy238_18p = Akima(x, y238_18p)(ix)
+    #iy238_19c = Akima(x, y238_19c)(ix)
+    #iy238_19p = Akima(x, y238_19p)(ix)
+
     iy238_15c = make_interp_spline(x, y238_15c)(ix)
     iy238_15p = make_interp_spline(x, y238_15p, k=kp)(ix)
     iy238_16c = make_interp_spline(x, y238_16c)(ix)
@@ -535,7 +558,7 @@ def plot_sensitivity(filename):
     iy238_18p = make_interp_spline(x, y238_18p, k=kp)(ix)
     iy238_19c = make_interp_spline(x, y238_19c)(ix)
     iy238_19p = make_interp_spline(x, y238_19p, k=kp)(ix)
-
+    
     plt.rc('font', size=16)
     #plt.figure(figsize=[14,5], tight_layout=True)
     plt.figure(figsize=[14,7], tight_layout=True)
